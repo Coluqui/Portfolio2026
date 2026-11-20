@@ -1,0 +1,79 @@
+---
+// Confirmación del envío (M38): aparece con las marcas de corte entrando en registro
+// alrededor. El gesto propio cierra el flujo. Se enfoca al aparecer (lo hace el formulario).
+import Icon from './Icon.astro';
+import { type Lang, useTranslations } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+  /** Visible desde el inicio (demo en /dev/componentes). */
+  visible?: boolean;
+}
+
+const { lang, visible = false } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<div
+  class="form-success"
+  role="status"
+  tabindex="-1"
+  hidden={!visible}
+  data-form-success
+  data-visible={visible ? '' : undefined}
+>
+  <span class="crop-marks" aria-hidden="true" data-crop={visible ? 'on' : undefined}>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+  </span>
+  <p class="title">
+    <Icon name="check" /> {t('form.successTitle')}
+  </p>
+  <p class="body">{t('form.successBody')}</p>
+</div>
+
+<style>
+  .form-success {
+    position: relative;
+    display: grid;
+    gap: var(--space-2);
+    padding: var(--space-6);
+    background-color: var(--color-success-bg);
+    color: var(--color-text-primary);
+  }
+
+  .form-success[hidden] {
+    display: none;
+  }
+
+  .form-success:focus-visible {
+    outline-offset: calc(var(--crop-mark-size) + var(--focus-ring-offset));
+  }
+
+  .title {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--color-success);
+    font-size: var(--text-h3);
+    font-weight: var(--weight-strong);
+    line-height: var(--leading-h3);
+  }
+
+  /* M38 · el bloque entra con fundido (500 ms, register); las marcas, en registro */
+  .form-success[data-visible] {
+    animation: form-success-in var(--duration-slow) var(--ease-register);
+  }
+
+  .form-success[data-visible] .crop-marks i {
+    transition-duration: var(--duration-slow);
+  }
+
+  @keyframes form-success-in {
+    from {
+      opacity: 0;
+    }
+  }
+</style>

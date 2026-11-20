@@ -1,0 +1,158 @@
+---
+// Chips de filtro (M05). Botones con aria-pressed y conteo; un solo fondo de tinta que viaja
+// del chip anterior al nuevo con --ease-spring. Sin JS, el chip activo se marca con su propio
+// fondo. El filtrado de la grilla (M06, FLIP) se conecta en la Fase 4 con el evento
+// `filterchange` que dispara este componente.
+import { type Lang, useTranslations } from '../i18n/utils';
+
+export interface FilterOption {
+  id: string;
+  label: string;
+  count: number;
+}
+
+interface Props {
+  lang: Lang;
+  options: FilterOption[];
+  active?: string;
+  /** id del contenedor que filtran (para aria-controls) */
+  controls?: string;
+  /** Solo para /dev/componentes: chip con hover o foco forzado */
+  force?: { id: string; state: 'hover' | 'focus' };
+}
+
+const { lang, options, active = options[0]?.id, controls, force } = Astro.props;
+const t = useTranslations(lang);
+const activeCount = options.find((o) => o.id === active)?.count ?? 0;
+---
+
+<div class="filters" data-filters>
+  <div class="chips" role="group" aria-label={t('filters.label')}>
+    <span class="indicator" aria-hidden="true" data-filter-indicator></span>
+    {options.map((option) => (
+      <button
+        class="chip"
+        type="button"
+        aria-pressed={option.id === active ? 'true' : 'false'}
+        aria-controls={controls}
+        data-filter={option.id}
+        data-force={force?.id === option.id ? force.state : undefined}
+      >
+        <span>{option.label}</span>
+        <span class="chip__count">{option.count}</span>
+      </button>
+    ))}
+  </div>
+  <p
+    class="visually-hidden"
+    aria-live="polite"
+    data-filter-status
+    data-template={t('filters.showing')}
+    data-template-one={t('filters.showingOne')}
+  >
+    {activeCount === 1 ? t('filters.showingOne') : t('filters.showing', { n: activeCount })}
+  </p>
+</div>
+
+<style>
+  .chips {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--target-gap);
+  }
+
+  .chip {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: baseline;
+    gap: var(--space-2);
+    min-block-size: var(--target-min);
+    padding-inline: var(--space-4);
+    border: var(--border-control);
+    border-radius: var(--radius-xs);
+    background-color: transparent;
+    color: var(--color-text-primary);
+    font-size: var(--text-small);
+    line-height: var(--target-min);
+    white-space: nowrap;
+    /* El color del texto acompaña la llegada del fondo (M05) */
+    transition:
+      border-color var(--duration-fast) var(--ease-out),
+      color var(--duration-base) var(--ease-in-out);
+  }
+
+  .chip__count {
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    font-weight: var(--weight-mono);
+    color: var(--color-text-secondary);
+    transition: color var(--duration-base) var(--ease-in-out);
+  }
+
+  /* Sin JS (o antes de que cargue): el chip activo pinta su propio fondo */
+  .chip[aria-pressed='true'] {
+    border-color: var(--color-text-primary);
+    background-color: var(--color-text-primary);
+    color: var(--color-bg);
+  }
+
+  .chip[aria-pressed='true'] .chip__count {
+    color: var(--color-bg);
+  }
+
+  /* Con JS, el fondo es un solo elemento que viaja (M05) */
+  .filters[data-enhanced] .chip[aria-pressed='true'] {
+    background-color: transparent;
+  }
+
+  .indicator {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    display: none;
+    inline-size: var(--space-9);
+    block-size: var(--target-min);
+    border-radius: var(--radius-xs);
+    background-color: var(--color-text-primary);
+    transform-origin: left top;
+    transition: transform var(--duration-base) var(--ease-spring);
+  }
+
+  .filters[data-enhanced] .indicator {
+    display: block;
+  }
+
+  .filters[data-instant] .indicator {
+    transition: none;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .chip:hover {
+      border-color: var(--color-text-primary);
+    }
+  }
+
+  .chip[data-force='hover'] {
+    border-color: var(--color-text-primary);
+  }
+
+  .chip[data-force='focus'] {
+    outline: var(--focus-ring-width) solid var(--color-accent);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  /* M05 reducido: cambio instantáneo */
+  @media (prefers-reduced-motion: reduce) {
+    .indicator {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  import { initFilterChips } from '../scripts/filters';
+
+  document.addEventListener('astro:page-load', initFilterChips);
+</script>

@@ -1,0 +1,55 @@
+---
+// Íconos que no existen en las fuentes del sitio (⧉ ◐ ☰ × ✓ ‖ ▶). Trazo fino, color heredado.
+// Siempre decorativos: el texto accesible lo pone el control que los contiene.
+interface Props {
+  name: 'carousel' | 'theme' | 'menu' | 'close' | 'check' | 'play' | 'pause' | 'alert';
+  class?: string;
+}
+
+const { name, class: className } = Astro.props;
+---
+
+<svg
+  class:list={['icon', className]}
+  viewBox="0 0 16 16"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.5"
+  stroke-linecap="square"
+  aria-hidden="true"
+  focusable="false"
+>
+  {name === 'carousel' && (
+    <>
+      <rect x="1.75" y="4.75" width="9.5" height="9.5" />
+      <path d="M4.75 1.75h9.5v9.5" />
+    </>
+  )}
+  {name === 'theme' && (
+    <>
+      <circle cx="8" cy="8" r="6.25" />
+      <path d="M8 1.75a6.25 6.25 0 0 1 0 12.5z" fill="currentColor" stroke="none" />
+    </>
+  )}
+  {name === 'menu' && <path d="M1.75 5.25h12.5M1.75 10.75h12.5" />}
+  {name === 'close' && <path d="M3 3l10 10M13 3L3 13" />}
+  {name === 'check' && <path d="M2.5 8.5l3.5 3.5 7.5-8" stroke-linecap="butt" />}
+  {name === 'play' && <path d="M4.5 2.5v11l9-5.5z" fill="currentColor" stroke="none" />}
+  {name === 'pause' && <path d="M5 2.75v10.5M11 2.75v10.5" />}
+  {name === 'alert' && (
+    <>
+      <circle cx="8" cy="8" r="6.25" />
+      <path d="M8 4.5v4.25M8 10.75v.75" />
+    </>
+  )}
+</svg>
+
+<style>
+  .icon {
+    flex: none;
+    inline-size: 1em;
+    block-size: 1em;
+  }
+</style>

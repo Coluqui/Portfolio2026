@@ -7,7 +7,20 @@
   },
   "a11y": {
     "skipToContent": "Saltar al contenido",
-    "mainNav": "Navegación principal"
+    "mainNav": "Navegación principal",
+    "quickActions": "Accesos rápidos",
+    "newTab": "(se abre en otra pestaña)"
+  },
+  "nav": {
+    "home": "Franco Colucci, inicio",
+    "trabajos": "Trabajos",
+    "queHago": "Qué hago",
+    "proceso": "Proceso",
+    "sobreMi": "Sobre mí",
+    "contacto": "Contacto",
+    "openMenu": "Abrir menú",
+    "closeMenu": "Cerrar menú",
+    "menu": "Menú"
   },
   "theme": {
     "toggle": "Modo oscuro",
@@ -23,11 +36,84 @@
       "en": "EN"
     }
   },
+  "cv": {
+    "label": "CV",
+    "download": "Descargar CV",
+    "downloading": "Descargando",
+    "done": "CV",
+    "doneAnnounce": "CV descargado",
+    "fileName": "Franco-Colucci-CV.pdf"
+  },
+  "contact": {
+    "copyEmail": "Copiar mail",
+    "copied": "Copiado",
+    "copiedAnnounce": "Mail copiado al portapapeles",
+    "copyFailed": "No se pudo copiar. El mail es {email}",
+    "email": "Mail",
+    "linkedin": "LinkedIn",
+    "whatsapp": "WhatsApp"
+  },
+  "piece": {
+    "view": "Ver pieza",
+    "viewSlides": "Ver {n} slides",
+    "slides": "{n} slides"
+  },
+  "formats": {
+    "carrusel": "Carrusel",
+    "posteo": "Posteo",
+    "story": "Story",
+    "reel": "Reel",
+    "ad": "Ad",
+    "mail": "Mail",
+    "ebook": "Ebook",
+    "one-pager": "One-pager",
+    "banner": "Banner",
+    "web": "Web",
+    "portadas": "Portadas",
+    "mockup": "Mockup",
+    "identidad": "Identidad"
+  },
+  "filters": {
+    "label": "Filtrar por formato",
+    "all": "Todo",
+    "redes": "Redes",
+    "ads": "Ads",
+    "documentos": "Documentos",
+    "lanzamientos": "Lanzamientos",
+    "showing": "Mostrando {n} piezas",
+    "showingOne": "Mostrando 1 pieza"
+  },
+  "form": {
+    "name": "Nombre",
+    "email": "Mail",
+    "company": "Empresa",
+    "message": "Mensaje",
+    "optional": "opcional",
+    "messageHint": "Contame qué necesitás: el puesto o el proyecto, los plazos y cómo seguimos.",
+    "submit": "Enviar mensaje",
+    "sending": "Enviando",
+    "successTitle": "Mensaje enviado",
+    "successBody": "Gracias por escribir. Te respondo por mail.",
+    "errorTitle": "No se pudo enviar el mensaje",
+    "errorBody": "Lo que escribiste sigue acá. Probá de nuevo o escribime directo a {email}",
+    "retry": "Reintentar",
+    "errors": {
+      "required": "Completá este campo.",
+      "nameTooLong": "El nombre puede tener hasta 100 caracteres.",
+      "emailInvalid": "Revisá el mail: tiene que ser como nombre@dominio.com.",
+      "messageTooShort": "El mensaje necesita al menos 10 caracteres.",
+      "messageTooLong": "El mensaje puede tener hasta 3000 caracteres.",
+      "noHtml": "Sacá las etiquetas HTML del texto."
+    }
+  },
   "home": {
     "name": "Franco Colucci",
     "status": "Sitio en construcción. Pronto, el trabajo."
   },
   "footer": {
-    "location": "Mendoza, Argentina"
+    "location": "Mendoza, Argentina",
+    "remote": "Disponible para trabajo remoto",
+    "backToTop": "Volver arriba",
+    "rights": "© {year} Franco Colucci"
   }
 }

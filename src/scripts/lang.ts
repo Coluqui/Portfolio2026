@@ -1,5 +1,5 @@
-// Guarda el idioma elegido en una cookie para que `/` redirija ahí en la próxima visita,
-// y conserva la sección actual (hash) al cambiar de idioma.
+// M24 · Cambio de idioma. Mueve el subrayado al idioma elegido, guarda la preferencia
+// en una cookie (la lee `/` en la próxima visita) y conserva la sección actual (hash).
 
 const ONE_YEAR = 60 * 60 * 24 * 365;
 
@@ -15,8 +15,11 @@ export function initLangSwitch(): void {
       'click',
       () => {
         const lang = link.dataset.langLink;
-        if (lang) document.cookie = `lang=${lang}; path=/; max-age=${ONE_YEAR}; samesite=lax`;
+        if (!lang) return;
+        document.cookie = `lang=${lang}; path=/; max-age=${ONE_YEAR}; samesite=lax`;
         if (location.hash) link.hash = location.hash;
+        const nav = link.closest<HTMLElement>('[data-lang-switch]');
+        if (nav) nav.dataset.active = lang;
       },
       { signal },
     ),

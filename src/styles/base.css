@@ -12,6 +12,10 @@
 }
 
 html {
+  /* WCAG 2.4.11: al mover el foco o saltar a un ancla, nada queda debajo de la nav fija
+     ni de la barra inferior (hasta 1279 px) */
+  scroll-padding-block: calc(var(--nav-height) + var(--safe-top) + var(--space-4))
+    calc(var(--bottom-bar-height) + var(--safe-bottom) + var(--space-4));
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   background-color: var(--color-bg);
@@ -103,6 +107,14 @@ a {
   outline-offset: var(--focus-ring-offset);
 }
 
+/* ---- M23 · Cambio de modo: fundido cruzado de toda la página ----
+   Solo mientras dura el cambio de tema (data-theme-switch lo pone theme.ts). */
+:root[data-theme-switch]::view-transition-old(root),
+:root[data-theme-switch]::view-transition-new(root) {
+  animation-duration: var(--duration-base);
+  animation-timing-function: var(--ease-in-out);
+}
+
 /* ---- Utilidades ---- */
 .visually-hidden {
   position: absolute;
@@ -118,6 +130,9 @@ a {
 
 .skip-link {
   position: absolute;
+  display: inline-flex;
+  align-items: center;
+  min-block-size: var(--target-min);
   inset-block-start: var(--space-2);
   inset-inline-start: var(--space-2);
   z-index: var(--z-toast);
@@ -141,6 +156,114 @@ a {
   letter-spacing: var(--tracking-label);
 }
 
+/* ---- Marcas de corte (gesto propio · M01, M01b, M04) ----
+   Uso: un contenedor con `.crop-host` (position: relative) y dentro
+   <span class="crop-marks" aria-hidden="true"><i></i><i></i><i></i><i></i></span>.
+   Aparecen en hover (puntero fino), focus de teclado y al tocar; con
+   [data-crop="on"] quedan fijas (visor, envío exitoso). La pieza no se mueve. */
+.crop-host {
+  position: relative;
+}
+
+.crop-marks {
+  --crop-offset: var(--crop-travel);
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.crop-marks i {
+  position: absolute;
+  inline-size: var(--crop-mark-size);
+  block-size: var(--crop-mark-size);
+  border: 0 solid var(--color-accent);
+  opacity: 0;
+  /* M01b · salir: solo opacidad, 100 ms, in */
+  transition:
+    opacity var(--duration-instant) var(--ease-in),
+    transform 0s linear var(--duration-instant);
+}
+
+.crop-marks i:nth-child(1) {
+  inset-block-start: calc(var(--crop-mark-size) * -1);
+  inset-inline-start: calc(var(--crop-mark-size) * -1);
+  border-block-end-width: var(--crop-mark-width);
+  border-inline-end-width: var(--crop-mark-width);
+  transform: translate(calc(var(--crop-offset) * -1), calc(var(--crop-offset) * -1));
+}
+
+.crop-marks i:nth-child(2) {
+  inset-block-start: calc(var(--crop-mark-size) * -1);
+  inset-inline-end: calc(var(--crop-mark-size) * -1);
+  border-block-end-width: var(--crop-mark-width);
+  border-inline-start-width: var(--crop-mark-width);
+  transform: translate(var(--crop-offset), calc(var(--crop-offset) * -1));
+}
+
+.crop-marks i:nth-child(3) {
+  inset-block-end: calc(var(--crop-mark-size) * -1);
+  inset-inline-start: calc(var(--crop-mark-size) * -1);
+  border-block-start-width: var(--crop-mark-width);
+  border-inline-end-width: var(--crop-mark-width);
+  transform: translate(calc(var(--crop-offset) * -1), var(--crop-offset));
+}
+
+.crop-marks i:nth-child(4) {
+  inset-block-end: calc(var(--crop-mark-size) * -1);
+  inset-inline-end: calc(var(--crop-mark-size) * -1);
+  border-block-start-width: var(--crop-mark-width);
+  border-inline-start-width: var(--crop-mark-width);
+  transform: translate(var(--crop-offset), var(--crop-offset));
+}
+
+/* M01 · entrar en registro: 6 px → 0, 200 ms, register */
+.crop-host:focus-visible .crop-marks,
+.crop-host:active .crop-marks,
+.crop-host[data-force='hover'] .crop-marks,
+.crop-marks[data-crop='on'] {
+  --crop-offset: 0px;
+}
+
+.crop-host:focus-visible .crop-marks i,
+.crop-host:active .crop-marks i,
+.crop-host[data-force='hover'] .crop-marks i,
+.crop-marks[data-crop='on'] i {
+  opacity: 1;
+  transition:
+    opacity var(--duration-fast) var(--ease-register),
+    transform var(--duration-fast) var(--ease-register);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .crop-host:hover .crop-marks {
+    --crop-offset: 0px;
+  }
+
+  .crop-host:hover .crop-marks i {
+    opacity: 1;
+    transition:
+      opacity var(--duration-fast) var(--ease-register),
+      transform var(--duration-fast) var(--ease-register);
+  }
+}
+
+/* M04 · press: las marcas se acercan 2 px (un tercio del recorrido; 0 en reducido) */
+.crop-host:active .crop-marks,
+.crop-host[data-force='active'] .crop-marks {
+  --crop-offset: calc(var(--crop-travel) / -3);
+}
+
+.crop-host[data-force='active'] .crop-marks i {
+  opacity: 1;
+}
+
+.crop-host:active .crop-marks i,
+.crop-host[data-force='active'] .crop-marks i {
+  transition:
+    opacity var(--duration-instant) var(--ease-out),
+    transform var(--duration-instant) var(--ease-out);
+}
+
 /* Contenedor de página: márgenes de la grilla y ancho máximo */
 .container {
   inline-size: 100%;
@@ -148,4 +271,10 @@ a {
   margin-inline: auto;
   padding-inline: max(var(--grid-margin), var(--safe-left))
     max(var(--grid-margin), var(--safe-right));
+}
+
+@media (min-width: 80rem) {
+  html {
+    scroll-padding-block-end: var(--space-4);
+  }
 }

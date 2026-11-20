@@ -1,0 +1,142 @@
+---
+// Copiar mail (M34): "Copiar mail" sale hacia arriba y entra "Copiado ✓" en verde desde
+// abajo; aria-live lo anuncia y vuelve después de --hold-feedback. Si el portapapeles
+// falla, muestra el mail para copiarlo a mano. Sin mail cargado: TODO(contenido) visible.
+import Icon from './Icon.astro';
+import { type Lang, useTranslations } from '../i18n/utils';
+import { contact, TODO_EMAIL } from '../lib/contact';
+
+interface Props {
+  lang: Lang;
+  /** Por defecto, el mail público de src/lib/contact.ts. */
+  email?: string | null;
+  /** Solo para /dev/componentes */
+  force?: 'done' | 'failed' | 'hover' | 'focus';
+}
+
+const { lang, email = contact.email, force } = Astro.props;
+const t = useTranslations(lang);
+const state = force === 'done' || force === 'failed' ? force : 'idle';
+---
+
+{email ? (
+  <span class="copy" data-copy-email={email} data-state={state}>
+    <button
+      class="copy__button"
+      type="button"
+      data-force={force === 'hover' || force === 'focus' ? force : undefined}
+    >
+      <span class="copy__labels">
+        <span class="copy__label copy__label--idle">{t('contact.copyEmail')}</span>
+        <span class="copy__label copy__label--done" aria-hidden="true">
+          {t('contact.copied')}
+          <Icon name="check" />
+        </span>
+      </span>
+    </button>
+    <span class="copy__fallback" data-copy-fallback hidden={state !== 'failed'}>
+      {t('contact.copyFailed', { email })}
+    </span>
+    <span class="visually-hidden" aria-live="polite" data-copy-status>
+      {state === 'done' ? t('contact.copiedAnnounce') : ''}
+    </span>
+    <span hidden data-copied-announce>
+      {t('contact.copiedAnnounce')}
+    </span>
+  </span>
+) : (
+  <span class="copy copy--todo label">{TODO_EMAIL}</span>
+)}
+
+<style>
+  .copy {
+    display: inline-grid;
+    gap: var(--space-2);
+    justify-items: start;
+  }
+
+  .copy--todo {
+    color: var(--color-danger);
+  }
+
+  .copy__button {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: var(--target-min);
+    padding-inline: var(--space-4);
+    overflow: hidden;
+    border: var(--border-control);
+    border-radius: var(--radius-xs);
+    background: none;
+    color: var(--color-text-primary);
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    font-weight: var(--weight-mono);
+    letter-spacing: var(--tracking-label);
+    transition:
+      border-color var(--duration-fast) var(--ease-out),
+      transform var(--duration-instant) var(--ease-out);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .copy__button:hover {
+      border-color: var(--color-text-primary);
+    }
+  }
+
+  .copy__button[data-force='hover'] {
+    border-color: var(--color-text-primary);
+  }
+
+  .copy__button[data-force='focus'] {
+    outline: var(--focus-ring-width) solid var(--color-accent);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  .copy__button:active {
+    transform: scale(var(--scale-press));
+  }
+
+  .copy__labels {
+    display: grid;
+  }
+
+  .copy__label {
+    grid-area: 1 / 1;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    transition:
+      opacity var(--duration-fast) var(--ease-out),
+      transform var(--duration-fast) var(--ease-out);
+  }
+
+  .copy__label--done {
+    color: var(--color-success);
+    opacity: 0;
+    transform: translateY(var(--shift-sm));
+  }
+
+  .copy[data-state='done'] .copy__label--idle {
+    opacity: 0;
+    transform: translateY(calc(var(--shift-sm) * -1));
+  }
+
+  .copy[data-state='done'] .copy__label--done {
+    opacity: 1;
+    transform: none;
+  }
+
+  .copy__fallback {
+    font-size: var(--text-small);
+    line-height: var(--leading-small);
+    color: var(--color-text-secondary);
+    user-select: all;
+  }
+</style>
+
+<script>
+  import { initCopyEmail } from '../scripts/copy';
+
+  document.addEventListener('astro:page-load', initCopyEmail);
+</script>

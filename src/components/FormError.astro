@@ -1,0 +1,71 @@
+---
+// Error de envío (M39): mensaje inline arriba del botón, con "Reintentar" y el mail como
+// alternativa. Los datos cargados no se pierden (los mantiene el formulario).
+import Button from './Button.astro';
+import Icon from './Icon.astro';
+import { type Lang, useTranslations } from '../i18n/utils';
+import { contact, TODO_EMAIL } from '../lib/contact';
+
+interface Props {
+  lang: Lang;
+  visible?: boolean;
+  email?: string | null;
+}
+
+const { lang, visible = false, email = contact.email } = Astro.props;
+const t = useTranslations(lang);
+// El mail va como link al final de la frase (el texto termina en {email}).
+const [before = ''] = t('form.errorBody').split('{email}');
+---
+
+<div class="form-error" role="alert" hidden={!visible} data-form-error>
+  <p class="title">
+    <Icon name="alert" /> {t('form.errorTitle')}
+  </p>
+  <p class="body">
+    {before}
+    {email ? <a href={`mailto:${email}`}>{email}</a> : <span class="todo">{TODO_EMAIL}</span>}
+  </p>
+  <Button variant="secondary" data-form-retry>
+    {t('form.retry')}
+  </Button>
+</div>
+
+<style>
+  .form-error {
+    display: grid;
+    gap: var(--space-3);
+    justify-items: start;
+    padding: var(--space-5);
+    border-inline-start: var(--border-rule);
+    border-inline-start-color: var(--color-danger);
+    background-color: var(--color-danger-bg);
+    animation: form-error-in var(--duration-fast) var(--ease-out);
+  }
+
+  .form-error[hidden] {
+    display: none;
+  }
+
+  .title {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--color-danger);
+    font-weight: var(--weight-strong);
+  }
+
+  .todo {
+    color: var(--color-danger);
+  }
+
+  .body a {
+    color: var(--color-text-primary);
+  }
+
+  @keyframes form-error-in {
+    from {
+      opacity: 0;
+    }
+  }
+</style>

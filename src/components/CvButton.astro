@@ -1,0 +1,167 @@
+---
+// Descargar CV (M33): descarga el PDF del idioma activo (o el que exista). La flecha baja y
+// cae en el filete; el texto pasa a "Descargando" y después a "CV ✓" durante
+// --hold-feedback, y vuelve. El estado se anuncia con aria-live.
+import Icon from './Icon.astro';
+import { type Lang, useTranslations } from '../i18n/utils';
+import { cvHref } from '../lib/contact';
+
+interface Props {
+  lang: Lang;
+  /** compact: "CV ↓" (nav, barra inferior) · full: "Descargar CV ↓" */
+  size?: 'compact' | 'full';
+  variant?: 'primary' | 'secondary';
+  block?: boolean;
+  /** Solo para /dev/componentes */
+  force?: 'downloading' | 'done' | 'hover' | 'focus';
+}
+
+const { lang, size = 'compact', variant = 'secondary', block = false, force } = Astro.props;
+const t = useTranslations(lang);
+const label = size === 'compact' ? t('cv.label') : t('cv.download');
+const state = force === 'downloading' || force === 'done' ? force : 'idle';
+---
+
+<span class:list={['cv', { 'cv--block': block }]}>
+  <a
+    class:list={['cv__button', `cv__button--${variant}`]}
+    href={cvHref(lang)}
+    download={t('cv.fileName')}
+    data-cv
+    data-state={state}
+    data-done-announce={t('cv.doneAnnounce')}
+    data-force={force === 'hover' || force === 'focus' ? force : undefined}
+    aria-label={size === 'compact' ? t('cv.download') : undefined}
+  >
+    <span class="cv__labels" aria-hidden={size === 'compact' ? 'true' : undefined}>
+      <span class="cv__label cv__label--idle">{label}</span>
+      <span class="cv__label cv__label--downloading">{t('cv.downloading')}</span>
+      <span class="cv__label cv__label--done">
+        {t('cv.done')}
+        <Icon name="check" />
+      </span>
+    </span>
+    <span class="cv__tray" aria-hidden="true">
+      <span class="cv__arrow">↓</span>
+    </span>
+  </a>
+  <span class="visually-hidden" aria-live="polite" data-cv-status></span>
+</span>
+
+<style>
+  .cv {
+    display: inline-flex;
+  }
+
+  .cv--block,
+  .cv--block .cv__button {
+    inline-size: 100%;
+  }
+
+  .cv__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    min-block-size: var(--target-min);
+    padding-inline: var(--space-4);
+    border: var(--border-control);
+    border-radius: var(--radius-xs);
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    font-weight: var(--weight-mono);
+    letter-spacing: var(--tracking-label);
+    text-decoration: none;
+    white-space: nowrap;
+    transition:
+      background-color var(--duration-fast) var(--ease-out),
+      border-color var(--duration-fast) var(--ease-out),
+      transform var(--duration-instant) var(--ease-out);
+  }
+
+  .cv__button--secondary {
+    color: var(--color-text-primary);
+  }
+
+  .cv__button--primary {
+    border-color: var(--color-text-primary);
+    background-color: var(--color-text-primary);
+    color: var(--color-bg);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .cv__button--secondary:hover {
+      border-color: var(--color-text-primary);
+    }
+
+    .cv__button--primary:hover {
+      border-color: var(--color-text-secondary);
+      background-color: var(--color-text-secondary);
+    }
+  }
+
+  .cv__button--secondary[data-force='hover'] {
+    border-color: var(--color-text-primary);
+  }
+
+  .cv__button[data-force='focus'] {
+    outline: var(--focus-ring-width) solid var(--color-accent);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  .cv__button:active {
+    transform: scale(var(--scale-press));
+  }
+
+  /* Textos apilados: el ancho no salta al cambiar de estado */
+  .cv__labels {
+    display: grid;
+    justify-items: center;
+  }
+
+  .cv__label {
+    grid-area: 1 / 1;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    opacity: 0;
+    transition: opacity var(--duration-fast) var(--ease-out);
+  }
+
+  .cv__button[data-state='idle'] .cv__label--idle,
+  .cv__button[data-state='downloading'] .cv__label--downloading,
+  .cv__button[data-state='done'] .cv__label--done {
+    opacity: 1;
+  }
+
+  .cv__label--done {
+    color: inherit;
+  }
+
+  /* Bandeja: la flecha baja --crop-travel (6 px) y cae dentro del filete */
+  .cv__tray {
+    display: grid;
+    justify-items: center;
+    overflow: hidden;
+    border-block-end: var(--crop-mark-width) solid currentColor;
+  }
+
+  .cv__arrow {
+    display: block;
+    transition:
+      transform var(--duration-base) var(--ease-register),
+      opacity var(--duration-base) var(--ease-register);
+  }
+
+  .cv__button[data-state='downloading'] .cv__arrow,
+  .cv__button[data-state='done'] .cv__arrow {
+    opacity: 0;
+    transform: translateY(var(--crop-travel));
+  }
+</style>
+
+<script>
+  import { initCvButtons } from '../scripts/cv';
+
+  document.addEventListener('astro:page-load', initCvButtons);
+</script>

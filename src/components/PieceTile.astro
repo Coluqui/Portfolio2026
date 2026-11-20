@@ -1,0 +1,183 @@
+---
+// Tile de pieza (M01–M04). Proporción real del formato (--ratio-*), pieza contenida sobre
+// --color-stage y etiqueta mono `cliente · formato` siempre visible. Carrusel: ⧉ y
+// "· 7 slides"; en grilla solo se carga la portada (slide 1). La pieza no se mueve: se
+// mueven las marcas de corte y la acción "Ver pieza ↗" (solo con puntero fino).
+// Sin JS es un link (al caso o a la imagen); el visor de la Fase 5 lo intercepta.
+import type { CollectionEntry } from 'astro:content';
+import { Picture } from 'astro:assets';
+import Icon from './Icon.astro';
+import { type Lang, useTranslations } from '../i18n/utils';
+import { pieceImage } from '../lib/piece-images';
+
+type Pieza = CollectionEntry<'casos'>['data']['piezas'][number];
+
+interface Props {
+  lang: Lang;
+  caso: string;
+  cliente: string;
+  pieza: Pieza;
+  href: string;
+  /** Primer viewport (mosaico del hero): carga inmediata y prioridad alta. */
+  priority?: boolean;
+  sizes?: string;
+  /** Solo para /dev/componentes */
+  force?: 'hover' | 'active' | 'focus';
+}
+
+const {
+  lang,
+  caso,
+  cliente,
+  pieza,
+  href,
+  priority = false,
+  sizes = '(min-width: 80rem) 25vw, (min-width: 48rem) 33vw, 50vw',
+  force,
+} = Astro.props;
+const t = useTranslations(lang);
+
+const cover = pieza.slides[0];
+if (!cover) throw new Error(`${caso}/${pieza.slug}: pieza sin slides`);
+const count = pieza.slides.length;
+const isCarousel = count > 1;
+const formato = t(`formats.${pieza.formato}`);
+const action = isCarousel ? t('piece.viewSlides', { n: count }) : t('piece.view');
+---
+
+<a
+  class="tile crop-host"
+  href={href}
+  data-piece={pieza.slug}
+  data-caso={caso}
+  data-force={force}
+  style={`--tile-ratio: var(--ratio-${pieza.ratio})`}
+>
+  <span class="tile__frame">
+    <Picture
+      src={pieceImage(caso, cover.src)}
+      alt={cover.alt[lang]}
+      formats={['avif', 'webp']}
+      widths={[240, 360, 480, 720, 960]}
+      sizes={sizes}
+      loading={priority ? 'eager' : 'lazy'}
+      fetchpriority={priority ? 'high' : 'auto'}
+      decoding={priority ? 'sync' : 'async'}
+      class="tile__img"
+    />
+    <span class="crop-marks" aria-hidden="true">
+      <i></i>
+      <i></i>
+      <i></i>
+      <i></i>
+    </span>
+  </span>
+  <span class="tile__meta">
+    <span class="tile__label label">
+      {cliente} · {formato}
+      {isCarousel && (
+        <>
+          {' '}
+          <Icon name="carousel" />
+          <span>· {t('piece.slides', { n: count })}</span>
+        </>
+      )}
+    </span>
+    <span class="tile__action label" aria-hidden="true">
+      {action} ↗
+    </span>
+  </span>
+</a>
+
+<style>
+  .tile {
+    display: grid;
+    gap: var(--space-3);
+    color: var(--color-text-primary);
+    text-decoration: none;
+    /* El foco suma anillo y marcas: el anillo va por fuera de las marcas */
+    outline-offset: calc(var(--crop-mark-size) + var(--focus-ring-offset));
+  }
+
+  .tile[data-force='focus'] {
+    outline: var(--focus-ring-width) solid var(--color-accent);
+  }
+
+  .tile[data-force='focus'] .crop-marks {
+    --crop-offset: 0px;
+  }
+
+  .tile[data-force='focus'] .crop-marks i {
+    opacity: 1;
+  }
+
+  .tile__frame {
+    position: relative;
+    display: grid;
+    place-items: center;
+    aspect-ratio: var(--tile-ratio);
+    background-color: var(--color-stage);
+  }
+
+  .tile__frame :global(picture) {
+    display: contents;
+  }
+
+  .tile__frame :global(.tile__img) {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: contain;
+  }
+
+  .tile__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-1) var(--space-3);
+  }
+
+  .tile__label {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-1);
+    color: var(--color-text-secondary);
+  }
+
+  /* M02 · la acción aparece y sube 4 px; solo con puntero fino (en táctil, todo el tile se toca) */
+  .tile__action {
+    display: none;
+    color: var(--color-accent-text);
+    opacity: 0;
+    transform: translateY(calc(var(--shift-sm) / 2));
+    transition:
+      opacity var(--duration-instant) var(--ease-in),
+      transform var(--duration-instant) var(--ease-in);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .tile__action {
+      display: inline;
+    }
+
+    .tile:hover .tile__action {
+      opacity: 1;
+      transform: none;
+      transition:
+        opacity var(--duration-fast) var(--ease-out) var(--stagger-fast),
+        transform var(--duration-fast) var(--ease-out) var(--stagger-fast);
+    }
+  }
+
+  .tile:focus-visible .tile__action,
+  .tile[data-force='hover'] .tile__action,
+  .tile[data-force='focus'] .tile__action {
+    display: inline;
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity var(--duration-fast) var(--ease-out) var(--stagger-fast),
+      transform var(--duration-fast) var(--ease-out) var(--stagger-fast);
+  }
+</style>

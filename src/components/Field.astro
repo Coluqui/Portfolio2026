@@ -1,0 +1,203 @@
+---
+// Campo de formulario: label visible, ayuda y error asociados con aria-describedby,
+// error con ícono y texto (no solo color). M35 filete de foco · M36 error sin sacudida.
+import Icon from './Icon.astro';
+import { type Lang, useTranslations } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+  id: string;
+  name: string;
+  label: string;
+  type?: 'text' | 'email' | 'textarea';
+  autocomplete?: string;
+  required?: boolean;
+  /** Muestra "(opcional)" junto al label. */
+  optional?: boolean;
+  hint?: string;
+  /** Mensaje de error ya traducido. */
+  error?: string;
+  value?: string;
+  disabled?: boolean;
+  maxlength?: number;
+  minlength?: number;
+  rows?: number;
+  /** Solo para /dev/componentes */
+  force?: 'focus';
+}
+
+const {
+  lang,
+  id,
+  name,
+  label,
+  type = 'text',
+  autocomplete,
+  required = false,
+  optional = false,
+  hint,
+  error,
+  value,
+  disabled = false,
+  maxlength,
+  minlength,
+  rows = 6,
+  force,
+} = Astro.props;
+const t = useTranslations(lang);
+
+const hintId = `${id}-hint`;
+const errorId = `${id}-error`;
+const describedBy = [hint && hintId, error && errorId].filter(Boolean).join(' ') || undefined;
+const common = {
+  id,
+  name,
+  required,
+  disabled,
+  maxlength,
+  minlength,
+  autocomplete,
+  'aria-describedby': describedBy,
+  'aria-invalid': error ? ('true' as const) : undefined,
+  class: 'field__input',
+};
+---
+
+<div class="field" data-field data-force={force} data-invalid={error ? '' : undefined}>
+  <label class="field__label" for={id}>
+    {label}
+    {optional && <span class="field__optional">({t('form.optional')})</span>}
+  </label>
+  {hint && (
+    <p class="field__hint" id={hintId}>
+      {hint}
+    </p>
+  )}
+  <div class="field__control">
+    {type === 'textarea' ? (
+      <textarea {...common} rows={rows} set:text={value ?? ''} />
+    ) : (
+      <input {...common} type={type} value={value} />
+    )}
+    <span class="field__rule" aria-hidden="true"></span>
+  </div>
+  <p class="field__error" id={errorId} hidden={!error} data-field-error>
+    <Icon name="alert" />
+    <span data-field-error-text>{error}</span>
+  </p>
+</div>
+
+<style>
+  .field {
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .field__label {
+    font-weight: var(--weight-strong);
+  }
+
+  .field__optional {
+    margin-inline-start: var(--space-1);
+    color: var(--color-text-secondary);
+    font-weight: var(--weight-regular);
+  }
+
+  .field__hint {
+    font-size: var(--text-small);
+    line-height: var(--leading-small);
+    color: var(--color-text-secondary);
+  }
+
+  .field__control {
+    position: relative;
+  }
+
+  .field__input {
+    display: block;
+    inline-size: 100%;
+    min-block-size: var(--control-height);
+    padding: var(--space-3);
+    border: 0;
+    border-block-end: var(--border-control);
+    border-radius: var(--radius-xs) var(--radius-xs) 0 0;
+    background-color: var(--color-raised);
+    color: var(--color-text-primary);
+    font-size: var(--text-body);
+    line-height: var(--leading-body);
+  }
+
+  textarea.field__input {
+    resize: vertical;
+  }
+
+  /* El filete de foco reemplaza el anillo dentro del campo (sigue habiendo indicador visible) */
+  .field__input:focus-visible {
+    outline: var(--focus-ring-width) solid transparent;
+  }
+
+  /* M35 · filete inferior en acento que se dibuja de izquierda a derecha */
+  .field__rule {
+    position: absolute;
+    inset-inline: 0;
+    inset-block-end: 0;
+    block-size: var(--focus-ring-width);
+    background-color: var(--color-accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--duration-fast) var(--ease-out);
+  }
+
+  .field__control:focus-within .field__rule,
+  .field[data-force='focus'] .field__rule {
+    transform: scaleX(1);
+  }
+
+  .field[data-invalid] .field__input {
+    border-block-end-color: var(--color-danger);
+  }
+
+  .field[data-invalid] .field__rule {
+    background-color: var(--color-danger);
+  }
+
+  /* M36 · el mensaje baja 4 px y aparece */
+  .field__error {
+    display: flex;
+    gap: var(--space-2);
+    align-items: center;
+    color: var(--color-danger);
+    font-size: var(--text-small);
+    line-height: var(--leading-small);
+    animation: field-error var(--duration-fast) var(--ease-out);
+  }
+
+  .field__error[hidden] {
+    display: none;
+  }
+
+  @keyframes field-error {
+    from {
+      opacity: 0;
+      transform: translateY(calc(var(--shift-sm) / -2));
+    }
+  }
+
+  .field__input:disabled {
+    border-block-end-color: var(--color-border-subtle);
+    background-color: var(--color-surface);
+    color: var(--color-text-disabled);
+    cursor: not-allowed;
+  }
+
+  .field:has(.field__input:disabled) .field__label {
+    color: var(--color-text-disabled);
+  }
+
+  /* M35 reducido: el filete aparece sin dibujarse */
+  @media (prefers-reduced-motion: reduce) {
+    .field__rule {
+      transition: none;
+    }
+  }
+</style>

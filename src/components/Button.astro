@@ -1,0 +1,238 @@
+---
+// Botón o link con forma de botón. <button> para acciones, <a> para navegar (con href).
+// M30 hover · M31 press · M37 enviando (loading). Mantiene el ancho al cambiar el texto.
+import type { HTMLAttributes } from 'astro/types';
+
+type Arrow = 'right' | 'down' | 'up-right';
+
+interface Props extends Omit<HTMLAttributes<'button'>, 'type'> {
+  variant?: 'primary' | 'secondary' | 'ghost';
+  href?: string;
+  type?: 'button' | 'submit';
+  arrow?: Arrow;
+  disabled?: boolean;
+  /** M37: texto de carga; el botón queda deshabilitado y aparece el filete indeterminado. */
+  loading?: boolean;
+  loadingLabel?: string;
+  /** Ocupa todo el ancho disponible. */
+  block?: boolean;
+  /** Solo para /dev/componentes: fuerza la apariencia de un estado. */
+  force?: 'hover' | 'active' | 'focus';
+  download?: string | boolean;
+  target?: string;
+  rel?: string;
+}
+
+const {
+  variant = 'primary',
+  href,
+  type = 'button',
+  arrow,
+  disabled = false,
+  loading = false,
+  loadingLabel,
+  block = false,
+  force,
+  class: className,
+  ...rest
+} = Astro.props;
+
+const glyph = { right: '→', down: '↓', 'up-right': '↗' } as const;
+const classes = ['button', `button--${variant}`, { 'button--block': block }, className];
+const Tag = href && !disabled ? 'a' : 'button';
+---
+
+<Tag
+  class:list={classes}
+  href={Tag === 'a' ? href : undefined}
+  type={Tag === 'button' ? type : undefined}
+  disabled={Tag === 'button' && (disabled || loading) ? true : undefined}
+  aria-disabled={Tag === 'button' && disabled ? 'true' : undefined}
+  aria-busy={loading ? 'true' : undefined}
+  data-loading={loading ? '' : undefined}
+  data-force={force}
+  {...rest}
+>
+  <span class="button__labels">
+    <span class="button__label" aria-hidden={loading ? 'true' : undefined}>
+      <slot />
+    </span>
+    {loadingLabel && (
+      <span class="button__label button__label--loading" aria-hidden={!loading}>
+        {loadingLabel}
+      </span>
+    )}
+  </span>
+  {arrow && (
+    <span class={`button__arrow button__arrow--${arrow}`} aria-hidden="true">
+      {glyph[arrow]}
+    </span>
+  )}
+</Tag>
+
+<style>
+  .button {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    min-block-size: var(--control-height);
+    padding-inline: var(--space-5);
+    overflow: hidden;
+    border: var(--border-control);
+    border-radius: var(--radius-xs);
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    font-weight: var(--weight-strong);
+    line-height: var(--leading-label);
+    text-decoration: none;
+    white-space: nowrap;
+    transition:
+      background-color var(--duration-fast) var(--ease-out),
+      color var(--duration-fast) var(--ease-out),
+      border-color var(--duration-fast) var(--ease-out),
+      transform var(--duration-instant) var(--ease-out);
+  }
+
+  .button--block {
+    inline-size: 100%;
+  }
+
+  .button--primary {
+    border-color: var(--color-text-primary);
+    background-color: var(--color-text-primary);
+    color: var(--color-bg);
+  }
+
+  .button--secondary {
+    background-color: transparent;
+    color: var(--color-text-primary);
+  }
+
+  .button--ghost {
+    border-color: transparent;
+    background-color: transparent;
+    color: var(--color-text-primary);
+    padding-inline: var(--space-3);
+  }
+
+  /* Los textos se apilan en la misma celda: el botón toma el ancho del más largo (M37) */
+  .button__labels {
+    display: grid;
+  }
+
+  .button__label {
+    grid-area: 1 / 1;
+    transition: opacity var(--duration-fast) var(--ease-out);
+  }
+
+  .button__label--loading {
+    opacity: 0;
+  }
+
+  .button[data-loading] .button__label:not(.button__label--loading) {
+    opacity: 0;
+  }
+
+  .button[data-loading] .button__label--loading {
+    opacity: 1;
+  }
+
+  .button__arrow {
+    font-family: var(--font-mono);
+    font-weight: var(--weight-mono);
+    transition: transform var(--duration-fast) var(--ease-out);
+  }
+
+  /* M30 · hover: fondo un tono más alto y la flecha avanza 4 px */
+  @media (hover: hover) and (pointer: fine) {
+    .button--primary:not(:disabled):hover {
+      border-color: var(--color-text-secondary);
+      background-color: var(--color-text-secondary);
+    }
+
+    .button--secondary:not(:disabled):hover,
+    .button--ghost:not(:disabled):hover {
+      border-color: var(--color-text-primary);
+    }
+
+    .button:not(:disabled):hover .button__arrow--right {
+      transform: translateX(calc(var(--shift-sm) / 2));
+    }
+
+    .button:not(:disabled):hover .button__arrow--down {
+      transform: translateY(calc(var(--shift-sm) / 2));
+    }
+
+    .button:not(:disabled):hover .button__arrow--up-right {
+      transform: translate(calc(var(--shift-sm) / 2), calc(var(--shift-sm) / -2));
+    }
+  }
+
+  .button--primary[data-force='hover'] {
+    border-color: var(--color-text-secondary);
+    background-color: var(--color-text-secondary);
+  }
+
+  .button--secondary[data-force='hover'],
+  .button--ghost[data-force='hover'] {
+    border-color: var(--color-text-primary);
+  }
+
+  .button[data-force='hover'] .button__arrow--right {
+    transform: translateX(calc(var(--shift-sm) / 2));
+  }
+
+  /* M31 · press */
+  .button:not(:disabled):active,
+  .button[data-force='active'] {
+    transform: scale(var(--scale-press));
+  }
+
+  .button[data-force='focus'] {
+    outline: var(--focus-ring-width) solid var(--color-accent);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  /* Deshabilitado: texto y borde en disabled; nunca solo por opacidad */
+  .button:disabled:not([data-loading]) {
+    border-color: var(--color-border-subtle);
+    background-color: transparent;
+    color: var(--color-text-disabled);
+    cursor: not-allowed;
+  }
+
+  /* M37 · enviando: filete indeterminado en la base (loop de 1200 ms = slow + page) */
+  .button[data-loading] {
+    cursor: progress;
+  }
+
+  .button[data-loading]::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    inset-block-end: 0;
+    block-size: var(--focus-ring-width);
+    background-color: var(--color-accent);
+    transform-origin: left;
+    animation: button-loading calc(var(--duration-slow) + var(--duration-page)) var(--ease-in-out)
+      infinite;
+  }
+
+  @keyframes button-loading {
+    0% {
+      transform: translateX(-100%) scaleX(0.4);
+    }
+
+    100% {
+      transform: translateX(100%) scaleX(0.4);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .button[data-loading]::after {
+      content: none;
+    }
+  }
+</style>

@@ -1,7 +1,7 @@
 ---
-// Cambio de idioma. Versión base (Fase 1): links a la misma página en el otro idioma,
-// con `lang`/`hreflang` correctos y la preferencia guardada en una cookie (la lee `/`).
-// El diseño final y M24 llegan en la Fase 3.
+// Cambio de idioma (M24). Links a la misma página en el otro idioma con `lang`/`hreflang`;
+// el subrayado viaja de ES a EN al tocar. La preferencia se guarda en una cookie (la lee `/`)
+// y se conserva la sección (hash).
 import { type Lang, languages, localizePath, useTranslations } from '../i18n/utils';
 
 interface Props {
@@ -12,7 +12,7 @@ const { lang } = Astro.props;
 const t = useTranslations(lang);
 ---
 
-<nav class="lang-switch" aria-label={t('lang.label')}>
+<nav class="lang-switch" aria-label={t('lang.label')} data-lang-switch data-active={lang}>
   <ul role="list">
     {languages.map((l) => (
       <li>
@@ -29,9 +29,14 @@ const t = useTranslations(lang);
       </li>
     ))}
   </ul>
+  <span class="indicator" aria-hidden="true"></span>
 </nav>
 
 <style>
+  .lang-switch {
+    position: relative;
+  }
+
   ul {
     display: flex;
     gap: var(--target-gap);
@@ -54,10 +59,27 @@ const t = useTranslations(lang);
 
   a[aria-current='page'] {
     color: var(--color-text-primary);
-    text-decoration: underline;
-    text-decoration-color: var(--color-accent);
-    text-decoration-thickness: var(--focus-ring-width);
-    text-underline-offset: var(--space-1);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    a:hover {
+      color: var(--color-text-primary);
+    }
+  }
+
+  /* Subrayado: un solo elemento que se traslada (M24, 300 ms, in-out) */
+  .indicator {
+    position: absolute;
+    inset-block-end: var(--space-2);
+    inset-inline-start: calc((var(--target-min) - var(--space-4)) / 2);
+    inline-size: var(--space-4);
+    block-size: var(--focus-ring-width);
+    background-color: var(--color-accent);
+    transition: transform var(--duration-base) var(--ease-in-out);
+  }
+
+  .lang-switch[data-active='en'] .indicator {
+    transform: translateX(calc(var(--target-min) + var(--target-gap)));
   }
 </style>
 

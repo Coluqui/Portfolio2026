@@ -1,0 +1,132 @@
+---
+// Footer: nombre y puesto, ubicación, contacto directo, CV y volver arriba.
+// Los datos que faltan se ven como TODO(contenido) (src/lib/contact.ts).
+import CopyEmail from './CopyEmail.astro';
+import CvButton from './CvButton.astro';
+import TextLink from './TextLink.astro';
+import { type Lang, useTranslations } from '../i18n/utils';
+import { contact } from '../lib/contact';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const year = new Date().getFullYear();
+const todo = (what: string) => `TODO(contenido): ${what}`;
+---
+
+<footer class="site-footer">
+  <div class="container footer">
+    <div class="who">
+      <p class="name">{t('meta.siteName')}</p>
+      <p class="muted">{t('meta.role')}</p>
+      <p class="label muted">
+        {t('footer.location')} · {t('footer.remote')}
+      </p>
+    </div>
+
+    <ul class="links" role="list">
+      <li>
+        <CopyEmail lang={lang} />
+      </li>
+      <li>
+        {contact.linkedin ? (
+          <TextLink href={contact.linkedin} lang={lang} external standalone>
+            {t('contact.linkedin')}
+          </TextLink>
+        ) : (
+          <span class="label todo">{todo('URL de LinkedIn')}</span>
+        )}
+      </li>
+      <li>
+        {contact.whatsapp ? (
+          <TextLink href={`https://wa.me/${contact.whatsapp}`} lang={lang} external standalone>
+            {t('contact.whatsapp')}
+          </TextLink>
+        ) : (
+          <span class="label todo">{todo('número de WhatsApp')}</span>
+        )}
+      </li>
+      <li>
+        <CvButton lang={lang} size="full" />
+      </li>
+    </ul>
+
+    <div class="base">
+      <p class="label muted">{t('footer.rights', { year })}</p>
+      <a class="label top" href="#main">
+        {t('footer.backToTop')} <span aria-hidden="true">↑</span>
+      </a>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    margin-block-start: var(--space-section);
+    border-block-start: var(--border-rule);
+  }
+
+  .footer {
+    display: grid;
+    gap: var(--space-6);
+    padding-block: var(--space-7);
+
+    @media (min-width: 48rem) {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .name {
+    font-size: var(--text-h3);
+    font-weight: var(--weight-strong);
+    line-height: var(--leading-h3);
+    letter-spacing: var(--tracking-h3);
+  }
+
+  .muted {
+    color: var(--color-text-secondary);
+  }
+
+  .who {
+    display: grid;
+    gap: var(--space-1);
+  }
+
+  .links {
+    display: grid;
+    gap: var(--space-3);
+    justify-items: start;
+    padding: 0;
+    list-style: none;
+  }
+
+  .todo {
+    color: var(--color-danger);
+  }
+
+  .base {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding-block-start: var(--space-5);
+    border-block-start: var(--border-hairline);
+
+    @media (min-width: 48rem) {
+      grid-column: 1 / -1;
+    }
+  }
+
+  .top {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    min-block-size: var(--target-min);
+    color: var(--color-text-primary);
+    text-decoration: none;
+  }
+</style>

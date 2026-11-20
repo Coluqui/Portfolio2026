@@ -1,0 +1,366 @@
+---
+// Nav numerada 01–05, fija arriba. Desktop (≥1280): links, idioma, modo y CV.
+// Mobile/tablet: idioma + botón de menú (M22); Contacto y CV van en la barra inferior.
+// M20 indicador de sección activa · M21 borde y sombra al scrollear · M22 menú mobile.
+// La nav queda quieta en las navegaciones (transition:name + animate none, ver decisiones T11).
+import CvButton from './CvButton.astro';
+import Icon from './Icon.astro';
+import LangSwitch from './LangSwitch.astro';
+import ThemeToggle from './ThemeToggle.astro';
+import { type Lang, type TranslationKey, useTranslations } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const home = `/${lang}/`;
+
+const sections: { id: string; key: TranslationKey }[] = [
+  { id: 'trabajos', key: 'nav.trabajos' },
+  { id: 'que-hago', key: 'nav.queHago' },
+  { id: 'proceso', key: 'nav.proceso' },
+  { id: 'sobre-mi', key: 'nav.sobreMi' },
+  { id: 'contacto', key: 'nav.contacto' },
+];
+const num = (i: number) => String(i + 1).padStart(2, '0');
+---
+
+<header
+  class="site-header"
+  data-site-header
+  transition:name="site-header"
+  transition:animate="none"
+>
+  <div class="container bar">
+    <a class="brand" href={home} aria-label={t('nav.home')}>
+      <span aria-hidden="true">{t('meta.siteName')}</span>
+    </a>
+
+    <nav class="primary" aria-label={t('a11y.mainNav')} data-nav>
+      <ol role="list">
+        {sections.map((s, i) => (
+          <li>
+            <a href={`${home}#${s.id}`} data-nav-link={s.id}>
+              <span class="num" aria-hidden="true">
+                {num(i)}
+              </span>
+              <span>{t(s.key)}</span>
+            </a>
+          </li>
+        ))}
+      </ol>
+      <span class="active-rule" aria-hidden="true" data-nav-indicator></span>
+    </nav>
+
+    <div class="tools">
+      <LangSwitch lang={lang} />
+      <span class="desktop-only">
+        <ThemeToggle lang={lang} />
+      </span>
+      <span class="desktop-only">
+        <CvButton lang={lang} />
+      </span>
+      <button
+        class="menu-button"
+        type="button"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        data-menu-button
+      >
+        <span class="menu-button__icon" aria-hidden="true">
+          <Icon name="menu" class="menu-button__open" />
+          <Icon name="close" class="menu-button__close" />
+        </span>
+        <span class="visually-hidden" data-menu-label-open>
+          {t('nav.openMenu')}
+        </span>
+        <span class="visually-hidden" data-menu-label-close hidden>
+          {t('nav.closeMenu')}
+        </span>
+      </button>
+    </div>
+  </div>
+
+  <div class="sheet" id="mobile-menu" data-menu data-open="false">
+    <nav class="container sheet__nav" aria-label={t('nav.menu')}>
+      <ol role="list">
+        {sections.map((s, i) => (
+          <li style={`--i: ${i}`}>
+            <a href={`${home}#${s.id}`} data-menu-link>
+              <span class="num" aria-hidden="true">
+                {num(i)}
+              </span>
+              <span>{t(s.key)}</span>
+            </a>
+          </li>
+        ))}
+      </ol>
+      <div class="sheet__tools" style={`--i: ${sections.length}`}>
+        <ThemeToggle lang={lang} showLabel />
+      </div>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: var(--z-nav);
+    padding-block-start: var(--safe-top);
+    background-color: var(--color-bg);
+  }
+
+  /* M21 · al scrollear: borde hairline y sombra flotante, por opacidad de una capa */
+  .site-header::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-block-end: var(--border-hairline);
+    box-shadow: var(--shadow-float);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--duration-fast) var(--ease-out);
+  }
+
+  .site-header[data-scrolled]::after {
+    opacity: 1;
+  }
+
+  .bar {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    min-block-size: var(--nav-height);
+    background-color: var(--color-bg);
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: var(--target-min);
+    color: var(--color-text-primary);
+    font-weight: var(--weight-strong);
+    letter-spacing: var(--tracking-lead);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .num {
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    font-weight: var(--weight-mono);
+    letter-spacing: var(--tracking-label);
+    color: var(--color-text-secondary);
+  }
+
+  /* ---- Desktop ---- */
+  .primary {
+    position: relative;
+    display: none;
+  }
+
+  .primary ol {
+    display: flex;
+    gap: var(--space-5);
+    padding: 0;
+    list-style: none;
+  }
+
+  .primary a {
+    display: inline-flex;
+    align-items: baseline;
+    gap: var(--space-2);
+    min-block-size: var(--target-min);
+    padding-block-start: var(--space-3);
+    color: var(--color-text-primary);
+    font-size: var(--text-small);
+    text-decoration: none;
+  }
+
+  .primary a[aria-current='true'] .num {
+    color: var(--color-accent-text);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .primary a:hover .num {
+      color: var(--color-accent-text);
+    }
+  }
+
+  /* M20 · filete naranja de 2 px que viaja bajo el número activo */
+  .active-rule {
+    position: absolute;
+    inset-block-end: var(--space-1);
+    inset-inline-start: 0;
+    inline-size: var(--space-6);
+    block-size: var(--focus-ring-width);
+    background-color: var(--color-accent);
+    transform-origin: left;
+    opacity: 0;
+    transition:
+      transform var(--duration-base) var(--ease-in-out),
+      opacity var(--duration-fast) var(--ease-out);
+  }
+
+  .active-rule[data-visible] {
+    opacity: 1;
+  }
+
+  .tools {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .desktop-only {
+    display: none;
+  }
+
+  /* ---- Botón de menú (M22: ☰ pasa a ×) ---- */
+  .menu-button {
+    display: inline-grid;
+    place-items: center;
+    min-inline-size: var(--target-min);
+    min-block-size: var(--target-min);
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--color-text-primary);
+    font-size: var(--text-h3);
+  }
+
+  .menu-button__icon {
+    display: grid;
+  }
+
+  .menu-button__icon :global(.icon) {
+    grid-area: 1 / 1;
+    transition:
+      opacity var(--duration-fast) var(--ease-out),
+      transform var(--duration-base) var(--ease-register);
+  }
+
+  .menu-button :global(.menu-button__close) {
+    opacity: 0;
+    transform: rotate(-45deg);
+  }
+
+  .menu-button[aria-expanded='true'] :global(.menu-button__open) {
+    opacity: 0;
+    transform: rotate(45deg);
+  }
+
+  .menu-button[aria-expanded='true'] :global(.menu-button__close) {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* ---- Hoja del menú mobile (M22) ---- */
+  .sheet {
+    position: absolute;
+    inset-inline: 0;
+    inset-block-start: 100%;
+    z-index: -2;
+    max-block-size: calc(var(--viewport-full) - var(--nav-height) - var(--safe-top));
+    overflow-y: auto;
+    padding-block: var(--space-5) var(--space-7);
+    border-block-end: var(--border-hairline);
+    background-color: var(--color-bg);
+    box-shadow: var(--shadow-float);
+    transform: translateY(-100%);
+    visibility: hidden;
+    transition:
+      transform var(--duration-base) var(--ease-register),
+      visibility 0s linear var(--duration-base);
+  }
+
+  .sheet[data-open='true'] {
+    transform: none;
+    visibility: visible;
+    transition:
+      transform var(--duration-base) var(--ease-register),
+      visibility 0s;
+  }
+
+  .sheet__nav ol {
+    display: grid;
+    padding: 0;
+    list-style: none;
+  }
+
+  .sheet__nav li,
+  .sheet__tools {
+    opacity: 0;
+    transform: translateY(calc(var(--shift-sm) * -1));
+    transition:
+      opacity var(--duration-fast) var(--ease-out),
+      transform var(--duration-fast) var(--ease-out);
+  }
+
+  .sheet[data-open='true'] li,
+  .sheet[data-open='true'] .sheet__tools {
+    opacity: 1;
+    transform: none;
+    transition-delay: calc(var(--stagger-fast) * var(--i));
+  }
+
+  .sheet__nav a {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-3);
+    min-block-size: var(--control-height);
+    padding-block: var(--space-2);
+    border-block-end: var(--border-hairline);
+    color: var(--color-text-primary);
+    font-size: var(--text-h3);
+    font-weight: var(--weight-strong);
+    letter-spacing: var(--tracking-h3);
+    text-decoration: none;
+  }
+
+  .sheet__tools {
+    padding-block-start: var(--space-5);
+  }
+
+  /* M22 reducido: fundido de 120 ms, sin desplazamiento */
+  @media (prefers-reduced-motion: reduce) {
+    .sheet {
+      transform: none;
+      opacity: 0;
+      transition:
+        opacity var(--duration-base) var(--ease-out),
+        visibility 0s linear var(--duration-base);
+    }
+
+    .sheet[data-open='true'] {
+      opacity: 1;
+      transition:
+        opacity var(--duration-base) var(--ease-out),
+        visibility 0s;
+    }
+  }
+
+  @media (min-width: 80rem) {
+    .primary,
+    .desktop-only {
+      display: block;
+    }
+
+    .menu-button,
+    .sheet {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  import { initNav } from '../scripts/nav';
+
+  document.addEventListener('astro:page-load', initNav);
+</script>

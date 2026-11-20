@@ -7,7 +7,20 @@
   },
   "a11y": {
     "skipToContent": "Skip to content",
-    "mainNav": "Main navigation"
+    "mainNav": "Main navigation",
+    "quickActions": "Quick actions",
+    "newTab": "(opens in a new tab)"
+  },
+  "nav": {
+    "home": "Franco Colucci, home",
+    "trabajos": "Work",
+    "queHago": "What I do",
+    "proceso": "Process",
+    "sobreMi": "About",
+    "contacto": "Contact",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "menu": "Menu"
   },
   "theme": {
     "toggle": "Dark mode",
@@ -23,11 +36,84 @@
       "en": "EN"
     }
   },
+  "cv": {
+    "label": "CV",
+    "download": "Download CV",
+    "downloading": "Downloading",
+    "done": "CV",
+    "doneAnnounce": "CV downloaded",
+    "fileName": "Franco-Colucci-CV.pdf"
+  },
+  "contact": {
+    "copyEmail": "Copy email",
+    "copied": "Copied",
+    "copiedAnnounce": "Email copied to clipboard",
+    "copyFailed": "Couldn’t copy. The email is {email}",
+    "email": "Email",
+    "linkedin": "LinkedIn",
+    "whatsapp": "WhatsApp"
+  },
+  "piece": {
+    "view": "View piece",
+    "viewSlides": "View {n} slides",
+    "slides": "{n} slides"
+  },
+  "formats": {
+    "carrusel": "Carousel",
+    "posteo": "Post",
+    "story": "Story",
+    "reel": "Reel",
+    "ad": "Ad",
+    "mail": "Email",
+    "ebook": "Ebook",
+    "one-pager": "One-pager",
+    "banner": "Banner",
+    "web": "Web",
+    "portadas": "Covers",
+    "mockup": "Mockup",
+    "identidad": "Branding"
+  },
+  "filters": {
+    "label": "Filter by format",
+    "all": "All",
+    "redes": "Social",
+    "ads": "Ads",
+    "documentos": "Documents",
+    "lanzamientos": "Launches",
+    "showing": "Showing {n} pieces",
+    "showingOne": "Showing 1 piece"
+  },
+  "form": {
+    "name": "Name",
+    "email": "Email",
+    "company": "Company",
+    "message": "Message",
+    "optional": "optional",
+    "messageHint": "Tell me what you need: the role or the project, the timeline and next steps.",
+    "submit": "Send message",
+    "sending": "Sending",
+    "successTitle": "Message sent",
+    "successBody": "Thanks for reaching out. I’ll reply by email.",
+    "errorTitle": "The message couldn’t be sent",
+    "errorBody": "What you wrote is still here. Try again or email me directly at {email}",
+    "retry": "Try again",
+    "errors": {
+      "required": "Fill in this field.",
+      "nameTooLong": "Your name can be up to 100 characters.",
+      "emailInvalid": "Check the email: it should look like name@domain.com.",
+      "messageTooShort": "The message needs at least 10 characters.",
+      "messageTooLong": "The message can be up to 3000 characters.",
+      "noHtml": "Remove the HTML tags from the text."
+    }
+  },
   "home": {
     "name": "Franco Colucci",
     "status": "Site under construction. The work is coming soon."
   },
   "footer": {
-    "location": "Mendoza, Argentina"
+    "location": "Mendoza, Argentina",
+    "remote": "Available for remote work",
+    "backToTop": "Back to top",
+    "rights": "© {year} Franco Colucci"
   }
 }

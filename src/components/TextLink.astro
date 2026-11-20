@@ -1,0 +1,100 @@
+---
+// Link de texto (M32): el subrayado pasa de 1 px a 2 px y a color acento en hover.
+// Externos: flecha ↗ y aviso para lectores de pantalla.
+import type { HTMLAttributes } from 'astro/types';
+import { type Lang, useTranslations } from '../i18n/utils';
+
+interface Props extends HTMLAttributes<'a'> {
+  href: string;
+  lang: Lang;
+  external?: boolean;
+  /** Link suelto (no dentro de un párrafo): objetivo táctil de 44 px. */
+  standalone?: boolean;
+  force?: 'hover' | 'focus';
+}
+
+const {
+  href,
+  lang,
+  external = false,
+  standalone = false,
+  force,
+  class: className,
+  ...rest
+} = Astro.props;
+const t = useTranslations(lang);
+---
+
+<a
+  class:list={['text-link', { 'text-link--standalone': standalone }, className]}
+  href={href}
+  data-force={force}
+  target={external ? '_blank' : undefined}
+  rel={external ? 'noopener noreferrer' : undefined}
+  {...rest}
+>
+  <slot />
+  {external && (
+    <>
+      <span class="text-link__arrow" aria-hidden="true">
+        ↗
+      </span>
+      <span class="visually-hidden">{t('a11y.newTab')}</span>
+    </>
+  )}
+</a>
+
+<style>
+  .text-link {
+    position: relative;
+    color: var(--color-text-primary);
+    text-decoration: none;
+  }
+
+  /* Subrayado dibujado: 2 px de alto, escalado a la mitad (1 px) en reposo */
+  .text-link::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    inset-block-end: calc(var(--space-1) / -2);
+    block-size: var(--focus-ring-width);
+    background-color: currentColor;
+    transform: scaleY(0.5);
+    transform-origin: bottom;
+    transition:
+      transform var(--duration-instant) var(--ease-out),
+      background-color var(--duration-instant) var(--ease-out);
+  }
+
+  .text-link--standalone {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: var(--target-min);
+  }
+
+  .text-link--standalone::after {
+    inset-block-end: var(--space-2);
+  }
+
+  .text-link__arrow {
+    margin-inline-start: var(--space-1);
+    font-family: var(--font-mono);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .text-link:hover::after {
+      background-color: var(--color-accent);
+      transform: scaleY(1);
+    }
+  }
+
+  .text-link[data-force='hover']::after {
+    background-color: var(--color-accent);
+    transform: scaleY(1);
+  }
+
+  .text-link[data-force='focus'] {
+    outline: var(--focus-ring-width) solid var(--color-accent);
+    outline-offset: var(--focus-ring-offset);
+  }
+</style>

@@ -1,0 +1,41 @@
+---
+// Página del sitio: Base + nav numerada + contenido + footer + barra inferior mobile.
+import BottomBar from '../components/BottomBar.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import type { Lang } from '../i18n/utils';
+import Base from './Base.astro';
+
+interface Props {
+  lang: Lang;
+  title?: string;
+  description?: string;
+  noindex?: boolean;
+}
+
+const { lang, title, description, noindex } = Astro.props;
+---
+
+<Base lang={lang} title={title} description={description} noindex={noindex}>
+  <SiteHeader lang={lang} />
+  <main id="main" tabindex="-1">
+    <slot />
+  </main>
+  <SiteFooter lang={lang} />
+  <BottomBar lang={lang} />
+</Base>
+
+<style>
+  main:focus {
+    outline: none;
+  }
+
+  /* Reserva el espacio de la barra inferior fija (hasta 1279 px) */
+  :global(body) {
+    padding-block-end: calc(var(--bottom-bar-height) + var(--safe-bottom));
+
+    @media (min-width: 80rem) {
+      padding-block-end: 0;
+    }
+  }
+</style>

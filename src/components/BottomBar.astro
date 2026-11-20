@@ -1,0 +1,56 @@
+---
+// Barra inferior fija en mobile y tablet (hasta 1279 px): Contacto y CV a un toque.
+// Siempre visible (no se esconde al scrollear) y respeta la safe area.
+import Button from './Button.astro';
+import CvButton from './CvButton.astro';
+import { type Lang, useTranslations } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+  /** Solo para /dev/componentes: se muestra en su lugar del flujo, no fija. */
+  inline?: boolean;
+}
+
+const { lang, inline = false } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<nav
+  class:list={['bottom-bar', { 'bottom-bar--inline': inline }]}
+  aria-label={t('a11y.quickActions')}
+  transition:name={inline ? undefined : 'bottom-bar'}
+  transition:animate="none"
+>
+  <Button href={`/${lang}/#contacto`} variant="primary" block>
+    {t('nav.contacto')}
+  </Button>
+  <CvButton lang={lang} block />
+</nav>
+
+<style>
+  .bottom-bar {
+    position: fixed;
+    inset-inline: 0;
+    inset-block-end: 0;
+    z-index: var(--z-bottom-bar);
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: var(--target-gap);
+    align-items: center;
+    min-block-size: calc(var(--bottom-bar-height) + var(--safe-bottom));
+    padding: var(--space-2) max(var(--grid-margin), var(--safe-right))
+      calc(var(--space-2) + var(--safe-bottom)) max(var(--grid-margin), var(--safe-left));
+    border-block-start: var(--border-hairline);
+    background-color: var(--color-bg);
+  }
+
+  .bottom-bar--inline {
+    position: static;
+  }
+
+  @media (min-width: 80rem) {
+    .bottom-bar:not(.bottom-bar--inline) {
+      display: none;
+    }
+  }
+</style>

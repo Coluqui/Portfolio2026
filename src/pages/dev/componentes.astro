@@ -1,0 +1,414 @@
+---
+// Página interna: todos los componentes con todos sus estados (default, hover, focus,
+// active, disabled, loading, error, éxito). Los estados de hover/focus/active están forzados
+// con `force` para verlos sin interactuar; los componentes de verdad también responden.
+// Las secciones usan los ids de la home para probar el indicador de la nav (M20).
+import { getCollection } from 'astro:content';
+import BottomBar from '../../components/BottomBar.astro';
+import Button from '../../components/Button.astro';
+import CopyEmail from '../../components/CopyEmail.astro';
+import CvButton from '../../components/CvButton.astro';
+import Field from '../../components/Field.astro';
+import FilterChips from '../../components/FilterChips.astro';
+import FormError from '../../components/FormError.astro';
+import FormSuccess from '../../components/FormSuccess.astro';
+import LangSwitch from '../../components/LangSwitch.astro';
+import PieceTile from '../../components/PieceTile.astro';
+import TextLink from '../../components/TextLink.astro';
+import ThemeToggle from '../../components/ThemeToggle.astro';
+import { useTranslations } from '../../i18n/utils';
+import Page from '../../layouts/Page.astro';
+import { filterOptions } from '../../lib/filters';
+
+const lang = 'es';
+const t = useTranslations(lang);
+const casos = await getCollection('casos');
+const allPieces = casos.flatMap((c) => c.data.piezas);
+const find = (caso: string, slug: string) => {
+  const entry = casos.find((c) => c.data.slug === caso);
+  const pieza = entry?.data.piezas.find((p) => p.slug === slug);
+  if (!entry || !pieza) throw new Error(`No existe ${caso}/${slug}`);
+  return { caso, cliente: entry.data.cliente, pieza, href: `#${caso}-${slug}` };
+};
+
+const samples = [
+  find('moondesk', 'nacimos-de-un-error'),
+  find('iscamen', 'mujer-en-la-ciencia'),
+  find('condimento', 'trafico-sin-ventas'),
+  find('moondesk', 'errores-packaging'),
+  find('carpa', 'bonos'),
+  find('carpa', 'oferta-lanzamiento'),
+];
+const stateTile = find('iscamen', 'bioinsumos');
+const options = filterOptions(allPieces, lang);
+const states = ['default', 'hover', 'active', 'focus'] as const;
+---
+
+<Page lang={lang} title="Componentes" noindex>
+  <div class="container page">
+    <header class="top">
+      <p class="label muted">/dev/componentes · Fase 3</p>
+      <h1>Componentes</h1>
+      <p class="muted">
+        Estados forzados para revisar sin interactuar. Probá también con teclado (Tab), en 360 px,
+        en oscuro y con movimiento reducido. La nav de arriba y la barra inferior son las reales.
+      </p>
+    </header>
+
+    <!-- ===== 01 · Piezas y filtros ===== -->
+    <section id="trabajos" aria-labelledby="s-piezas">
+      <h2 id="s-piezas">
+        <span class="num">01</span> Tile de pieza · M01–M04
+      </h2>
+      <p class="muted">
+        Proporción real de cada formato, etiqueta siempre visible, marcas de corte en hover, foco y
+        toque.
+      </p>
+      <ul class="tiles" role="list">
+        {samples.map((s, i) => (
+          <li>
+            <PieceTile lang={lang} {...s} priority={i < 2} />
+            <p class="label muted">--ratio-{s.pieza.ratio}</p>
+          </li>
+        ))}
+      </ul>
+
+      <h3>Estados del tile</h3>
+      <ul class="tiles" role="list">
+        {states.map((state) => (
+          <li>
+            <PieceTile
+              lang={lang}
+              {...stateTile}
+              href={`#estado-${state}`}
+              force={state === 'default' ? undefined : state}
+            />
+            <p class="label muted">{state}</p>
+          </li>
+        ))}
+      </ul>
+
+      <h3>Chips de filtro · M05</h3>
+      <p class="muted">
+        Conteos reales del inventario (un carrusel cuenta 1). Tocá los chips para ver viajar el
+        fondo.
+      </p>
+      <FilterChips lang={lang} options={options} />
+      <div class="row">
+        <FilterChips
+          lang={lang}
+          options={options}
+          active="ads"
+          force={{ id: 'redes', state: 'hover' }}
+        />
+        <p class="label muted">activo: Ads · hover forzado: Redes</p>
+      </div>
+      <div class="row">
+        <FilterChips
+          lang={lang}
+          options={options}
+          active="todo"
+          force={{ id: 'documentos', state: 'focus' }}
+        />
+        <p class="label muted">foco forzado: Documentos</p>
+      </div>
+    </section>
+
+    <!-- ===== 02 · Botones y links ===== -->
+    <section id="que-hago" aria-labelledby="s-botones">
+      <h2 id="s-botones">
+        <span class="num">02</span> Botones · M30, M31, M37
+      </h2>
+      <div class="matrix">
+        {(['primary', 'secondary', 'ghost'] as const).map((variant) => (
+          <div class="matrix__row">
+            <p class="label muted">{variant}</p>
+            <Button variant={variant} arrow="right">
+              Ver trabajos
+            </Button>
+            <Button variant={variant} arrow="right" force="hover">
+              Hover
+            </Button>
+            <Button variant={variant} arrow="right" force="active">
+              Active
+            </Button>
+            <Button variant={variant} arrow="right" force="focus">
+              Focus
+            </Button>
+            <Button variant={variant} disabled>
+              Disabled
+            </Button>
+            <Button variant={variant} loading loadingLabel={t('form.sending')}>
+              {t('form.submit')}
+            </Button>
+          </div>
+        ))}
+      </div>
+      <div class="row">
+        <Button href="#que-hago" variant="secondary" arrow="up-right">
+          Link con forma de botón
+        </Button>
+        <Button variant="primary" arrow="down">
+          Flecha abajo
+        </Button>
+      </div>
+
+      <h3>Links de texto · M32</h3>
+      <div class="row">
+        <TextLink href="#que-hago" lang={lang} standalone>
+          Link interno
+        </TextLink>
+        <TextLink href="#que-hago" lang={lang} standalone force="hover">
+          Hover
+        </TextLink>
+        <TextLink href="#que-hago" lang={lang} standalone force="focus">
+          Focus
+        </TextLink>
+        <TextLink href="https://example.com" lang={lang} external standalone>
+          Externo
+        </TextLink>
+      </div>
+      <p class="prose">
+        Un link dentro de un párrafo usa el estilo base:{' '}
+        <a href="#que-hago">color de acento con subrayado</a> y cambio de tono en hover.
+      </p>
+    </section>
+
+    <!-- ===== 03 · Toggles ===== -->
+    <section id="proceso" aria-labelledby="s-toggles">
+      <h2 id="s-toggles">
+        <span class="num">03</span> Toggles · M23, M24
+      </h2>
+      <div class="row">
+        <ThemeToggle lang={lang} />
+        <ThemeToggle lang={lang} showLabel />
+        <p class="label muted">Cambia el modo de toda la página (fundido cruzado)</p>
+      </div>
+      <div class="row">
+        <LangSwitch lang={lang} />
+        <p class="label muted">
+          Lleva a /en/dev/componentes, que no existe: la página es solo en ES
+        </p>
+      </div>
+
+      <h3>CV · M33</h3>
+      <div class="row">
+        <CvButton lang={lang} />
+        <CvButton lang={lang} force="hover" />
+        <CvButton lang={lang} force="focus" />
+        <CvButton lang={lang} force="downloading" />
+        <CvButton lang={lang} force="done" />
+      </div>
+      <div class="row">
+        <CvButton lang={lang} size="full" variant="primary" />
+        <CvButton lang="en" size="full" />
+        <p class="label muted">EN: todavía no hay CV en inglés; descarga el de español</p>
+      </div>
+
+      <h3>Copiar mail · M34</h3>
+      <div class="row">
+        <CopyEmail lang={lang} email="nombre@ejemplo.com" />
+        <CopyEmail lang={lang} email="nombre@ejemplo.com" force="hover" />
+        <CopyEmail lang={lang} email="nombre@ejemplo.com" force="done" />
+        <CopyEmail lang={lang} email="nombre@ejemplo.com" force="failed" />
+      </div>
+      <div class="row">
+        <CopyEmail lang={lang} />
+        <p class="label muted">Sin mail cargado (estado actual del sitio)</p>
+      </div>
+    </section>
+
+    <!-- ===== 04 · Barra inferior y footer ===== -->
+    <section id="sobre-mi" aria-labelledby="s-barra">
+      <h2 id="s-barra">
+        <span class="num">04</span> Barra inferior y footer
+      </h2>
+      <p class="muted">
+        La barra real está fija abajo hasta 1279 px. Acá, una copia en el flujo para verla en
+        cualquier ancho. El footer real está al final de la página.
+      </p>
+      <div class="frame-demo">
+        <BottomBar lang={lang} inline />
+      </div>
+    </section>
+
+    <!-- ===== 05 · Formulario ===== -->
+    <section id="contacto" aria-labelledby="s-form">
+      <h2 id="s-form">
+        <span class="num">05</span> Campos y estados del formulario · M35–M39
+      </h2>
+      <div class="form-grid">
+        <Field
+          lang={lang}
+          id="f-default"
+          name="name"
+          label={t('form.name')}
+          autocomplete="name"
+          required
+        />
+        <Field
+          lang={lang}
+          id="f-focus"
+          name="email"
+          type="email"
+          label={t('form.email')}
+          force="focus"
+          value="franco@"
+        />
+        <Field
+          lang={lang}
+          id="f-filled"
+          name="company"
+          label={t('form.company')}
+          optional
+          value="Empresa de ejemplo"
+        />
+        <Field
+          lang={lang}
+          id="f-error"
+          name="email-error"
+          type="email"
+          label={t('form.email')}
+          value="franco@correo"
+          error={t('form.errors.emailInvalid')}
+          required
+        />
+        <Field
+          lang={lang}
+          id="f-disabled"
+          name="disabled"
+          label={t('form.name')}
+          value="Deshabilitado"
+          disabled
+        />
+        <Field
+          lang={lang}
+          id="f-message"
+          name="message"
+          type="textarea"
+          label={t('form.message')}
+          hint={t('form.messageHint')}
+          error={t('form.errors.messageTooShort')}
+          value="Hola"
+          required
+        />
+      </div>
+      <div class="row">
+        <Button type="submit" arrow="right" loadingLabel={t('form.sending')}>
+          {t('form.submit')}
+        </Button>
+        <Button type="submit" arrow="right" loading loadingLabel={t('form.sending')}>
+          {t('form.submit')}
+        </Button>
+        <p class="label muted">default · enviando (M37)</p>
+      </div>
+      <h3>Error de envío · M39</h3>
+      <FormError lang={lang} visible email="nombre@ejemplo.com" />
+      <h3>Envío exitoso · M38</h3>
+      <div class="success-demo">
+        <FormSuccess lang={lang} visible />
+      </div>
+    </section>
+  </div>
+</Page>
+
+<style>
+  .page {
+    display: grid;
+  }
+
+  .top {
+    display: grid;
+    gap: var(--space-3);
+    padding-block: var(--space-7) var(--space-5);
+    border-block-end: var(--border-rule);
+  }
+
+  .muted {
+    color: var(--color-text-secondary);
+  }
+
+  section {
+    display: grid;
+    gap: var(--space-5);
+    padding-block: var(--space-8);
+    border-block-end: var(--border-hairline);
+    scroll-margin-block-start: var(--nav-height);
+  }
+
+  h2 {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-3);
+  }
+
+  h3 {
+    margin-block-start: var(--space-5);
+  }
+
+  .num {
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    font-weight: var(--weight-mono);
+    letter-spacing: var(--tracking-label);
+    color: var(--color-accent-text);
+  }
+
+  .tiles {
+    display: grid;
+    grid-template-columns: repeat(var(--pieces-columns), minmax(0, 1fr));
+    gap: var(--space-7) var(--grid-gutter);
+    align-items: start;
+    padding: var(--space-3);
+  }
+
+  .tiles li {
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  .matrix {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .matrix__row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .matrix__row > p {
+    inline-size: var(--space-9);
+  }
+
+  .prose {
+    max-inline-size: var(--measure);
+  }
+
+  .frame-demo {
+    max-inline-size: var(--measure);
+    border: var(--border-hairline);
+  }
+
+  .form-grid {
+    display: grid;
+    gap: var(--space-6) var(--grid-gutter);
+
+    @media (min-width: 48rem) {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .success-demo {
+    padding: var(--space-5);
+  }
+</style>

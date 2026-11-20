@@ -21,8 +21,9 @@ export function isLang(value: unknown): value is Lang {
   return typeof value === 'string' && (languages as readonly string[]).includes(value);
 }
 
+/** Traductor de un idioma. Las variables se escriben `{nombre}` en el JSON. */
 export function useTranslations(lang: Lang) {
-  return function t(key: TranslationKey): string {
+  return function t(key: TranslationKey, vars?: Record<string, string | number>): string {
     let node: unknown = dictionaries[lang];
     for (const part of key.split('.')) {
       node = (node as Record<string, unknown>)[part];
@@ -30,7 +31,10 @@ export function useTranslations(lang: Lang) {
     if (typeof node !== 'string') {
       throw new Error(`i18n: falta la clave "${key}" en ${lang}`);
     }
-    return node;
+    if (!vars) return node;
+    return node.replace(/\{(\w+)\}/g, (match, name: string) =>
+      name in vars ? String(vars[name]) : match,
+    );
   };
 }
 
