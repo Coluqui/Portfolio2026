@@ -1,0 +1,171 @@
+{
+  "slug": "carpa",
+  "cliente": "Carpa",
+  "orden": 4,
+  "portada": "metodo-carpa",
+  "titulo": {
+    "es": "TODO(contenido): nombre del caso carpa",
+    "en": "TODO(contenido): nombre del caso carpa"
+  },
+  "rol": {
+    "es": "TODO(contenido): mi rol",
+    "en": "TODO(contenido): mi rol"
+  },
+  "contexto": {
+    "es": "TODO(contenido): contexto",
+    "en": "TODO(contenido): contexto"
+  },
+  "desafio": {
+    "es": "TODO(contenido): desafío",
+    "en": "TODO(contenido): desafío"
+  },
+  "solucion": {
+    "es": "TODO(contenido): solución",
+    "en": "TODO(contenido): solución"
+  },
+  "resultado": {
+    "es": "TODO(contenido): resultado",
+    "en": "TODO(contenido): resultado"
+  },
+  "metricas": [],
+  "entregables": [],
+  "piezas": [
+    {
+      "slug": "bonos",
+      "formato": "portadas",
+      "ratio": "landing",
+      "titulo": {
+        "es": "Portadas de los bonos del Método Carpa",
+        "en": "Método Carpa bonus covers"
+      },
+      "objetivo": {
+        "es": "TODO(contenido): objetivo en una línea de bonos",
+        "en": "TODO(contenido): objetivo en una línea de bonos"
+      },
+      "slides": [
+        {
+          "src": "carpa-portadas-bonos-01.jpg",
+          "alt": {
+            "es": "Portada del bonus #1 «Tips secretos para brokers», con una camioneta blanca sobre fondo negro y rojo.",
+            "en": "Bonus #1 cover “Secret tips for brokers”, with a white SUV on a black and red background."
+          }
+        },
+        {
+          "src": "carpa-portadas-bonos-02.jpg",
+          "alt": {
+            "es": "Portada del bonus #2 «Títulos y modelos de negocio», con un sedán negro.",
+            "en": "Bonus #2 cover “Titles and business models”, with a black sedan."
+          }
+        },
+        {
+          "src": "carpa-portadas-bonos-03.jpg",
+          "alt": {
+            "es": "Portada del bonus #3 «Acceso exclusivo a la comunidad privada de brokers Carpa», con una camioneta plateada.",
+            "en": "Bonus #3 cover “Exclusive access to the private Carpa brokers community”, with a silver SUV."
+          }
+        },
+        {
+          "src": "carpa-portadas-bonos-04.jpg",
+          "alt": {
+            "es": "Portada del bonus #4 «Sesión grupal de asesoría y preguntas en vivo con expertos», con el equipo de Carpa.",
+            "en": "Bonus #4 cover “Live group Q&A session with experts”, with the Carpa team."
+          }
+        },
+        {
+          "src": "carpa-portadas-bonos-05.jpg",
+          "alt": {
+            "es": "Portada del bonus imperdible «Masterclass exclusiva: impuestos para brokers de autos», con una camioneta gris.",
+            "en": "Must-have bonus cover “Exclusive masterclass: taxes for car brokers”, with a grey SUV."
+          }
+        }
+      ]
+    },
+    {
+      "slug": "oferta-lanzamiento",
+      "formato": "banner",
+      "ratio": "web",
+      "titulo": {
+        "es": "Oferta de lanzamiento",
+        "en": "Launch offer"
+      },
+      "objetivo": {
+        "es": "TODO(contenido): objetivo en una línea de oferta-lanzamiento",
+        "en": "TODO(contenido): objetivo en una línea de oferta-lanzamiento"
+      },
+      "slides": [
+        {
+          "src": "carpa-banner-oferta-lanzamiento.jpg",
+          "alt": {
+            "es": "Banner «Oferta de lanzamiento» con el equipo de Carpa, precio tachado de US$ 2588 y precio de hoy US$ 497.",
+            "en": "“Launch offer” banner with the Carpa team, a crossed-out price of US$2,588 and today’s price of US$497."
+          }
+        }
+      ]
+    },
+    {
+      "slug": "modulos",
+      "formato": "portadas",
+      "ratio": "landing",
+      "titulo": {
+        "es": "Portadas de los módulos del Método Carpa",
+        "en": "Método Carpa module covers"
+      },
+      "objetivo": {
+        "es": "TODO(contenido): objetivo en una línea de modulos",
+        "en": "TODO(contenido): objetivo en una línea de modulos"
+      },
+      "slides": [
+        {
+          "src": "carpa-portadas-modulos-01.jpg",
+          "alt": {
+            "es": "Portada de los módulos 1–5 «Iniciando en el negocio sin cometer errores», con una camioneta blanca.",
+            "en": "Modules 1–5 cover “Starting the business without mistakes”, with a white SUV."
+          }
+        },
+        {
+          "src": "carpa-portadas-modulos-02.jpg",
+          "alt": {
+            "es": "Portada «Compra con inteligencia y sin pagar de más», con un auto deportivo gris.",
+            "en": "“Buy smart without overpaying” cover, with a grey sports car."
+          }
+        },
+        {
+          "src": "carpa-portadas-modulos-03.jpg",
+          "alt": {
+            "es": "Portada «Venta rápida con máximas ganancias», con un auto verde lima.",
+            "en": "“Fast sales with maximum profit” cover, with a lime green car."
+          }
+        },
+        {
+          "src": "carpa-portadas-modulos-04.jpg",
+          "alt": {
+            "es": "Portada de los módulos 26–30 «Documentación, impuestos y escalabilidad», con un muscle car negro.",
+            "en": "Modules 26–30 cover “Paperwork, taxes and scaling”, with a black muscle car."
+          }
+        }
+      ]
+    },
+    {
+      "slug": "metodo-carpa",
+      "formato": "mockup",
+      "ratio": "landing",
+      "titulo": {
+        "es": "Método Carpa",
+        "en": "Método Carpa"
+      },
+      "objetivo": {
+        "es": "TODO(contenido): objetivo en una línea de metodo-carpa",
+        "en": "TODO(contenido): objetivo en una línea de metodo-carpa"
+      },
+      "slides": [
+        {
+          "src": "carpa-mockup-metodo-carpa.jpg",
+          "alt": {
+            "es": "Mockup del Método Carpa: las portadas de módulos y bonos en libros, laptop, tablet y celular, con un sello de garantía de 7 días.",
+            "en": "Método Carpa mockup: module and bonus covers on books, laptop, tablet and phone, with a 7-day guarantee seal."
+          }
+        }
+      ]
+    }
+  ]
+}

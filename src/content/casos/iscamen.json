@@ -1,0 +1,243 @@
+{
+  "slug": "iscamen",
+  "cliente": "ISCAMEN",
+  "orden": 2,
+  "portada": "bioinsumos",
+  "destacado": "bioinsumos",
+  "titulo": {
+    "es": "TODO(contenido): nombre del caso iscamen",
+    "en": "TODO(contenido): nombre del caso iscamen"
+  },
+  "rol": {
+    "es": "TODO(contenido): mi rol",
+    "en": "TODO(contenido): mi rol"
+  },
+  "contexto": {
+    "es": "TODO(contenido): contexto",
+    "en": "TODO(contenido): contexto"
+  },
+  "desafio": {
+    "es": "TODO(contenido): desafío",
+    "en": "TODO(contenido): desafío"
+  },
+  "solucion": {
+    "es": "TODO(contenido): solución",
+    "en": "TODO(contenido): solución"
+  },
+  "resultado": {
+    "es": "TODO(contenido): resultado",
+    "en": "TODO(contenido): resultado"
+  },
+  "metricas": [],
+  "entregables": [],
+  "piezas": [
+    {
+      "slug": "bioinsumos",
+      "formato": "carrusel",
+      "ratio": "carousel",
+      "titulo": {
+        "es": "Bioinsumos de exportación",
+        "en": "Bio-inputs for export"
+      },
+      "objetivo": {
+        "es": "TODO(contenido): objetivo en una línea de bioinsumos",
+        "en": "TODO(contenido): objetivo en una línea de bioinsumos"
+      },
+      "slides": [
+        {
+          "src": "iscamen-carrusel-bioinsumos-01.jpg",
+          "alt": {
+            "es": "Portada en verde de ISCAMEN: «Bioinsumos de exportación», con una caja de envío rotulada para Chile.",
+            "en": "Green ISCAMEN cover: “Bio-inputs for export”, with a shipping box labelled for Chile."
+          }
+        },
+        {
+          "src": "iscamen-carrusel-bioinsumos-02.jpg",
+          "alt": {
+            "es": "Slide sobre la bioplanta multipropósito de producción de insectos estériles y la técnica que la posiciona en Mendoza.",
+            "en": "Slide about the multipurpose sterile-insect bioplant and the technique that positions it in Mendoza."
+          }
+        },
+        {
+          "src": "iscamen-carrusel-bioinsumos-03.jpg",
+          "alt": {
+            "es": "Slide «Mosca del Mediterráneo» con la foto macro del insecto y datos sobre su control en frutales.",
+            "en": "“Mediterranean fruit fly” slide with a macro photo of the insect and facts about its control in orchards."
+          }
+        },
+        {
+          "src": "iscamen-carrusel-bioinsumos-04.jpg",
+          "alt": {
+            "es": "Slide «Mosquito vector del dengue» con la foto del mosquito y el avance de la técnica en salud pública.",
+            "en": "“Dengue vector mosquito” slide with a photo of the mosquito and progress of the technique in public health."
+          }
+        },
+        {
+          "src": "iscamen-carrusel-bioinsumos-05.jpg",
+          "alt": {
+            "es": "Slide «Drosophila suzukii» con la foto de la mosca y el proyecto binacional con Chile.",
+            "en": "“Drosophila suzukii” slide with a photo of the fly and the binational project with Chile."
+          }
+        },
+        {
+          "src": "iscamen-carrusel-bioinsumos-06.jpg",
+          "alt": {
+            "es": "Slide «Tenebrio molitor» con la foto del escarabajo y su uso como bioinsumo proteico.",
+            "en": "“Tenebrio molitor” slide with a photo of the beetle and its use as a protein bio-input."
+          }
+        },
+        {
+          "src": "iscamen-carrusel-bioinsumos-07.jpg",
+          "alt": {
+            "es": "Cierre con los logos de ISCAMEN y del Gobierno de Mendoza.",
+            "en": "Closing slide with the ISCAMEN and Mendoza Government logos."
+          }
+        }
+      ]
+    },
+    {
+      "slug": "huerto-urbano",
+      "formato": "carrusel",
+      "ratio": "carousel",
+      "titulo": {
+        "es": "Ciclo de capacitaciones Huerto urbano",
+        "en": "Urban garden training series"
+      },
+      "objetivo": {
+        "es": "TODO(contenido): objetivo en una línea de huerto-urbano",
+        "en": "TODO(contenido): objetivo en una línea de huerto-urbano"
+      },
+      "slides": [
+        {
+          "src": "iscamen-carrusel-huerto-urbano-01.jpg",
+          "alt": {
+            "es": "Portada del ciclo «Huerto urbano», otoño-invierno, en vivo los martes de mayo, con un cantero de verduras.",
+            "en": "Cover of the “Urban garden” series, autumn-winter, live on Tuesdays in May, with a vegetable bed."
+          }
+        },
+        {
+          "src": "iscamen-carrusel-huerto-urbano-02.jpg",
+          "alt": {
+            "es": "Encuentro #1, 5 de mayo: «Diseño del huerto», con un cantero dividido en cuadrantes.",
+            "en": "Session #1, May 5: “Garden design”, with a raised bed split into squares."
+          }
+        },
+        {
+          "src": "iscamen-carrusel-huerto-urbano-03.jpg",
+          "alt": {
+            "es": "Encuentro #2, 12 de mayo: «Armado de compostaje», con una pila de compost.",
+            "en": "Session #2, May 12: “Building a compost”, with a compost pile."
+          }
+        },
+        {
+          "src": "iscamen-carrusel-huerto-urbano-04.jpg",
+          "alt": {
+            "es": "Encuentro #3, 19 de mayo: «Caldos y purines», con un balde de preparado de hojas.",
+            "en": "Session #3, May 19: “Plant broths and slurries”, with a bucket of leaf preparation."
+          }
+        },
+        {
+          "src": "iscamen-carrusel-huerto-urbano-05.jpg",
+          "alt": {
+            "es": "Encuentro #4, 26 de mayo: «Reconocimiento de insectos», con una vaquita de San Antonio.",
+            "en": "Session #4, May 26: “Insect identification”, with a ladybird."
+          }
+        }
+      ]
+    },
+    {
+      "slug": "dia-del-trabajador",
+      "formato": "story",
+      "ratio": "reel",
+      "titulo": {
+        "es": "Día del Trabajador",
+        "en": "Labour Day"
+      },
+      "objetivo": {
+        "es": "TODO(contenido): objetivo en una línea de dia-del-trabajador",
+        "en": "TODO(contenido): objetivo en una línea de dia-del-trabajador"
+      },
+      "slides": [
+        {
+          "src": "iscamen-story-dia-del-trabajador.jpg",
+          "alt": {
+            "es": "Story del 1 de mayo con una lupa verde formada por íconos agrícolas y el saludo «Feliz Día del Trabajador».",
+            "en": "May 1st story with a green magnifying glass made of farming icons and a “Happy Labour Day” greeting."
+          }
+        }
+      ]
+    },
+    {
+      "slug": "mujer-en-la-ciencia",
+      "formato": "story",
+      "ratio": "reel",
+      "titulo": {
+        "es": "La mujer en la ciencia y la tecnología",
+        "en": "Women in science and technology"
+      },
+      "objetivo": {
+        "es": "TODO(contenido): objetivo en una línea de mujer-en-la-ciencia",
+        "en": "TODO(contenido): objetivo en una línea de mujer-en-la-ciencia"
+      },
+      "slides": [
+        {
+          "src": "iscamen-story-mujer-en-la-ciencia.jpg",
+          "alt": {
+            "es": "Story de la jornada interinstitucional «La mujer en la ciencia y la tecnología», con una investigadora frente al microscopio.",
+            "en": "Story for the inter-institutional event “Women in science and technology”, with a researcher at a microscope."
+          }
+        }
+      ]
+    },
+    {
+      "slug": "citricos",
+      "formato": "carrusel",
+      "ratio": "carousel",
+      "titulo": {
+        "es": "Cosechá tus cítricos",
+        "en": "Harvest your citrus"
+      },
+      "objetivo": {
+        "es": "TODO(contenido): objetivo en una línea de citricos",
+        "en": "TODO(contenido): objetivo en una línea de citricos"
+      },
+      "slides": [
+        {
+          "src": "iscamen-carrusel-citricos-01.jpg",
+          "alt": {
+            "es": "Portada «Cosechá tus cítricos» sobre la foto de una naranja en el árbol.",
+            "en": "“Harvest your citrus” cover over a photo of an orange on the tree."
+          }
+        },
+        {
+          "src": "iscamen-carrusel-citricos-02.jpg",
+          "alt": {
+            "es": "Slide «Mendoza agrícola» con un racimo de uvas y la identidad productiva de la provincia.",
+            "en": "“Agricultural Mendoza” slide with a bunch of grapes and the province’s farming identity."
+          }
+        },
+        {
+          "src": "iscamen-carrusel-citricos-03.jpg",
+          "alt": {
+            "es": "Slide «El puente son los cítricos»: la mosca del Mediterráneo pasa el invierno en la fruta sin cosechar.",
+            "en": "“Citrus is the bridge” slide: the Mediterranean fruit fly spends winter in unpicked fruit."
+          }
+        },
+        {
+          "src": "iscamen-carrusel-citricos-04.jpg",
+          "alt": {
+            "es": "Slide «De la planta al frasco» con un frasco de dulce de naranja y la invitación a un recetario.",
+            "en": "“From plant to jar” slide with a jar of orange marmalade and an invitation to a recipe book."
+          }
+        },
+        {
+          "src": "iscamen-carrusel-citricos-05.jpg",
+          "alt": {
+            "es": "Slide «Más salud» con media naranja y los beneficios nutricionales de los cítricos.",
+            "en": "“Better health” slide with half an orange and the nutritional benefits of citrus."
+          }
+        }
+      ]
+    }
+  ]
+}

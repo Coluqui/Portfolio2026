@@ -1,6 +1,6 @@
 # Inventario de piezas — propuesta (Fase 2)
 
-20 nov 2026 · **Pendiente de tu confirmación.** No se copió nada todavía.
+20 nov 2026 · **Confirmado** con las respuestas por defecto (D5). Piezas copiadas a `src/assets/trabajos/`; revisión en `/dev/inventario`.
 
 - **Fuente:** `C:\Users\FRANCO\Portfolio\dist\proyectos` (solo lectura).
 - **Mapeo:** `scripts/inventario.json`. Es la única fuente: si cambiás un grupo ahí, las hojas, la copia y los JSON salen del mismo archivo.

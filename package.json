@@ -16,7 +16,8 @@
     "format": "prettier --write .",
     "fonts": "python scripts/build-fonts.py",
     "inventario:check": "node scripts/inventario.mjs check",
-    "inventario:sheets": "node scripts/inventario.mjs sheets"
+    "inventario:sheets": "node scripts/inventario.mjs sheets",
+    "pendientes": "node scripts/pendientes.mjs"
   },
   "dependencies": {
     "@astrojs/node": "^11.1.14",

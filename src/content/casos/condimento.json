@@ -1,0 +1,122 @@
+{
+  "slug": "condimento",
+  "cliente": "Condimento",
+  "orden": 3,
+  "portada": "trafico-sin-ventas",
+  "titulo": {
+    "es": "TODO(contenido): nombre del caso condimento",
+    "en": "TODO(contenido): nombre del caso condimento"
+  },
+  "rol": {
+    "es": "TODO(contenido): mi rol",
+    "en": "TODO(contenido): mi rol"
+  },
+  "contexto": {
+    "es": "TODO(contenido): contexto",
+    "en": "TODO(contenido): contexto"
+  },
+  "desafio": {
+    "es": "TODO(contenido): desafío",
+    "en": "TODO(contenido): desafío"
+  },
+  "solucion": {
+    "es": "TODO(contenido): solución",
+    "en": "TODO(contenido): solución"
+  },
+  "resultado": {
+    "es": "TODO(contenido): resultado",
+    "en": "TODO(contenido): resultado"
+  },
+  "metricas": [],
+  "entregables": [],
+  "piezas": [
+    {
+      "slug": "no-funciona",
+      "formato": "ad",
+      "ratio": "square",
+      "titulo": {
+        "es": "No necesitás otra campaña",
+        "en": "You don’t need another campaign"
+      },
+      "objetivo": {
+        "es": "TODO(contenido): objetivo en una línea de no-funciona",
+        "en": "TODO(contenido): objetivo en una línea de no-funciona"
+      },
+      "slides": [
+        {
+          "src": "condimento-ad-no-funciona.jpg",
+          "alt": {
+            "es": "Ad «No necesitás otra campaña. Necesitás entender qué no funciona» sobre un panel de campañas, con el botón «Solicitá tu auditoría gratis».",
+            "en": "Ad “You don’t need another campaign. You need to understand what isn’t working” over a campaign dashboard, with a “Request your free audit” button."
+          }
+        }
+      ]
+    },
+    {
+      "slug": "trafico-sin-ventas",
+      "formato": "ad",
+      "ratio": "square",
+      "titulo": {
+        "es": "¿Tu tienda tiene tráfico, pero no ventas?",
+        "en": "Traffic but no sales?"
+      },
+      "objetivo": {
+        "es": "TODO(contenido): objetivo en una línea de trafico-sin-ventas",
+        "en": "TODO(contenido): objetivo en una línea de trafico-sin-ventas"
+      },
+      "slides": [
+        {
+          "src": "condimento-ad-trafico-sin-ventas.jpg",
+          "alt": {
+            "es": "Ad «¿Tu tienda tiene tráfico, pero no ventas?» con dos tarjetas: 2,2 M visitas y 0 ventas.",
+            "en": "Ad “Does your store get traffic but no sales?” with two cards: 2.2M visits and 0 sales."
+          }
+        }
+      ]
+    },
+    {
+      "slug": "auditoria",
+      "formato": "ad",
+      "ratio": "square",
+      "titulo": {
+        "es": "Necesitás una auditoría, no otra promesa",
+        "en": "You need an audit, not another promise"
+      },
+      "objetivo": {
+        "es": "TODO(contenido): objetivo en una línea de auditoria",
+        "en": "TODO(contenido): objetivo en una línea de auditoria"
+      },
+      "slides": [
+        {
+          "src": "condimento-ad-auditoria.jpg",
+          "alt": {
+            "es": "Ad rojo «Si ya hiciste anuncios y no generaste resultados, necesitás una auditoría, no otra promesa».",
+            "en": "Red ad “If you’ve run ads with no results, you need an audit, not another promise”."
+          }
+        }
+      ]
+    },
+    {
+      "slug": "aplicaciones-de-marca",
+      "formato": "identidad",
+      "ratio": "square",
+      "titulo": {
+        "es": "Aplicaciones de marca",
+        "en": "Brand applications"
+      },
+      "objetivo": {
+        "es": "TODO(contenido): objetivo en una línea de aplicaciones-de-marca",
+        "en": "TODO(contenido): objetivo en una línea de aplicaciones-de-marca"
+      },
+      "slides": [
+        {
+          "src": "condimento-identidad-aplicaciones-de-marca.jpg",
+          "alt": {
+            "es": "Board de marca de Condimento: logo sobre rojo y sobre negro, patrón de ícono y la frase «El toque justo para que tu marca se note».",
+            "en": "Condimento brand board: logo on red and on black, icon pattern and the tagline “Just the right touch for your brand to stand out”."
+          }
+        }
+      ]
+    }
+  ]
+}

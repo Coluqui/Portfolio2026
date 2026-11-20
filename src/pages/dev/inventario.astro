@@ -1,0 +1,158 @@
+---
+// Página interna: revisa el inventario cargado en src/content/casos (piezas, slides,
+// títulos y alt text). Prueba el esquema y el pipeline de imágenes de astro:assets.
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import ThemeToggle from '../../components/ThemeToggle.astro';
+import Base from '../../layouts/Base.astro';
+import { pieceImage } from '../../lib/piece-images';
+
+const casos = (await getCollection('casos')).sort((a, b) => a.data.orden - b.data.orden);
+const totals = casos.reduce(
+  (acc, c) => ({
+    piezas: acc.piezas + c.data.piezas.length,
+    slides: acc.slides + c.data.piezas.reduce((n, p) => n + p.slides.length, 0),
+  }),
+  { piezas: 0, slides: 0 },
+);
+const isTodo = (text: string) => text.startsWith('TODO(contenido)');
+---
+
+<Base lang="es" title="Inventario" noindex>
+  <header class="container top">
+    <div>
+      <p class="label muted">/dev/inventario · src/content/casos</p>
+      <h1>Inventario</h1>
+      <p class="label muted">
+        {casos.length} casos · {totals.piezas} piezas · {totals.slides} slides
+      </p>
+    </div>
+    <ThemeToggle lang="es" />
+  </header>
+
+  <main id="main" class="container">
+    {casos.map(({ data: caso }) => (
+      <section aria-labelledby={`caso-${caso.slug}`}>
+        <h2 id={`caso-${caso.slug}`}>
+          <span class="label muted">0{caso.orden}</span> {caso.cliente}
+        </h2>
+        <p class="label muted">
+          {caso.piezas.length} piezas · portada: {caso.portada ?? '—'} · destacado:{' '}
+          {caso.destacado ?? '—'}
+        </p>
+        <ul class="pieces" role="list">
+          {caso.piezas.map((pieza) => (
+            <li class="piece">
+              <div class="piece__head">
+                <p class="label">
+                  {caso.cliente} · {pieza.formato}
+                  {pieza.slides.length > 1 && ` · ⧉ ${pieza.slides.length} slides`}
+                </p>
+                <h3>{pieza.titulo.es}</h3>
+                <p class="muted">{pieza.titulo.en}</p>
+                <p class="label muted">
+                  ratio --ratio-{pieza.ratio}
+                  {pieza.objetivo && isTodo(pieza.objetivo.es) && ' · objetivo TODO'}
+                </p>
+              </div>
+              <ol class="slides">
+                {pieza.slides.map((slide, i) => (
+                  <li>
+                    <div class="frame" style={`aspect-ratio: var(--ratio-${pieza.ratio})`}>
+                      <Image
+                        src={pieceImage(caso.slug, slide.src)}
+                        alt={slide.alt.es}
+                        widths={[240, 480]}
+                        sizes="240px"
+                        loading={i === 0 ? 'eager' : 'lazy'}
+                      />
+                    </div>
+                    <p class="label muted">{slide.src}</p>
+                    <p class="alt">
+                      <span class="label">ES</span> {slide.alt.es}
+                    </p>
+                    <p class="alt muted">
+                      <span class="label">EN</span> {slide.alt.en}
+                    </p>
+                  </li>
+                ))}
+              </ol>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))}
+  </main>
+</Base>
+
+<style>
+  .top {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding-block: var(--space-7) var(--space-5);
+    border-block-end: var(--border-rule);
+  }
+
+  .muted {
+    color: var(--color-text-secondary);
+  }
+
+  section {
+    display: grid;
+    gap: var(--space-3);
+    padding-block: var(--space-8);
+    border-block-end: var(--border-hairline);
+  }
+
+  .pieces {
+    display: grid;
+    gap: var(--space-7);
+    padding: 0;
+    margin-block-start: var(--space-5);
+  }
+
+  .piece {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .piece__head {
+    display: grid;
+    gap: var(--space-1);
+  }
+
+  .slides {
+    display: flex;
+    gap: var(--space-5);
+    overflow-x: auto;
+    padding: 0 0 var(--space-3);
+    list-style: none;
+    scroll-snap-type: x proximity;
+  }
+
+  .slides li {
+    display: grid;
+    flex: 0 0 15rem;
+    gap: var(--space-2);
+    align-content: start;
+    scroll-snap-align: start;
+  }
+
+  .frame {
+    display: grid;
+    place-items: center;
+    background-color: var(--color-stage);
+  }
+
+  .frame :global(img) {
+    max-block-size: 100%;
+    object-fit: contain;
+  }
+
+  .alt {
+    font-size: var(--text-small);
+    line-height: var(--leading-small);
+  }
+</style>

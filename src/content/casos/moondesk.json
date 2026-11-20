@@ -1,0 +1,311 @@
+{
+  "slug": "moondesk",
+  "cliente": "MoonDesk",
+  "orden": 1,
+  "portada": "nacimos-de-un-error",
+  "destacado": "nacimos-de-un-error",
+  "titulo": {
+    "es": "TODO(contenido): nombre del caso moondesk",
+    "en": "TODO(contenido): nombre del caso moondesk"
+  },
+  "rol": {
+    "es": "TODO(contenido): mi rol",
+    "en": "TODO(contenido): mi rol"
+  },
+  "contexto": {
+    "es": "TODO(contenido): contexto",
+    "en": "TODO(contenido): contexto"
+  },
+  "desafio": {
+    "es": "TODO(contenido): desafío",
+    "en": "TODO(contenido): desafío"
+  },
+  "solucion": {
+    "es": "TODO(contenido): solución",
+    "en": "TODO(contenido): solución"
+  },
+  "resultado": {
+    "es": "TODO(contenido): resultado",
+    "en": "TODO(contenido): resultado"
+  },
+  "metricas": [],
+  "entregables": [],
+  "piezas": [
+    {
+      "slug": "nacimos-de-un-error",
+      "formato": "carrusel",
+      "ratio": "carousel",
+      "titulo": {
+        "es": "Nacimos de un error",
+        "en": "Born from a mistake"
+      },
+      "objetivo": {
+        "es": "TODO(contenido): objetivo en una línea de nacimos-de-un-error",
+        "en": "TODO(contenido): objetivo en una línea de nacimos-de-un-error"
+      },
+      "slides": [
+        {
+          "src": "moondesk-carrusel-nacimos-de-un-error-01.jpg",
+          "alt": {
+            "es": "Portada «Nacimos de un error» con cajas de cartón marcadas con una cruz: un archivo mal enviado a imprenta.",
+            "en": "“Born from a mistake” cover with cardboard boxes marked with an X: a file sent to print by mistake."
+          }
+        },
+        {
+          "src": "moondesk-carrusel-nacimos-de-un-error-02.jpg",
+          "alt": {
+            "es": "Slide «El costo fue alto»: USD 50.000 en pérdidas, 100.000 etiquetas desperdiciadas y puestos de trabajo perdidos.",
+            "en": "“The cost was high” slide: USD 50,000 in losses, 100,000 wasted labels and lost jobs."
+          }
+        },
+        {
+          "src": "moondesk-carrusel-nacimos-de-un-error-03.jpg",
+          "alt": {
+            "es": "Slide «El problema no era el diseño, sino el desorden», con una fila de archivos numerados hasta la versión 12.",
+            "en": "“The problem wasn’t the design, it was the chaos” slide, with a row of files numbered up to version 12."
+          }
+        },
+        {
+          "src": "moondesk-carrusel-nacimos-de-un-error-04.jpg",
+          "alt": {
+            "es": "Slide «De ese error, nació una solución» con la interfaz de MoonDesk y sus indicadores: -50 %, -50 % y +100 %.",
+            "en": "“From that mistake, a solution was born” slide with the MoonDesk interface and its indicators: -50%, -50% and +100%."
+          }
+        },
+        {
+          "src": "moondesk-carrusel-nacimos-de-un-error-05.jpg",
+          "alt": {
+            "es": "Cierre «El caos quedó atrás», con una persona trabajando tranquila y el botón «Agenda una demo».",
+            "en": "“The chaos is behind us” closing slide, with a person working calmly and a “Book a demo” button."
+          }
+        }
+      ]
+    },
+    {
+      "slug": "cambio-normativo",
+      "formato": "posteo",
+      "ratio": "carousel",
+      "titulo": {
+        "es": "Un cambio normativo, veinte artes afectados",
+        "en": "One regulation change, twenty artworks affected"
+      },
+      "objetivo": {
+        "es": "TODO(contenido): objetivo en una línea de cambio-normativo",
+        "en": "TODO(contenido): objetivo en una línea de cambio-normativo"
+      },
+      "slides": [
+        {
+          "src": "moondesk-posteo-cambio-normativo.jpg",
+          "alt": {
+            "es": "Posteo «Un cambio normativo. Veinte artes afectados.» con una persona rodeada de sellos y símbolos regulatorios.",
+            "en": "“One regulation change. Twenty artworks affected.” post with a person surrounded by regulatory seals and symbols."
+          }
+        }
+      ]
+    },
+    {
+      "slug": "dia-de-la-tierra",
+      "formato": "carrusel",
+      "ratio": "carousel",
+      "titulo": {
+        "es": "Día de la Tierra",
+        "en": "Earth Day"
+      },
+      "objetivo": {
+        "es": "TODO(contenido): objetivo en una línea de dia-de-la-tierra",
+        "en": "TODO(contenido): objetivo en una línea de dia-de-la-tierra"
+      },
+      "slides": [
+        {
+          "src": "moondesk-carrusel-dia-de-la-tierra-01.jpg",
+          "alt": {
+            "es": "Portada «Hoy es el Día de la Tierra» con un planeta triste y la pregunta por las etiquetas reimpresas.",
+            "en": "“Today is Earth Day” cover with a sad planet and a question about reprinted labels."
+          }
+        },
+        {
+          "src": "moondesk-carrusel-dia-de-la-tierra-02.jpg",
+          "alt": {
+            "es": "Slide «Un impacto que no se ve»: cada error en un arte aprobado termina en una reimpresión.",
+            "en": "“An impact you don’t see” slide: every error in an approved artwork ends in a reprint."
+          }
+        },
+        {
+          "src": "moondesk-carrusel-dia-de-la-tierra-03.jpg",
+          "alt": {
+            "es": "Slide «Costo real» con la lista de material desperdiciado, tinta, energía y logística, y tres cruces.",
+            "en": "“Real cost” slide listing wasted material, ink, energy and logistics, with three X marks."
+          }
+        },
+        {
+          "src": "moondesk-carrusel-dia-de-la-tierra-04.jpg",
+          "alt": {
+            "es": "Slide «No es un problema de diseño»: la mayoría de los errores son evitables, son fallas de proceso.",
+            "en": "“It’s not a design problem” slide: most errors are avoidable, they are process failures."
+          }
+        },
+        {
+          "src": "moondesk-carrusel-dia-de-la-tierra-05.jpg",
+          "alt": {
+            "es": "Cierre «Menos error, más impacto» con un planeta sonriente.",
+            "en": "“Fewer errors, more impact” closing slide with a smiling planet."
+          }
+        }
+      ]
+    },
+    {
+      "slug": "plataforma",
+      "formato": "one-pager",
+      "ratio": "a4",
+      "titulo": {
+        "es": "One-pager de la plataforma",
+        "en": "Platform one-pager"
+      },
+      "objetivo": {
+        "es": "TODO(contenido): objetivo en una línea de plataforma",
+        "en": "TODO(contenido): objetivo en una línea de plataforma"
+      },
+      "slides": [
+        {
+          "src": "moondesk-one-pager-plataforma.jpg",
+          "alt": {
+            "es": "One-pager de MoonDesk con características, resultados (-50 %, -50 %, +100 %), un testimonio y logos de clientes.",
+            "en": "MoonDesk one-pager with features, results (-50%, -50%, +100%), a testimonial and client logos."
+          }
+        }
+      ]
+    },
+    {
+      "slug": "codigo-qr",
+      "formato": "ebook",
+      "ratio": "a4",
+      "titulo": {
+        "es": "El código se transforma",
+        "en": "The code is changing"
+      },
+      "objetivo": {
+        "es": "TODO(contenido): objetivo en una línea de codigo-qr",
+        "en": "TODO(contenido): objetivo en una línea de codigo-qr"
+      },
+      "slides": [
+        {
+          "src": "moondesk-ebook-codigo-qr.jpg",
+          "alt": {
+            "es": "Portada «El código se transforma. ¿Tu marca está preparada?» con un código QR sobre un envase.",
+            "en": "“The code is changing. Is your brand ready?” cover with a QR code on a package."
+          }
+        }
+      ]
+    },
+    {
+      "slug": "errores-packaging",
+      "formato": "ebook",
+      "ratio": "a4",
+      "titulo": {
+        "es": "Cómo evitar los 5 errores más comunes del packaging",
+        "en": "How to avoid the 5 most common packaging mistakes"
+      },
+      "objetivo": {
+        "es": "TODO(contenido): objetivo en una línea de errores-packaging",
+        "en": "TODO(contenido): objetivo en una línea de errores-packaging"
+      },
+      "slides": [
+        {
+          "src": "moondesk-ebook-errores-packaging.jpg",
+          "alt": {
+            "es": "Portada «Cómo evitar los 5 errores más comunes del packaging» con una lata roja de ejemplo.",
+            "en": "“How to avoid the 5 most common packaging mistakes” cover with a sample red can."
+          }
+        }
+      ]
+    },
+    {
+      "slug": "feria-envase-2025",
+      "formato": "posteo",
+      "ratio": "carousel",
+      "titulo": {
+        "es": "Feria Envase 2025",
+        "en": "Envase 2025 trade fair"
+      },
+      "objetivo": {
+        "es": "TODO(contenido): objetivo en una línea de feria-envase-2025",
+        "en": "TODO(contenido): objetivo en una línea de feria-envase-2025"
+      },
+      "slides": [
+        {
+          "src": "moondesk-posteo-feria-envase-2025.jpg",
+          "alt": {
+            "es": "Posteo «Visitanos en la feria Envase 2025», pabellón 5, stand 509, con una línea de producción ilustrada.",
+            "en": "“Visit us at Envase 2025” post, hall 5, stand 509, with an illustrated production line."
+          }
+        }
+      ]
+    },
+    {
+      "slug": "retrabajos",
+      "formato": "posteo",
+      "ratio": "carousel",
+      "titulo": {
+        "es": "¿Qué generó más retrabajos este año?",
+        "en": "What caused the most rework this year?"
+      },
+      "objetivo": {
+        "es": "TODO(contenido): objetivo en una línea de retrabajos",
+        "en": "TODO(contenido): objetivo en una línea de retrabajos"
+      },
+      "slides": [
+        {
+          "src": "moondesk-posteo-retrabajos.jpg",
+          "alt": {
+            "es": "Posteo con la pregunta «¿Qué generó más retrabajos este año?» en un globo de diálogo sobre una persona pensativa.",
+            "en": "Post asking “What caused the most rework this year?” in a speech bubble above a thoughtful person."
+          }
+        }
+      ]
+    },
+    {
+      "slug": "testimonio",
+      "formato": "story",
+      "ratio": "reel",
+      "titulo": {
+        "es": "Testimonio",
+        "en": "Testimonial"
+      },
+      "objetivo": {
+        "es": "TODO(contenido): objetivo en una línea de testimonio",
+        "en": "TODO(contenido): objetivo en una línea de testimonio"
+      },
+      "slides": [
+        {
+          "src": "moondesk-story-testimonio.jpg",
+          "alt": {
+            "es": "Story de testimonio: un diseñador industrial con la cita «Si volviera al pasado me recomendaría MoonDesk».",
+            "en": "Testimonial story: an industrial designer with the quote “If I went back in time I’d recommend MoonDesk to myself”."
+          }
+        }
+      ]
+    },
+    {
+      "slug": "validaciones",
+      "formato": "posteo",
+      "ratio": "carousel",
+      "titulo": {
+        "es": "Validaciones que tardan segundos",
+        "en": "Approvals in seconds"
+      },
+      "objetivo": {
+        "es": "TODO(contenido): objetivo en una línea de validaciones",
+        "en": "TODO(contenido): objetivo en una línea de validaciones"
+      },
+      "slides": [
+        {
+          "src": "moondesk-posteo-validaciones.jpg",
+          "alt": {
+            "es": "Posteo «Validaciones que tardan días… con MoonDesk tardan segundos» con un arte aprobado y personas validando.",
+            "en": "“Approvals that take days… take seconds with MoonDesk” post with an approved artwork and people signing off."
+          }
+        }
+      ]
+    }
+  ]
+}
