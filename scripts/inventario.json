@@ -1,0 +1,229 @@
+{
+  "$comentario": "Mapeo de piezas originales → piezas del sitio. Fuente única para scripts/inventario.mjs (hojas de contacto y copia). 'grupo' = una pieza; 'files' en orden de publicación. 'confianza' alta/media/baja y 'pregunta' marcan lo que Franco tiene que confirmar.",
+  "source": "C:/Users/FRANCO/Portfolio/dist/proyectos",
+  "meta": {
+    "moondesk": {
+      "cliente": "MoonDesk",
+      "orden": 1,
+      "portada": "nacimos-de-un-error",
+      "destacado": "nacimos-de-un-error"
+    },
+    "iscamen": {
+      "cliente": "ISCAMEN",
+      "orden": 2,
+      "portada": "bioinsumos",
+      "destacado": "bioinsumos"
+    },
+    "condimento": { "cliente": "Condimento", "orden": 3, "portada": "trafico-sin-ventas" },
+    "carpa": { "cliente": "Carpa", "orden": 4, "portada": "metodo-carpa" }
+  },
+  "casos": {
+    "iscamen": [
+      {
+        "id": "A",
+        "formato": "carrusel",
+        "tema": "bioinsumos",
+        "ratio": "carousel",
+        "files": ["01.jpg", "02.jpg", "03.jpg", "04.jpg", "05.jpg", "06.jpg", "07.jpg"],
+        "confianza": "alta",
+        "nota": "Portada «Bioinsumos de exportación», 5 slides de especies y cierre con logos ISCAMEN + Mendoza."
+      },
+      {
+        "id": "B",
+        "formato": "carrusel",
+        "tema": "huerto-urbano",
+        "ratio": "carousel",
+        "files": ["08.jpg", "09.jpg", "10.jpg", "11.jpg", "12.jpg"],
+        "confianza": "media",
+        "pregunta": "¿Se publicó como un carrusel o como 5 posteos (uno por encuentro, con fechas 05, 12, 19 y 26 de mayo)? Si fueron posteos, quedan como 5 piezas sueltas (D4)."
+      },
+      {
+        "id": "C",
+        "formato": "story",
+        "tema": "dia-del-trabajador",
+        "ratio": "reel",
+        "files": ["13.jpg"],
+        "confianza": "alta"
+      },
+      {
+        "id": "D",
+        "formato": "story",
+        "tema": "mujer-en-la-ciencia",
+        "ratio": "reel",
+        "files": ["14.jpg"],
+        "confianza": "alta"
+      },
+      {
+        "id": "E",
+        "formato": "carrusel",
+        "tema": "citricos",
+        "ratio": "carousel",
+        "files": ["15.jpg", "16.jpg", "17.jpg", "18.jpg", "19.jpg"],
+        "confianza": "media",
+        "pregunta": "Leo una sola narrativa (portada con logos y «Te explico…»). ¿Es un carrusel de 5 y en este orden?"
+      }
+    ],
+    "moondesk": [
+      {
+        "id": "A",
+        "formato": "carrusel",
+        "tema": "nacimos-de-un-error",
+        "ratio": "carousel",
+        "files": ["01.jpg", "02.jpg", "03.jpg", "04.jpg", "05.jpg"],
+        "confianza": "alta",
+        "nota": "Historia del error de imprenta → solución → CTA «Agenda una demo»."
+      },
+      {
+        "id": "B",
+        "formato": "posteo",
+        "tema": "cambio-normativo",
+        "ratio": "carousel",
+        "files": ["06.jpg"],
+        "confianza": "media",
+        "pregunta": "¿«Un cambio normativo. Veinte artes afectados» es un posteo suelto o el slide 6 del carrusel anterior?"
+      },
+      {
+        "id": "C",
+        "formato": "carrusel",
+        "tema": "dia-de-la-tierra",
+        "ratio": "carousel",
+        "files": ["07.jpg", "08.jpg", "09.jpg", "10.jpg", "11.jpg"],
+        "confianza": "alta"
+      },
+      {
+        "id": "D",
+        "formato": "one-pager",
+        "tema": "plataforma",
+        "ratio": "a4",
+        "files": ["12.jpg"],
+        "confianza": "media",
+        "pregunta": "¿Es un one-pager comercial (PDF/impreso)?"
+      },
+      {
+        "id": "E",
+        "formato": "ebook",
+        "tema": "codigo-qr",
+        "ratio": "a4",
+        "files": ["13.jpg"],
+        "confianza": "baja",
+        "pregunta": "«El código se transforma»: ¿portada de ebook, flyer o lead magnet? ¿Tenés las páginas interiores?"
+      },
+      {
+        "id": "F",
+        "formato": "ebook",
+        "tema": "errores-packaging",
+        "ratio": "a4",
+        "files": ["14.jpg"],
+        "confianza": "baja",
+        "pregunta": "«Cómo evitar los 5 errores del packaging»: ¿portada de ebook? ¿Tenés las páginas interiores?"
+      },
+      {
+        "id": "G",
+        "formato": "posteo",
+        "tema": "feria-envase-2025",
+        "ratio": "carousel",
+        "files": ["15.jpg"],
+        "confianza": "alta"
+      },
+      {
+        "id": "H",
+        "formato": "posteo",
+        "tema": "retrabajos",
+        "ratio": "carousel",
+        "files": ["16.jpg"],
+        "confianza": "media",
+        "pregunta": "¿«¿Qué generó más retrabajos este año?» es un posteo suelto o la portada de un carrusel cuyos otros slides no están?"
+      },
+      {
+        "id": "I",
+        "formato": "story",
+        "tema": "testimonio",
+        "ratio": "reel",
+        "files": ["17.jpg"],
+        "confianza": "alta"
+      },
+      {
+        "id": "J",
+        "formato": "posteo",
+        "tema": "validaciones",
+        "ratio": "carousel",
+        "files": ["18.jpg"],
+        "confianza": "alta"
+      }
+    ],
+    "carpa": [
+      {
+        "id": "A",
+        "formato": "portadas",
+        "tema": "bonos",
+        "ratio": "landing",
+        "files": ["01.jpg", "02.jpg", "03.jpg", "04.jpg", "05.jpg"],
+        "confianza": "baja",
+        "pregunta": "No es un carrusel: son 5 portadas de bonos del curso (el mockup 11 las muestra como libros). ¿Las agrupo como una pieza «set de 5 portadas» (excepción a D4) o van sueltas? ¿Dónde se usaron (landing, plataforma del curso)?"
+      },
+      {
+        "id": "B",
+        "formato": "banner",
+        "tema": "oferta-lanzamiento",
+        "ratio": "web",
+        "files": ["06.jpg"],
+        "confianza": "media",
+        "pregunta": "835×451: ¿banner de la landing? Va en marco web 16:10, contenido sobre stage."
+      },
+      {
+        "id": "C",
+        "formato": "portadas",
+        "tema": "modulos",
+        "ratio": "landing",
+        "files": ["07.jpg", "08.jpg", "09.jpg", "10.jpg"],
+        "confianza": "baja",
+        "pregunta": "Igual que A: 4 portadas de módulos (1–5, 6–?, …, 26–30). ¿Agrupadas o sueltas?"
+      },
+      {
+        "id": "D",
+        "formato": "mockup",
+        "tema": "metodo-carpa",
+        "ratio": "landing",
+        "files": ["11.jpg"],
+        "confianza": "alta",
+        "nota": "Mockup del producto completo. Candidato a portada del caso."
+      }
+    ],
+    "condimento": [
+      {
+        "id": "A",
+        "formato": "ad",
+        "tema": "no-funciona",
+        "ratio": "square",
+        "files": ["01.jpg"],
+        "confianza": "alta",
+        "nota": "Set de 3 ads «auditoría gratis» (A–C): sueltos por D4."
+      },
+      {
+        "id": "B",
+        "formato": "ad",
+        "tema": "trafico-sin-ventas",
+        "ratio": "square",
+        "files": ["02.jpg"],
+        "confianza": "alta"
+      },
+      {
+        "id": "C",
+        "formato": "ad",
+        "tema": "auditoria",
+        "ratio": "square",
+        "files": ["03.jpg"],
+        "confianza": "alta"
+      },
+      {
+        "id": "D",
+        "formato": "identidad",
+        "tema": "aplicaciones-de-marca",
+        "ratio": "square",
+        "files": ["04.jpg"],
+        "confianza": "media",
+        "pregunta": "1504×1545: board de aplicaciones de marca. ¿Diseñaste vos la identidad de Condimento o solo las piezas?"
+      }
+    ]
+  }
+}
