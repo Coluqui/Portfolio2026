@@ -1,0 +1,68 @@
+---
+// Cambio de idioma. Versión base (Fase 1): links a la misma página en el otro idioma,
+// con `lang`/`hreflang` correctos y la preferencia guardada en una cookie (la lee `/`).
+// El diseño final y M24 llegan en la Fase 3.
+import { type Lang, languages, localizePath, useTranslations } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<nav class="lang-switch" aria-label={t('lang.label')}>
+  <ul role="list">
+    {languages.map((l) => (
+      <li>
+        <a
+          href={localizePath(Astro.url.pathname, l)}
+          hreflang={l}
+          lang={l}
+          aria-current={l === lang ? 'page' : undefined}
+          data-lang-link={l}
+        >
+          <span aria-hidden="true">{t(`lang.short.${l}`)}</span>
+          <span class="visually-hidden">{t(`lang.${l}`)}</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</nav>
+
+<style>
+  ul {
+    display: flex;
+    gap: var(--target-gap);
+    padding: 0;
+    list-style: none;
+  }
+
+  a {
+    display: inline-grid;
+    place-items: center;
+    min-inline-size: var(--target-min);
+    min-block-size: var(--target-min);
+    color: var(--color-text-secondary);
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    font-weight: var(--weight-mono);
+    letter-spacing: var(--tracking-label);
+    text-decoration: none;
+  }
+
+  a[aria-current='page'] {
+    color: var(--color-text-primary);
+    text-decoration: underline;
+    text-decoration-color: var(--color-accent);
+    text-decoration-thickness: var(--focus-ring-width);
+    text-underline-offset: var(--space-1);
+  }
+</style>
+
+<script>
+  import { initLangSwitch } from '../scripts/lang';
+
+  document.addEventListener('astro:page-load', initLangSwitch);
+</script>

@@ -1,0 +1,112 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import '../styles/tokens.css';
+import '../styles/fonts.css';
+import '../styles/base.css';
+import { type Lang, languages, localizePath, useTranslations } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+  /** Título propio de la página; sin él se usa "Franco Colucci — puesto". */
+  title?: string;
+  description?: string;
+  /** Páginas internas (/dev/…) no se indexan ni tienen alternativas de idioma. */
+  noindex?: boolean;
+}
+
+const { lang, title, description, noindex = false } = Astro.props;
+const t = useTranslations(lang);
+
+const siteName = t('meta.siteName');
+const fullTitle = title ? `${title} — ${siteName}` : `${siteName} — ${t('meta.role')}`;
+const metaDescription = description ?? t('meta.description');
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const isLocalized = /^\/(es|en)(\/|$)/.test(Astro.url.pathname);
+const alternates = isLocalized
+  ? languages.map((l) => ({
+      lang: l,
+      href: new URL(localizePath(Astro.url.pathname, l), Astro.site).href,
+    }))
+  : [];
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={metaDescription} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    {!noindex && <link rel="canonical" href={canonical} />}
+    {!noindex &&
+      alternates.map((alt) => <link rel="alternate" hreflang={alt.lang} href={alt.href} />)}
+    {!noindex && isLocalized && (
+      <link rel="alternate" hreflang="x-default" href={new URL('/', Astro.site).href} />
+    )}
+    {!noindex && <link rel="sitemap" href="/sitemap-index.xml" />}
+
+    <!-- Tema: el mismo valor que --color-bg de cada modo en tokens.css -->
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#F3F1EB" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#161513" media="(prefers-color-scheme: dark)" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={metaDescription} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={t('meta.ogLocale')} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={metaDescription} />
+
+    <link
+      rel="preload"
+      href="/fonts/instrument-sans-400.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/instrument-sans-600.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+    <!-- Tema sin parpadeo: aplica la preferencia guardada antes del primer paint
+         y en cada navegación del ClientRouter (antes del swap). -->
+    <script is:inline>
+      (() => {
+        const read = () => {
+          try {
+            const value = localStorage.getItem('theme');
+            return value === 'light' || value === 'dark' ? value : null;
+          } catch {
+            return null;
+          }
+        };
+        const apply = (doc) => {
+          const theme = read();
+          if (theme) doc.documentElement.dataset.theme = theme;
+        };
+        apply(document);
+        if (!window.__themeSwapHook) {
+          window.__themeSwapHook = true;
+          document.addEventListener('astro:before-swap', (event) => apply(event.newDocument));
+        }
+      })();
+    </script>
+
+    <ClientRouter />
+    <slot name="head" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">
+      {t('a11y.skipToContent')}
+    </a>
+    <slot />
+  </body>
+</html>

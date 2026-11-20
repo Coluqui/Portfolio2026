@@ -1,0 +1,33 @@
+{
+  "meta": {
+    "siteName": "Franco Colucci",
+    "role": "Diseñador gráfico y digital",
+    "description": "Diseñador gráfico y digital en Mendoza, Argentina. Piezas de redes, ads de performance, mails, ebooks y webs que comunican claro y rinden.",
+    "ogLocale": "es_AR"
+  },
+  "a11y": {
+    "skipToContent": "Saltar al contenido",
+    "mainNav": "Navegación principal"
+  },
+  "theme": {
+    "toggle": "Modo oscuro",
+    "light": "Claro",
+    "dark": "Oscuro"
+  },
+  "lang": {
+    "label": "Idioma",
+    "es": "Español",
+    "en": "English",
+    "short": {
+      "es": "ES",
+      "en": "EN"
+    }
+  },
+  "home": {
+    "name": "Franco Colucci",
+    "status": "Sitio en construcción. Pronto, el trabajo."
+  },
+  "footer": {
+    "location": "Mendoza, Argentina"
+  }
+}

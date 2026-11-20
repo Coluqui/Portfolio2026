@@ -1,0 +1,41 @@
+---
+// Toggle de modo claro/oscuro. Versión base (Fase 1): estado anunciado con aria-pressed.
+// El diseño final y M23 (fundido cruzado con View Transition) llegan en la Fase 3.
+import { type Lang, useTranslations } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const t = useTranslations(Astro.props.lang);
+---
+
+<button class="theme-toggle" type="button" aria-pressed="false" data-theme-toggle>
+  <span aria-hidden="true" class="theme-toggle__icon">
+    ◐
+  </span>
+  <span>{t('theme.toggle')}</span>
+</button>
+
+<style>
+  .theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-block-size: var(--target-min);
+    padding-inline: var(--space-3);
+    border: var(--border-control);
+    border-radius: var(--radius-xs);
+    background-color: transparent;
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    font-weight: var(--weight-mono);
+    letter-spacing: var(--tracking-label);
+  }
+</style>
+
+<script>
+  import { initThemeToggle } from '../scripts/theme';
+
+  document.addEventListener('astro:page-load', initThemeToggle);
+</script>

@@ -1,0 +1,261 @@
+/* ==========================================================================
+   Portfolio Franco Colucci — Design tokens · "Ficha de producción"
+   v1.2 · 2026-11-20 (motion · Etapa 6) + D3 (ratios A4 y landing, Fase 1)
+   Modo: <html data-theme="light|dark">. Sin atributo, sigue al sistema.
+   Fuentes: Instrument Sans (400, 600) + Geist Mono (400, 500) — self-hosted (D1).
+   ========================================================================== */
+
+:root {
+  /* ---- Paleta base (no usar directo en componentes) ---- */
+  --paper-50: #FBFAF7;
+  --paper-100: #F3F1EB;
+  --paper-200: #EAE7DF;
+  --paper-300: #E4E0D6;
+  --paper-400: #D6D1C6;
+  --ink-50: #EEEBE4;
+  --ink-300: #A19D94;
+  --ink-500: #7F7A70;
+  --ink-700: #5F5C55;
+  --ink-900: #1A1917;
+  --ink-950: #161513;
+  --signal-300: #FF9873;
+  --signal-400: #FF7A50;
+  --signal-500: #FF6A3D;
+  --signal-600: #D9431A;
+  --signal-700: #B23412;
+  --signal-800: #962A0E;
+  --green-300: #8FC2AB;
+  --green-700: #2E5A47;
+  --crimson-300: #FF8A94;
+  --crimson-700: #A11D33;
+
+  /* ---- Color semántico · modo claro ---- */
+  --color-bg: var(--paper-100);
+  --color-surface: var(--paper-200);
+  --color-stage: var(--paper-300);
+  --color-raised: var(--paper-50);
+  --color-text-primary: var(--ink-900);
+  --color-text-secondary: var(--ink-700);
+  --color-text-disabled: #77736A;
+  --color-border-subtle: var(--paper-400);
+  --color-border-strong: var(--ink-500);
+  --color-rule: var(--ink-900);
+  --color-accent: var(--signal-600);
+  --color-accent-text: var(--signal-700);
+  --color-accent-text-hover: var(--signal-800);
+  --color-success: var(--green-700);
+  --color-success-bg: #DCE6DF;
+  --color-danger: var(--crimson-700);
+  --color-danger-bg: #F5E0E0;
+  --color-scrim: rgb(26 25 23 / 0.92);
+  --shadow-mockup: 0 24px 48px -16px rgb(26 25 23 / 0.18);
+  --shadow-float: 0 8px 24px rgb(26 25 23 / 0.10);
+  color-scheme: light;
+
+  /* ---- Tipografía ---- */
+  --font-sans: "Instrument Sans", "Instrument Sans Fallback", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono", "Geist Mono Fallback", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  --text-display: clamp(2.5rem, 1.5rem + 4.444vw, 5.5rem);
+  --text-h1: clamp(2rem, 1.333rem + 2.963vw, 4rem);
+  --text-h2: clamp(1.75rem, 1.375rem + 1.667vw, 2.875rem);
+  --text-h3: clamp(1.25rem, 1.125rem + 0.556vw, 1.625rem);
+  --text-lead: clamp(1.125rem, 1.042rem + 0.37vw, 1.375rem);
+  --text-body: clamp(1rem, 0.958rem + 0.185vw, 1.0625rem);
+  --text-small: 0.875rem;
+  --text-metric: clamp(2.5rem, 2.083rem + 1.852vw, 3.5rem);
+  --text-label: clamp(0.75rem, 0.729rem + 0.093vw, 0.8125rem);
+
+  --leading-display: 0.95;
+  --leading-h1: 1;
+  --leading-h2: 1.05;
+  --leading-h3: 1.15;
+  --leading-lead: 1.45;
+  --leading-body: 1.6;
+  --leading-small: 1.5;
+  --leading-label: 1.4;
+
+  --tracking-display: -0.04em;
+  --tracking-h1: -0.035em;
+  --tracking-h2: -0.03em;
+  --tracking-h3: -0.02em;
+  --tracking-lead: -0.01em;
+  --tracking-body: 0;
+  --tracking-label: 0.02em;
+
+  --weight-regular: 400;
+  --weight-strong: 600;  /* Instrument Sans */
+  --weight-mono: 500;    /* Geist Mono */
+
+  --measure: 64ch;
+
+  /* ---- Espaciado (base 4 px) ---- */
+  --space-1: 0.25rem;  /*  4 */
+  --space-2: 0.5rem;   /*  8 */
+  --space-3: 0.75rem;  /* 12 */
+  --space-4: 1rem;     /* 16 */
+  --space-5: 1.5rem;   /* 24 */
+  --space-6: 2rem;     /* 32 */
+  --space-7: 3rem;     /* 48 */
+  --space-8: 4rem;     /* 64 */
+  --space-9: 6rem;     /* 96 */
+  --space-section: clamp(4rem, 2.667rem + 5.926vw, 8rem);
+
+  /* ---- Grilla (mobile-first; ver media queries abajo) ---- */
+  --grid-columns: 4;
+  --grid-margin: 1.25rem;  /* 20 */
+  --grid-gutter: 1rem;     /* 16 */
+  --container-max: 82rem;  /* 1312 */
+
+  /* ---- Proporciones por formato ---- */
+  --ratio-carousel: 4 / 5;
+  --ratio-reel: 9 / 16;
+  --ratio-square: 1 / 1;
+  --ratio-mail-header: 3 / 1;
+  --ratio-ebook: 3 / 4;
+  --ratio-ad-mrec: 6 / 5;
+  --ratio-ad-leaderboard: 8 / 1;
+  --ratio-web: 16 / 10;
+  --ratio-a4: 1 / 1.414;        /* D3 · one-pagers y flyers A4 (MoonDesk) */
+  --ratio-landing: 6 / 7;       /* D3 · gráficas de landing 1374×1600 (Carpa) */
+
+  /* ---- Radios y bordes ---- */
+  --radius-none: 0;
+  --radius-xs: 2px;
+  --radius-device-phone: 28px;
+  --radius-device-browser: 10px;
+  --radius-full: 999px;
+  --border-hairline: 1px solid var(--color-border-subtle);
+  --border-control: 1px solid var(--color-border-strong);
+  --border-rule: 3px solid var(--color-rule);
+  --focus-ring-width: 2px;
+  --focus-ring-offset: 2px;
+  --crop-mark-size: 12px;
+  --crop-mark-width: 1.5px;
+
+  /* ---- Tamaños de control ---- */
+  --control-height: 3rem;   /* 48 */
+  --target-min: 2.75rem;    /* 44 */
+  --target-gap: 0.5rem;     /* 8: separación mínima entre objetivos táctiles */
+
+  /* ---- Layout responsive (valores base = 360 px) ---- */
+  --pieces-columns: 2;          /* grilla de piezas y mosaico */
+  --nav-height: 3.5rem;         /* 56 */
+  --bottom-bar-height: 4rem;    /* 64, más safe area */
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+  --viewport-full: 100dvh;
+
+  /* ---- Capas ---- */
+  --z-nav: 100;
+  --z-bottom-bar: 100;
+  --z-toast: 200;
+  --z-viewer: 300;
+
+  /* ---- Motion ---- */
+  --duration-instant: 100ms;
+  --duration-fast: 200ms;
+  --duration-base: 300ms;
+  --duration-slow: 500ms;
+  --duration-page: 700ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in: cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-register: cubic-bezier(0.2, 0.9, 0.1, 1);
+  /* Rebote de ~4 %: solo pulgar de toggles e indicador del filtro activo */
+  --ease-spring: linear(0, 0.18 6%, 0.6 16%, 0.9 26%, 1.03 36%, 1.045 42%, 1.03 52%, 1.005 66%, 0.998 80%, 1);
+  --stagger: 60ms;
+  --stagger-fast: 40ms;         /* menú mobile, chips, reordenamiento de filtros */
+  --crop-travel: 6px;           /* recorrido de las marcas de corte hasta su lugar (M01) */
+  --delay-chrome: 200ms;        /* controles del visor y textos del caso tras el elemento compartido */
+  --hold-feedback: 1800ms;      /* "Copiado ✓", "CV ✓" antes de volver */
+  --stagger-max-items: 6;
+  --shift-sm: 8px;
+  --shift-md: 16px;
+  --scale-hover: 1.03;          /* solo botones y controles; las piezas no escalan (principio 1) */
+  --scale-press: 0.98;
+}
+
+/* ---- Modo oscuro (diseñado, no invertido) ---- */
+:root[data-theme="dark"] {
+  --color-bg: var(--ink-950);
+  --color-surface: #1F1D1A;
+  --color-stage: #272521;
+  --color-raised: #2B2925;
+  --color-text-primary: var(--ink-50);
+  --color-text-secondary: var(--ink-300);
+  --color-text-disabled: #86827A;
+  --color-border-subtle: #34312C;
+  --color-border-strong: #76726A;
+  --color-rule: var(--ink-50);
+  --color-accent: var(--signal-500);
+  --color-accent-text: var(--signal-400);
+  --color-accent-text-hover: var(--signal-300);
+  --color-success: var(--green-300);
+  --color-success-bg: #1E2C25;
+  --color-danger: var(--crimson-300);
+  --color-danger-bg: #33191C;
+  --color-scrim: rgb(10 10 9 / 0.94);
+  --shadow-mockup: 0 24px 48px -16px rgb(0 0 0 / 0.55);
+  --shadow-float: 0 0 0 1px var(--color-border-subtle), 0 8px 24px rgb(0 0 0 / 0.45);
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-bg: var(--ink-950);
+    --color-surface: #1F1D1A;
+    --color-stage: #272521;
+    --color-raised: #2B2925;
+    --color-text-primary: var(--ink-50);
+    --color-text-secondary: var(--ink-300);
+    --color-text-disabled: #86827A;
+    --color-border-subtle: #34312C;
+    --color-border-strong: #76726A;
+    --color-rule: var(--ink-50);
+    --color-accent: var(--signal-500);
+    --color-accent-text: var(--signal-400);
+    --color-accent-text-hover: var(--signal-300);
+    --color-success: var(--green-300);
+    --color-success-bg: #1E2C25;
+    --color-danger: var(--crimson-300);
+    --color-danger-bg: #33191C;
+    --color-scrim: rgb(10 10 9 / 0.94);
+    --shadow-mockup: 0 24px 48px -16px rgb(0 0 0 / 0.55);
+    --shadow-float: 0 0 0 1px var(--color-border-subtle), 0 8px 24px rgb(0 0 0 / 0.45);
+    color-scheme: dark;
+  }
+}
+
+/* ---- Grilla por breakpoint ---- */
+/* Breakpoints: md 48rem (768) · lg 80rem (1280) · xl 90rem (1440).
+   Hover solo en @media (hover: hover) and (pointer: fine). */
+@media (min-width: 48rem) {      /* 768 */
+  :root { --grid-columns: 8; --grid-margin: 2rem; --grid-gutter: 1.25rem; --pieces-columns: 3; }
+}
+@media (min-width: 80rem) {      /* 1280 */
+  :root { --grid-columns: 12; --grid-margin: 3rem; --grid-gutter: 1.5rem; --pieces-columns: 4; --nav-height: 4.5rem; }
+}
+@media (min-width: 90rem) {      /* 1440 */
+  :root { --grid-margin: 4rem; }
+}
+
+/* ---- Movimiento reducido ---- */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-fast: 0ms;
+    --duration-base: 120ms;
+    --duration-slow: 120ms;
+    --duration-page: 120ms;
+    --stagger: 0ms;
+    --stagger-fast: 0ms;
+    --crop-travel: 0px;
+    --delay-chrome: 0ms;
+    --shift-sm: 0px;
+    --shift-md: 0px;
+    --scale-hover: 1;
+    --scale-press: 1;
+  }
+}

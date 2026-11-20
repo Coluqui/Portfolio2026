@@ -1,0 +1,33 @@
+{
+  "meta": {
+    "siteName": "Franco Colucci",
+    "role": "Graphic & Digital Designer",
+    "description": "Graphic and digital designer based in Mendoza, Argentina. Social content, performance ads, emails, ebooks and websites that communicate clearly and perform.",
+    "ogLocale": "en_US"
+  },
+  "a11y": {
+    "skipToContent": "Skip to content",
+    "mainNav": "Main navigation"
+  },
+  "theme": {
+    "toggle": "Dark mode",
+    "light": "Light",
+    "dark": "Dark"
+  },
+  "lang": {
+    "label": "Language",
+    "es": "Español",
+    "en": "English",
+    "short": {
+      "es": "ES",
+      "en": "EN"
+    }
+  },
+  "home": {
+    "name": "Franco Colucci",
+    "status": "Site under construction. The work is coming soon."
+  },
+  "footer": {
+    "location": "Mendoza, Argentina"
+  }
+}

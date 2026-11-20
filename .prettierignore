@@ -1,0 +1,12 @@
+dist/
+.astro/
+.vercel/
+node_modules/
+public/
+design-system/
+docs/
+.claude/
+CLAUDE.md
+PROMPT-INICIO.md
+package-lock.json
+src/styles/tokens.css

@@ -1,0 +1,19 @@
+---
+// `/` redirige al idioma: primero la preferencia guardada (cookie `lang`),
+// después Accept-Language, y si no hay coincidencia, español.
+import { isLang, pickLang } from '../i18n/utils';
+
+export const prerender = false;
+
+const saved = Astro.cookies.get('lang')?.value;
+const lang = isLang(saved) ? saved : pickLang(Astro.request.headers.get('accept-language'));
+
+return new Response(null, {
+  status: 302,
+  headers: {
+    Location: `/${lang}/`,
+    Vary: 'Accept-Language, Cookie',
+    'Cache-Control': 'private, no-store',
+  },
+});
+---

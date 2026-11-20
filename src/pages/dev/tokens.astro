@@ -1,0 +1,799 @@
+---
+// Página interna: muestra los tokens de design-system/tokens.css (v1.2 + D3).
+// No se indexa ni va al sitemap. Textos en español: es una herramienta de desarrollo.
+import ThemeToggle from '../../components/ThemeToggle.astro';
+import {
+  contrast,
+  contrastBackgrounds,
+  contrastText,
+  contrastUi,
+  dark,
+  light,
+  paletteColors,
+  reduced,
+  resolve,
+  semanticColors,
+  tokensWithPrefix,
+} from '../../dev/tokens-data';
+import Base from '../../layouts/Base.astro';
+
+const modes = [
+  { name: 'Claro', map: light },
+  { name: 'Oscuro', map: dark },
+] as const;
+
+const typeScale = ['display', 'h1', 'h2', 'h3', 'lead', 'body', 'small', 'metric', 'label'].map(
+  (step) => ({
+    step,
+    size: `--text-${step}`,
+    leading: `--leading-${step}`,
+    tracking: `--tracking-${step}`,
+    mono: step === 'metric' || step === 'label',
+  }),
+);
+
+const spaces = tokensWithPrefix(light, '--space-');
+const ratios = tokensWithPrefix(light, '--ratio-');
+const radii = tokensWithPrefix(light, '--radius-');
+const durations = tokensWithPrefix(light, '--duration-');
+const easings = tokensWithPrefix(light, '--ease-');
+const motionMisc = [
+  '--stagger',
+  '--stagger-fast',
+  '--crop-travel',
+  '--delay-chrome',
+  '--hold-feedback',
+  '--shift-sm',
+  '--shift-md',
+  '--scale-hover',
+  '--scale-press',
+];
+const layout = [
+  '--grid-columns',
+  '--grid-margin',
+  '--grid-gutter',
+  '--container-max',
+  '--pieces-columns',
+  '--nav-height',
+  '--bottom-bar-height',
+  '--control-height',
+  '--target-min',
+  '--target-gap',
+];
+
+const fmt = (n: number | null) => (n === null ? '—' : n.toFixed(2));
+const short = (token: string) => token.replace('--color-', '');
+---
+
+<Base lang="es" title="Tokens" noindex>
+  <header class="container top">
+    <div>
+      <p class="label muted">/dev/tokens · design-system/tokens.css v1.2 + D3</p>
+      <h1>Tokens</h1>
+    </div>
+    <ThemeToggle lang="es" />
+  </header>
+
+  <main id="main" class="container">
+    <nav class="toc label" aria-label="Secciones">
+      <a href="#color">Color</a>
+      <a href="#contraste">Contraste</a>
+      <a href="#tipografia">Tipografía</a>
+      <a href="#espaciado">Espaciado</a>
+      <a href="#layout">Layout</a>
+      <a href="#ratios">Proporciones</a>
+      <a href="#bordes">Radios y bordes</a>
+      <a href="#motion">Motion</a>
+    </nav>
+
+    <!-- ===== Color ===== -->
+    <section id="color" aria-labelledby="color-title">
+      <h2 id="color-title">Color semántico</h2>
+      <p class="muted">
+        La columna "Ahora" usa la variable en vivo (cambia con el toggle). Las columnas Claro y
+        Oscuro muestran el valor de cada modo leído de tokens.css.
+      </p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Token</th>
+              <th scope="col">Ahora</th>
+              <th scope="col">Claro</th>
+              <th scope="col">Oscuro</th>
+            </tr>
+          </thead>
+          <tbody>
+            {semanticColors.map((token) => (
+              <tr>
+                <th scope="row" class="label">
+                  {token}
+                </th>
+                <td>
+                  <span class="swatch" style={`background: var(${token})`} />
+                  <span class="label muted" data-live={token} />
+                </td>
+                {modes.map(({ map }) => {
+                  const value = resolve(map, map.get(token) ?? '');
+                  return (
+                    <td>
+                      <span class="swatch" style={`background: ${value}`} />
+                      <span class="label muted">{value}</span>
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <h3>
+        Paleta base <span class="label muted">(no usar en componentes)</span>
+      </h3>
+      <ul class="palette" role="list">
+        {paletteColors.map((token) => (
+          <li>
+            <span class="swatch swatch--lg" style={`background: ${light.get(token)}`} />
+            <span class="label">{token}</span>
+            <span class="label muted">{light.get(token)}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <!-- ===== Contraste ===== -->
+    <section id="contraste" aria-labelledby="contraste-title">
+      <h2 id="contraste-title">Contraste (WCAG 2.2)</h2>
+      <p class="muted">
+        Texto ≥ 4,5:1 · componentes y bordes ≥ 3:1. <code>text-disabled</code> está exento (WCAG
+        1.4.3). Calculado desde los valores de tokens.css.
+      </p>
+      <div class="modes">
+        {modes.map(({ name, map }) => (
+          <div class="table-wrap">
+            <table>
+              <caption class="label">{name}</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Sobre →</th>
+                  {contrastBackgrounds.map((bg) => (
+                    <th scope="col" class="label">
+                      {short(bg)}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {[...contrastText, ...contrastUi].map((fg) => {
+                  const min = contrastUi.includes(fg) ? 3 : 4.5;
+                  const exempt = fg === '--color-text-disabled';
+                  return (
+                    <tr>
+                      <th scope="row" class="label">
+                        {short(fg)}
+                        {contrastUi.includes(fg) ? ' (3:1)' : ''}
+                      </th>
+                      {contrastBackgrounds.map((bg) => {
+                        const ratio = contrast(map, fg, bg);
+                        const ok = ratio !== null && ratio >= min;
+                        return (
+                          <td class:list={['label', { fail: !ok && !exempt }]}>
+                            {fmt(ratio)} {exempt ? '·' : ok ? '✓' : '✗'}
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- ===== Tipografía ===== -->
+    <section id="tipografia" aria-labelledby="tipo-title">
+      <h2 id="tipo-title">Tipografía</h2>
+      <p class="muted">
+        Instrument Sans 400/600 para lectura · Geist Mono 400/500 para metadatos, numeración y
+        métricas. Escala fluida de 360 a 1440 px.
+      </p>
+      <ul class="type" role="list">
+        {typeScale.map(({ step, size, leading, tracking, mono }) => (
+          <li>
+            <p class="label muted">
+              {size} · <span data-live={size} /> · {leading} · {tracking}
+            </p>
+            <p
+              class:list={['specimen', { 'specimen--mono': mono }]}
+              style={`font-size: var(${size}); line-height: var(${leading}); letter-spacing: var(${tracking});`}
+            >
+              {step === 'metric'
+                ? '-50 %'
+                : step === 'label'
+                  ? 'ISCAMEN · CARRUSEL · 7 SLIDES'
+                  : 'Diseñador gráfico y digital'}
+            </p>
+          </li>
+        ))}
+      </ul>
+      <div class="weights">
+        <p style="font-weight: var(--weight-regular)">
+          Instrument Sans 400 — Piezas que comunican claro
+        </p>
+        <p style="font-weight: var(--weight-strong)">
+          Instrument Sans 600 — Piezas que comunican claro
+        </p>
+        <p class="specimen--mono" style="font-weight: var(--weight-regular)">
+          Geist Mono 400 — 01 02 03 04 05 ← → ↗ ⧉ ✓
+        </p>
+        <p class="specimen--mono" style="font-weight: var(--weight-mono)">
+          Geist Mono 500 — Pieza 03 / 12 · Slide 4 / 7
+        </p>
+      </div>
+    </section>
+
+    <!-- ===== Espaciado ===== -->
+    <section id="espaciado" aria-labelledby="espaciado-title">
+      <h2 id="espaciado-title">
+        Espaciado <span class="label muted">base 4 px</span>
+      </h2>
+      <ul class="spaces" role="list">
+        {[...spaces, '--space-section']
+          .filter((v, i, a) => a.indexOf(v) === i)
+          .map((token) => (
+            <li>
+              <span class="label">{token}</span>
+              <span class="bar" style={`inline-size: var(${token})`} />
+              <span class="label muted" data-live={token} />
+            </li>
+          ))}
+      </ul>
+    </section>
+
+    <!-- ===== Layout ===== -->
+    <section id="layout" aria-labelledby="layout-title">
+      <h2 id="layout-title">Layout y grilla</h2>
+      <p class="muted">Valores en vivo para el ancho actual (breakpoints 768 · 1280 · 1440).</p>
+      <div class="grid-demo" aria-hidden="true">
+        {Array.from({ length: 12 }, (_, i) => (
+          <span class="grid-demo__col">{i + 1}</span>
+        ))}
+      </div>
+      <dl class="values">
+        {layout.map((token) => (
+          <div>
+            <dt class="label">{token}</dt>
+            <dd class="label muted" data-live={token} />
+          </div>
+        ))}
+      </dl>
+    </section>
+
+    <!-- ===== Proporciones ===== -->
+    <section id="ratios" aria-labelledby="ratios-title">
+      <h2 id="ratios-title">Proporciones por formato</h2>
+      <ul class="ratios" role="list">
+        {ratios.map((token) => (
+          <li>
+            <span class="ratio-box" style={`aspect-ratio: var(${token})`} />
+            <span class="label">{token}</span>
+            <span class="label muted">{light.get(token)}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <!-- ===== Radios y bordes ===== -->
+    <section id="bordes" aria-labelledby="bordes-title">
+      <h2 id="bordes-title">Radios, bordes y foco</h2>
+      <ul class="radii" role="list">
+        {radii.map((token) => (
+          <li>
+            <span class="radius-box" style={`border-radius: var(${token})`} />
+            <span class="label">{token}</span>
+            <span class="label muted">{light.get(token)}</span>
+          </li>
+        ))}
+      </ul>
+      <div class="borders">
+        <div style="border-block-end: var(--border-hairline)">
+          <span class="label">--border-hairline</span>
+        </div>
+        <div style="border-block-end: var(--border-control)">
+          <span class="label">--border-control</span>
+        </div>
+        <div style="border-block-end: var(--border-rule)">
+          <span class="label">--border-rule</span>
+        </div>
+      </div>
+      <p class="muted">
+        Marcas de corte (M01): pasá el mouse o tabulá sobre el tile. El anillo de foco usa
+        <code>--focus-ring-width</code> y <code>--focus-ring-offset</code>.
+      </p>
+      <a class="crop-demo" href="#bordes">
+        <span class="crop-demo__piece" />
+        <span class="crop" aria-hidden="true">
+          <i></i>
+          <i></i>
+          <i></i>
+          <i></i>
+        </span>
+        <span class="label">cliente · formato</span>
+      </a>
+    </section>
+
+    <!-- ===== Motion ===== -->
+    <section id="motion" aria-labelledby="motion-title">
+      <h2 id="motion-title">Motion</h2>
+      <p class="muted">
+        Valores en vivo: con <code>prefers-reduced-motion</code> activo cambian solos (entre
+        paréntesis, el valor reducido de tokens.css).
+      </p>
+      <button class="play" type="button" aria-pressed="false" data-play>
+        Reproducir curvas
+      </button>
+
+      <h3>
+        Curvas <span class="label muted">(con --duration-slow)</span>
+      </h3>
+      <ul class="tracks" role="list">
+        {easings.map((token) => (
+          <li>
+            <span class="label">{token}</span>
+            <span class="track">
+              <span
+                class="dot"
+                style={`transition-timing-function: var(${token}); transition-duration: var(--duration-slow)`}
+              />
+            </span>
+          </li>
+        ))}
+      </ul>
+
+      <h3>
+        Duraciones <span class="label muted">(con --ease-register)</span>
+      </h3>
+      <ul class="tracks" role="list">
+        {durations.map((token) => (
+          <li>
+            <span class="label">
+              {token} · <span data-live={token} />
+              {reduced.has(token) && ` (${reduced.get(token)})`}
+            </span>
+            <span class="track">
+              <span
+                class="dot"
+                style={`transition-timing-function: var(--ease-register); transition-duration: var(${token})`}
+              />
+            </span>
+          </li>
+        ))}
+      </ul>
+
+      <h3>Otros</h3>
+      <dl class="values">
+        {motionMisc.map((token) => (
+          <div>
+            <dt class="label">{token}</dt>
+            <dd class="label muted">
+              <span data-live={token} />
+              {reduced.has(token) && ` (${reduced.get(token)})`}
+            </dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+  </main>
+</Base>
+
+<style>
+  .top {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding-block: var(--space-7) var(--space-5);
+    border-block-end: var(--border-rule);
+  }
+
+  .muted {
+    color: var(--color-text-secondary);
+  }
+
+  .toc {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-4);
+    padding-block: var(--space-4);
+  }
+
+  section {
+    display: grid;
+    gap: var(--space-4);
+    padding-block: var(--space-8);
+    border-block-end: var(--border-hairline);
+  }
+
+  h3 {
+    margin-block-start: var(--space-5);
+  }
+
+  code {
+    font-family: var(--font-mono);
+    font-size: var(--text-small);
+  }
+
+  .table-wrap {
+    overflow-x: auto;
+  }
+
+  table {
+    inline-size: 100%;
+    border-collapse: collapse;
+    font-size: var(--text-small);
+  }
+
+  caption {
+    padding-block: var(--space-2);
+    text-align: start;
+  }
+
+  th,
+  td {
+    padding: var(--space-2) var(--space-3);
+    border-block-end: var(--border-hairline);
+    text-align: start;
+    white-space: nowrap;
+  }
+
+  td .swatch {
+    margin-inline-end: var(--space-2);
+    vertical-align: middle;
+  }
+
+  .fail {
+    color: var(--color-danger);
+  }
+
+  .modes {
+    display: grid;
+    gap: var(--space-6);
+
+    @media (min-width: 80rem) {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .swatch {
+    display: inline-block;
+    inline-size: var(--space-6);
+    block-size: var(--space-6);
+    border: var(--border-hairline);
+  }
+
+  .swatch--lg {
+    display: block;
+    inline-size: 100%;
+    block-size: var(--space-8);
+  }
+
+  .palette,
+  .ratios,
+  .radii {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 9rem), 1fr));
+    gap: var(--space-4);
+    padding: 0;
+  }
+
+  .palette li,
+  .ratios li,
+  .radii li {
+    display: grid;
+    gap: var(--space-1);
+    align-content: start;
+  }
+
+  .type {
+    display: grid;
+    gap: var(--space-5);
+    padding: 0;
+  }
+
+  .specimen {
+    font-weight: var(--weight-strong);
+    overflow-wrap: anywhere;
+  }
+
+  .specimen--mono {
+    font-family: var(--font-mono);
+    font-weight: var(--weight-mono);
+  }
+
+  .weights {
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .spaces {
+    display: grid;
+    gap: var(--space-2);
+    padding: 0;
+  }
+
+  .spaces li {
+    display: grid;
+    grid-template-columns: 9rem auto 1fr;
+    gap: var(--space-4);
+    align-items: center;
+  }
+
+  .bar {
+    display: block;
+    block-size: var(--space-4);
+    background-color: var(--color-accent);
+  }
+
+  .grid-demo {
+    display: grid;
+    grid-template-columns: repeat(var(--grid-columns), 1fr);
+    gap: var(--grid-gutter);
+  }
+
+  .grid-demo__col {
+    padding-block: var(--space-5);
+    background-color: var(--color-surface);
+    color: var(--color-text-secondary);
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    text-align: center;
+  }
+
+  .grid-demo__col:nth-child(n + 5) {
+    display: none;
+
+    @media (min-width: 48rem) {
+      display: block;
+    }
+  }
+
+  .grid-demo__col:nth-child(n + 9) {
+    @media (min-width: 48rem) {
+      display: none;
+    }
+
+    @media (min-width: 80rem) {
+      display: block;
+    }
+  }
+
+  .values {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr));
+    gap: var(--space-3) var(--space-5);
+  }
+
+  .values div {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-2);
+    padding-block-end: var(--space-2);
+    border-block-end: var(--border-hairline);
+  }
+
+  .values dd {
+    margin: 0;
+  }
+
+  .ratio-box {
+    display: block;
+    inline-size: 100%;
+    background-color: var(--color-stage);
+    border: var(--border-hairline);
+  }
+
+  .radius-box {
+    display: block;
+    block-size: var(--space-8);
+    background-color: var(--color-stage);
+    border: var(--border-control);
+  }
+
+  .borders {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .borders div {
+    padding-block-end: var(--space-2);
+  }
+
+  /* Demo de marcas de corte (M01 / M01b). El componente real llega en la Fase 3. */
+  .crop-demo {
+    position: relative;
+    display: grid;
+    gap: var(--space-3);
+    inline-size: min(100%, 16rem);
+    color: var(--color-text-secondary);
+    text-decoration: none;
+  }
+
+  .crop-demo:focus-visible {
+    outline-offset: calc(var(--crop-mark-size) + var(--focus-ring-offset));
+  }
+
+  .crop-demo__piece {
+    display: block;
+    aspect-ratio: var(--ratio-carousel);
+    background-color: var(--color-stage);
+  }
+
+  .crop {
+    position: absolute;
+    inset: 0 0 auto;
+    aspect-ratio: var(--ratio-carousel);
+    pointer-events: none;
+  }
+
+  .crop i {
+    position: absolute;
+    inline-size: var(--crop-mark-size);
+    block-size: var(--crop-mark-size);
+    border-color: var(--color-accent);
+    border-style: solid;
+    border-width: 0;
+    opacity: 0;
+    transition:
+      opacity var(--duration-instant) var(--ease-in),
+      transform var(--duration-instant) var(--ease-in);
+  }
+
+  .crop i:nth-child(1) {
+    inset-block-start: calc(var(--crop-mark-size) * -1);
+    inset-inline-start: calc(var(--crop-mark-size) * -1);
+    border-block-end-width: var(--crop-mark-width);
+    border-inline-end-width: var(--crop-mark-width);
+    transform: translate(calc(var(--crop-travel) * -1), calc(var(--crop-travel) * -1));
+  }
+
+  .crop i:nth-child(2) {
+    inset-block-start: calc(var(--crop-mark-size) * -1);
+    inset-inline-end: calc(var(--crop-mark-size) * -1);
+    border-block-end-width: var(--crop-mark-width);
+    border-inline-start-width: var(--crop-mark-width);
+    transform: translate(var(--crop-travel), calc(var(--crop-travel) * -1));
+  }
+
+  .crop i:nth-child(3) {
+    inset-block-end: calc(var(--crop-mark-size) * -1);
+    inset-inline-start: calc(var(--crop-mark-size) * -1);
+    border-block-start-width: var(--crop-mark-width);
+    border-inline-end-width: var(--crop-mark-width);
+    transform: translate(calc(var(--crop-travel) * -1), var(--crop-travel));
+  }
+
+  .crop i:nth-child(4) {
+    inset-block-end: calc(var(--crop-mark-size) * -1);
+    inset-inline-end: calc(var(--crop-mark-size) * -1);
+    border-block-start-width: var(--crop-mark-width);
+    border-inline-start-width: var(--crop-mark-width);
+    transform: translate(var(--crop-travel), var(--crop-travel));
+  }
+
+  .crop-demo:focus-visible .crop i {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity var(--duration-fast) var(--ease-register),
+      transform var(--duration-fast) var(--ease-register);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .crop-demo:hover .crop i {
+      opacity: 1;
+      transform: none;
+      transition:
+        opacity var(--duration-fast) var(--ease-register),
+        transform var(--duration-fast) var(--ease-register);
+    }
+  }
+
+  .play {
+    justify-self: start;
+    min-block-size: var(--control-height);
+    padding-inline: var(--space-5);
+    border: 0;
+    border-radius: var(--radius-xs);
+    background-color: var(--color-text-primary);
+    color: var(--color-bg);
+    font-weight: var(--weight-strong);
+  }
+
+  .tracks {
+    display: grid;
+    gap: var(--space-3);
+    padding: 0;
+  }
+
+  .tracks li {
+    display: grid;
+    gap: var(--space-1);
+
+    @media (min-width: 48rem) {
+      grid-template-columns: 18rem 1fr;
+      align-items: center;
+    }
+  }
+
+  .track {
+    display: block;
+    container-type: inline-size;
+    padding-block: var(--space-1);
+    border-block-end: var(--border-hairline);
+  }
+
+  .dot {
+    display: block;
+    inline-size: var(--space-4);
+    block-size: var(--space-4);
+    background-color: var(--color-accent);
+    transition-property: transform;
+  }
+
+  :global([data-playing='true']) .dot {
+    transform: translateX(calc(100cqi - var(--space-4)));
+  }
+</style>
+
+<script>
+  // Valores en vivo de los tokens (cambian con el modo, el ancho y reduced motion).
+  let controller: AbortController | null = null;
+
+  function fill(): void {
+    const styles = getComputedStyle(document.documentElement);
+    document.querySelectorAll<HTMLElement>('[data-live]').forEach((el) => {
+      const token = el.dataset.live;
+      if (token) el.textContent = styles.getPropertyValue(token).trim();
+    });
+  }
+
+  function init(): void {
+    controller?.abort();
+    controller = new AbortController();
+    const { signal } = controller;
+    fill();
+
+    const observer = new MutationObserver(fill);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-theme'],
+    });
+    signal.addEventListener('abort', () => observer.disconnect());
+    window.addEventListener('resize', fill, { signal });
+    for (const query of ['(prefers-reduced-motion: reduce)', '(prefers-color-scheme: dark)']) {
+      window.matchMedia(query).addEventListener('change', fill, { signal });
+    }
+
+    const play = document.querySelector<HTMLButtonElement>('[data-play]');
+    const section = document.querySelector<HTMLElement>('#motion');
+    play?.addEventListener(
+      'click',
+      () => {
+        const next = section?.dataset.playing !== 'true';
+        if (section) section.dataset.playing = String(next);
+        play.setAttribute('aria-pressed', String(next));
+      },
+      { signal },
+    );
+
+    document.addEventListener('astro:before-swap', () => controller?.abort(), {
+      once: true,
+      signal,
+    });
+  }
+
+  document.addEventListener('astro:page-load', init);
+</script>
