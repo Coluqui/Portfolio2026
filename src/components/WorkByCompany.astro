@@ -58,7 +58,7 @@ const options = filterOptions(
             >
               {group.cliente}
             </h3>
-            <p class="label muted">{group.rol}</p>
+            <p class="label company__role">{group.rol}</p>
           </div>
           <a class="company__link" href={`/${lang}/trabajos/${group.slug}/`} data-case-link>
             <span>{t('home.work.viewCase')}</span>
@@ -133,6 +133,10 @@ const options = filterOptions(
   .company__who {
     display: grid;
     gap: var(--space-1);
+  }
+
+  .company__role {
+    color: var(--color-accent-text);
   }
 
   .company__link {

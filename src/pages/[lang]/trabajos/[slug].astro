@@ -78,7 +78,7 @@ const rise = {
         <div class="intro" transition:name={`case-lead-${caso.slug}`} transition:animate={rise}>
           <p class="role">
             <span class="label muted">{t('case.labels.rol')}</span>
-            <span>{caso.rol[lang]}</span>
+            <span class="role__value">{caso.rol[lang]}</span>
           </p>
           <p class="lead">{caso.descripcion[lang]}</p>
         </div>
@@ -258,6 +258,10 @@ const rise = {
     align-items: baseline;
     gap: var(--space-1) var(--space-3);
     font-weight: var(--weight-strong);
+  }
+
+  .role__value {
+    color: var(--color-accent-text);
   }
 
   .lead {
