@@ -1,10 +1,8 @@
 ---
-// Hero: nombre, puesto, presentación, especialidades, datos rápidos y foto.
-// Sin mosaico de piezas (pedido de Franco, 21 nov; ver decisiones D9): las piezas viven en
-// 01 Trabajos. La foto es provisoria hasta definir un arreglo gráfico o ilustración.
+// Hero: nombre, puesto, presentación, especialidades y datos rápidos. Sin imagen (D9): el
+// nombre ocupa todo el ancho y debajo van, en dos columnas desde 1280 px, la presentación
+// y la ficha de datos con los botones. Las piezas viven en 01 Trabajos.
 // M26: sin animación de entrada.
-import { Picture } from 'astro:assets';
-import portrait from '../assets/franco/franco-colucci-retrato.png';
 import Button from './Button.astro';
 import CvButton from './CvButton.astro';
 import { type Lang, useDictionary, useTranslations } from '../i18n/utils';
@@ -19,10 +17,13 @@ const hero = useDictionary(lang).home.hero;
 ---
 
 <section class="hero container" aria-labelledby="hero-title">
-  <div class="intro">
+  <header class="head">
     <p class="eyebrow label">{hero.eyebrow}</p>
     <h1 id="hero-title">{t('home.name')}</h1>
     <p class="role">{t('meta.role')}</p>
+  </header>
+
+  <div class="about">
     <p class="bio">{hero.bio}</p>
     <ul class="tags" role="list" aria-label={hero.expertiseLabel}>
       {hero.expertise.map((tag) => (
@@ -30,17 +31,6 @@ const hero = useDictionary(lang).home.hero;
       ))}
     </ul>
   </div>
-
-  <figure class="photo">
-    <Picture
-      src={portrait}
-      alt={hero.photoAlt}
-      formats={['avif', 'webp']}
-      widths={[320, 480, 600]}
-      sizes="(min-width: 80rem) 30vw, (min-width: 48rem) 40vw, 80vw"
-      loading="eager"
-    />
-  </figure>
 
   <div class="details">
     <dl class="facts" aria-label={hero.factsLabel}>
@@ -63,27 +53,25 @@ const hero = useDictionary(lang).home.hero;
 <style>
   .hero {
     display: grid;
-    grid-template-areas: 'intro' 'details' 'photo';
-    gap: var(--space-6) var(--grid-gutter);
-    padding-block: var(--space-6) var(--space-section);
-
-    @media (min-width: 48rem) {
-      grid-template-columns: 3fr 2fr;
-      grid-template-areas: 'intro photo' 'details photo';
-      align-items: start;
-    }
+    grid-template-areas: 'head' 'about' 'details';
+    gap: var(--space-7) var(--grid-gutter);
+    padding-block: var(--space-7) var(--space-section);
 
     @media (min-width: 80rem) {
       grid-template-columns: 7fr 5fr;
-      padding-block-start: var(--space-7);
+      grid-template-areas: 'head head' 'about details';
+      column-gap: var(--space-9);
+      padding-block-start: var(--space-8);
     }
   }
 
-  .intro {
-    grid-area: intro;
+  /* Encabezado: el nombre a todo el ancho, cerrado por el filete de 3 px */
+  .head {
+    grid-area: head;
     display: grid;
     gap: var(--space-4);
-    align-content: start;
+    padding-block-end: var(--space-6);
+    border-block-end: var(--border-rule);
   }
 
   .eyebrow {
@@ -103,12 +91,18 @@ const hero = useDictionary(lang).home.hero;
     letter-spacing: var(--tracking-h3);
   }
 
+  .about {
+    grid-area: about;
+    display: grid;
+    gap: var(--space-5);
+    align-content: start;
+  }
+
   .bio {
     max-inline-size: var(--measure);
     font-size: var(--text-lead);
     line-height: var(--leading-lead);
     letter-spacing: var(--tracking-lead);
-    color: var(--color-text-secondary);
   }
 
   .tags {
@@ -124,21 +118,6 @@ const hero = useDictionary(lang).home.hero;
     border: var(--border-hairline);
     border-radius: var(--radius-xs);
     color: var(--color-text-secondary);
-  }
-
-  /* Foto provisoria (D9): retrato 4:5 sobre el escenario */
-  .photo {
-    grid-area: photo;
-    aspect-ratio: var(--ratio-carousel);
-    overflow: hidden;
-    background-color: var(--color-stage);
-  }
-
-  .photo :global(img) {
-    inline-size: 100%;
-    block-size: 100%;
-    object-fit: cover;
-    object-position: top;
   }
 
   .details {

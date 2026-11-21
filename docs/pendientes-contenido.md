@@ -39,7 +39,7 @@ Por cada uno de los 4 casos (MoonDesk, ISCAMEN, Condimento, Carpa):
 - [x] Experiencia con fechas: tomada del CV
 - [x] Experiencia e inglés en el sitio: más de 5 años, B2 (pedido de Franco)
 - [ ] **Actualizar el CV** para que coincida con el sitio: hoy dice "más de 7 años" e inglés B1
-- [ ] Hero: la foto es provisoria hasta definir un arreglo gráfico o ilustración (D9)
+- [ ] Hero: falta el arreglo gráfico o ilustración (hoy va solo texto, D9)
 - [ ] Foto de más resolución (la actual es 600×900)
 
 ## Contacto y CV
