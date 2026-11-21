@@ -104,8 +104,13 @@
       "emailInvalid": "Check the email: it should look like name@domain.com.",
       "messageTooShort": "The message needs at least 10 characters.",
       "messageTooLong": "The message can be up to 3000 characters.",
-      "noHtml": "Remove the HTML tags from the text."
-    }
+      "noHtml": "Remove the HTML tags from the text.",
+      "tooFast": "Wait a second and send it again.",
+      "confirm": "Check your details and press Send to confirm."
+    },
+    "honeypot": "Leave this field empty",
+    "fixErrors": "Check the highlighted fields.",
+    "pageTitle": "Contact"
   },
   "home": {
     "name": "Franco Colucci",
@@ -334,5 +339,11 @@
     "pause": "Pause",
     "carousel": "carousel",
     "slideRole": "slide"
+  },
+  "thanks": {
+    "title": "Message sent",
+    "body": "Thanks for reaching out. I’ll reply by email.",
+    "back": "Back to home",
+    "work": "See work"
   }
 }

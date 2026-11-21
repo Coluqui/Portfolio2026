@@ -104,8 +104,13 @@
       "emailInvalid": "Revisá el mail: tiene que ser como nombre@dominio.com.",
       "messageTooShort": "El mensaje necesita al menos 10 caracteres.",
       "messageTooLong": "El mensaje puede tener hasta 3000 caracteres.",
-      "noHtml": "Sacá las etiquetas HTML del texto."
-    }
+      "noHtml": "Sacá las etiquetas HTML del texto.",
+      "tooFast": "Esperá un segundo y enviá de nuevo.",
+      "confirm": "Revisá tus datos y tocá Enviar para confirmar."
+    },
+    "honeypot": "No completes este campo",
+    "fixErrors": "Revisá los campos marcados.",
+    "pageTitle": "Contacto"
   },
   "home": {
     "name": "Franco Colucci",
@@ -334,5 +339,11 @@
     "pause": "Pausar",
     "carousel": "carrusel",
     "slideRole": "slide"
+  },
+  "thanks": {
+    "title": "Mensaje enviado",
+    "body": "Gracias por escribir. Te respondo por mail.",
+    "back": "Volver al inicio",
+    "work": "Ver trabajos"
   }
 }

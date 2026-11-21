@@ -1,12 +1,9 @@
 ---
 // 05 Contacto: formulario + contacto directo (mail con copiar, LinkedIn, WhatsApp, CV).
-// El envío (endpoint /api/contacto, validación, anti-spam, M37–M39) se conecta en la Fase 6.
-import Button from './Button.astro';
+// El formulario (validación, envío, anti-spam, M35–M39) está en ContactForm.
+import ContactForm from './ContactForm.astro';
 import CopyEmail from './CopyEmail.astro';
 import CvButton from './CvButton.astro';
-import Field from './Field.astro';
-import FormError from './FormError.astro';
-import FormSuccess from './FormSuccess.astro';
 import SectionHeader from './SectionHeader.astro';
 import TextLink from './TextLink.astro';
 import { type Lang, useTranslations } from '../i18n/utils';
@@ -30,58 +27,10 @@ const linkedinLabel = contact.linkedin?.replace(/^https?:\/\/(www\.)?/, '').repl
   />
 
   <div class="layout">
-    <form class="form" method="post" action="/api/contacto" novalidate data-contact-form>
+    <div class="form-wrap">
       <h3 class="visually-hidden">{t('home.contact.formTitle')}</h3>
-      <input type="hidden" name="lang" value={lang} />
-      <div class="row">
-        <Field
-          lang={lang}
-          id="contact-name"
-          name="nombre"
-          label={t('form.name')}
-          autocomplete="name"
-          maxlength={100}
-          required
-        />
-        <Field
-          lang={lang}
-          id="contact-email"
-          name="mail"
-          type="email"
-          label={t('form.email')}
-          autocomplete="email"
-          maxlength={254}
-          required
-        />
-      </div>
-      <Field
-        lang={lang}
-        id="contact-company"
-        name="empresa"
-        label={t('form.company')}
-        autocomplete="organization"
-        maxlength={100}
-        optional
-      />
-      <Field
-        lang={lang}
-        id="contact-message"
-        name="mensaje"
-        type="textarea"
-        label={t('form.message')}
-        hint={t('form.messageHint')}
-        minlength={10}
-        maxlength={3000}
-        required
-      />
-      <FormError lang={lang} />
-      <div>
-        <Button type="submit" arrow="right" loadingLabel={t('form.sending')}>
-          {t('form.submit')}
-        </Button>
-      </div>
-      <FormSuccess lang={lang} />
-    </form>
+      <ContactForm lang={lang} />
+    </div>
 
     <aside class="direct" aria-labelledby="contact-direct">
       <h3 id="contact-direct" class="label direct__title">
@@ -134,20 +83,6 @@ const linkedinLabel = contact.linkedin?.replace(/^https?:\/\/(www\.)?/, '').repl
     @media (min-width: 80rem) {
       grid-template-columns: 3fr 2fr;
       align-items: start;
-    }
-  }
-
-  .form {
-    display: grid;
-    gap: var(--space-5);
-  }
-
-  .row {
-    display: grid;
-    gap: var(--space-5) var(--grid-gutter);
-
-    @media (min-width: 48rem) {
-      grid-template-columns: 1fr 1fr;
     }
   }
 

@@ -1,0 +1,101 @@
+---
+// Contacto sin JS (backend.md): el formulario de la home hace POST acá.
+// - OK → 303 a /<lang>/gracias/.
+// - Error → la misma página con los errores y lo escrito (nada viaja en la URL).
+// - Sin token (la home es estática) → se pide confirmar con un token nuevo: así el tiempo
+//   mínimo de llenado también vale sin JS.
+// Con JS, el formulario usa /api/contacto y no pasa por acá.
+import ContactForm from '../../components/ContactForm.astro';
+import { isLang, useTranslations } from '../../i18n/utils';
+import Page from '../../layouts/Page.astro';
+import {
+  type ContactInput,
+  type ContactValues,
+  type FieldErrors,
+  type FormErrorKey,
+  handleContact,
+  issueToken,
+  readValues,
+  sameOrigin,
+} from '../../lib/contact-form';
+
+export const prerender = false;
+
+const { lang } = Astro.params;
+if (!isLang(lang)) return new Response(null, { status: 404 });
+const t = useTranslations(lang);
+
+let values: Partial<ContactValues> = {};
+let errors: FieldErrors = {};
+let notice: FormErrorKey | undefined;
+let failed = false;
+
+if (Astro.request.method === 'POST') {
+  if (!sameOrigin(Astro.request, Astro.url)) return new Response(null, { status: 403 });
+  let form: FormData;
+  try {
+    form = await Astro.request.formData();
+  } catch {
+    return new Response(null, { status: 415 });
+  }
+  const input = Object.fromEntries(form) as ContactInput;
+  values = readValues(input);
+  const result = await handleContact(input, Astro.clientAddress);
+
+  if (result.ok) return Astro.redirect(`/${lang}/gracias/`, 303);
+
+  Astro.response.status = result.status;
+  if (result.status === 400) {
+    errors = result.errors;
+    notice = result.form;
+  } else if (result.status === 403) {
+    notice = 'confirm'; // token vencido o inválido: se confirma con uno nuevo
+  } else {
+    failed = true; // 429 o 500 (M39)
+  }
+}
+Astro.response.headers.set('Cache-Control', 'no-store');
+---
+
+<Page lang={lang} title={t('form.pageTitle')} noindex>
+  <div class="container contact-page">
+    <a class="back label" href={`/${lang}/#contacto`}>
+      <span aria-hidden="true">←</span>
+      {t('notFound.contact')}
+    </a>
+    <h1>{t('form.pageTitle')}</h1>
+    <ContactForm
+      lang={lang}
+      values={values}
+      errors={errors}
+      notice={notice}
+      failed={failed}
+      token={issueToken()}
+    />
+  </div>
+</Page>
+
+<style>
+  .contact-page {
+    display: grid;
+    gap: var(--space-6);
+    max-inline-size: calc(var(--measure) + 2 * var(--grid-margin));
+    padding-block: var(--space-7) var(--space-section);
+  }
+
+  .back {
+    display: inline-flex;
+    gap: var(--space-2);
+    align-items: center;
+    justify-self: start;
+    min-block-size: var(--target-min);
+    color: var(--color-text-primary);
+    text-decoration: none;
+  }
+
+  h1 {
+    font-size: var(--text-h1);
+    line-height: var(--leading-h1);
+    letter-spacing: var(--tracking-h1);
+  }
+</style>

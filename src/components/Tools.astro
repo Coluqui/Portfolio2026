@@ -4,12 +4,11 @@
 import SectionHeader from './SectionHeader.astro';
 import ToolIcon from './ToolIcon.astro';
 import { type Lang, useDictionary } from '../i18n/utils';
+import { toToolIcon } from '../lib/tool-icons';
 
 interface Props {
   lang: Lang;
 }
-
-type IconName = Parameters<typeof ToolIcon>[0]['name'];
 
 const { lang } = Astro.props;
 const tools = useDictionary(lang).home.tools;
@@ -26,7 +25,7 @@ const tools = useDictionary(lang).home.tools;
           {group.items.map((item) => (
             <li class="tool">
               <span class="tool__icon">
-                <ToolIcon name={item.icon as IconName} />
+                <ToolIcon name={toToolIcon(item.icon)} />
               </span>
               <span class="tool__text">
                 <span class="tool__name">{item.name}</span>

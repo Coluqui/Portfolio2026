@@ -69,7 +69,7 @@ function renderPiece(s: State): void {
 
   const trackEl = q(root, '[data-viewer-track]');
   trackEl.replaceChildren(
-    ...piece.slides.map((slide, i) => {
+    ...piece.slides.map((_slide, i) => {
       const item = document.createElement('div');
       item.className = 'slide';
       item.setAttribute('role', 'group');

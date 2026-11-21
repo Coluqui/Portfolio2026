@@ -1,6 +1,6 @@
 # Plan de construcción — Portfolio Franco Colucci
 
-21 nov 2026 · Fases 0 a 5 cerradas (D1–D4 aprobadas, ver `docs/decisiones.md`). Este archivo se actualiza al cerrar cada fase.
+21 nov 2026 · Fases 0 a 6 cerradas (D1–D4 aprobadas, ver `docs/decisiones.md`). Este archivo se actualiza al cerrar cada fase.
 
 | Fase | Estado |
 | --- | --- |
@@ -10,7 +10,8 @@
 | 3 · Componentes | Cerrada: nav, toggles, botones, links, CV, copiar mail, tile, chips, barra inferior, footer, campos; `/dev/componentes` |
 | 4 · Home | Cerrada: hero con datos y mosaico, Trabajé con, 01 Trabajos por empresa con filtros (FLIP), 02–05, caso base y 404 |
 | 5 · Caso + visor | Cerrada: caso completo, tira de contactos, visor (teclado, swipe, URL), tarjeta → caso, filtro en la URL |
-| 6 · Contacto y CV | Próxima |
+| 6 · Contacto y CV | Cerrada: `/api/contacto` en modo local, validación cliente/servidor, anti-spam, fallback sin JS, gracias; CV por idioma |
+| 7 · Pasada de motion | Próxima |
 
 ## 1. Lo que encontré (Fase 0)
 

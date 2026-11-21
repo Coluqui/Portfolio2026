@@ -1,5 +1,5 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
+import { defineConfig, envField } from 'astro/config';
 import node from '@astrojs/node';
 import sitemap from '@astrojs/sitemap';
 import vercel from '@astrojs/vercel';
@@ -32,5 +32,20 @@ export default defineConfig({
       },
     }),
   ],
+  // Formulario de contacto (backend.md). Todo opcional: sin RESEND_API_KEY el endpoint
+  // funciona en modo local (no envía, loguea y responde 200).
+  env: {
+    schema: {
+      RESEND_API_KEY: envField.string({ context: 'server', access: 'secret', optional: true }),
+      CONTACT_TO_EMAIL: envField.string({ context: 'server', access: 'secret', optional: true }),
+      CONTACT_FROM_EMAIL: envField.string({ context: 'server', access: 'secret', optional: true }),
+      // Firma del token anti-spam. Obligatorio en producción (varias instancias).
+      CONTACT_FORM_SECRET: envField.string({ context: 'server', access: 'secret', optional: true }),
+    },
+  },
+  // El chequeo de origen de Astro compara contra la URL armada con SITE_URL y rechaza los
+  // POST en local y en los deploys de preview. Lo reemplaza sameOrigin() de
+  // src/lib/contact-form.ts, que compara contra el host real de la petición (T31).
+  security: { checkOrigin: false },
   devToolbar: { enabled: false },
 });

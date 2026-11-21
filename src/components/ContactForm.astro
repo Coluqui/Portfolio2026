@@ -1,0 +1,162 @@
+---
+// Formulario de contacto. Con JS lo maneja src/scripts/contact-form.ts (validación al salir
+// del campo, envío a /api/contacto, M35–M39). Sin JS hace POST a /<lang>/contacto/, que
+// vuelve con los errores y lo escrito, o redirige a /<lang>/gracias/.
+import Button from './Button.astro';
+import Field from './Field.astro';
+import FormError from './FormError.astro';
+import FormSuccess from './FormSuccess.astro';
+import { type Lang, useTranslations } from '../i18n/utils';
+import type { ContactValues, FieldErrors, FormErrorKey } from '../lib/contact-form';
+
+interface Props {
+  lang: Lang;
+  /** Lo que escribió (página sin JS que vuelve con errores). */
+  values?: Partial<ContactValues>;
+  errors?: FieldErrors;
+  /** Aviso del formulario: falta confirmar o fue demasiado rápido. */
+  notice?: FormErrorKey;
+  /** Error de envío (M39) visible desde el servidor. */
+  failed?: boolean;
+  /** Token firmado (lo pone la página server; en la home lo pide el script). */
+  token?: string;
+}
+
+const { lang, values = {}, errors = {}, notice, failed = false, token = '' } = Astro.props;
+const t = useTranslations(lang);
+const err = (field: keyof FieldErrors) => {
+  const key = errors[field];
+  return key ? t(`form.errors.${key}`) : undefined;
+};
+
+// Mensajes para la validación en el cliente (mismas reglas que el servidor).
+const messages = JSON.stringify({
+  required: t('form.errors.required'),
+  nameTooLong: t('form.errors.nameTooLong'),
+  emailInvalid: t('form.errors.emailInvalid'),
+  messageTooShort: t('form.errors.messageTooShort'),
+  messageTooLong: t('form.errors.messageTooLong'),
+  noHtml: t('form.errors.noHtml'),
+  tooFast: t('form.errors.tooFast'),
+  confirm: t('form.errors.confirm'),
+});
+---
+
+<form
+  class="form"
+  method="post"
+  action={`/${lang}/contacto/`}
+  novalidate
+  data-contact-form
+  data-messages={messages}
+>
+  <div class="form__body" data-form-body>
+    <input type="hidden" name="lang" value={lang} />
+    <input type="hidden" name="token" value={token} data-form-token />
+
+    <!-- Honeypot: invisible para personas y lectores de pantalla -->
+    <div class="visually-hidden" aria-hidden="true">
+      <label for="contact-hp">{t('form.honeypot')}</label>
+      <input id="contact-hp" name="hp_ref" type="text" tabindex="-1" autocomplete="one-time-code" />
+    </div>
+
+    {notice && (
+      <p class="notice" role="status">
+        {t(`form.errors.${notice}`)}
+      </p>
+    )}
+
+    <div class="row">
+      <Field
+        lang={lang}
+        id="contact-name"
+        name="nombre"
+        label={t('form.name')}
+        autocomplete="name"
+        maxlength={100}
+        value={values.nombre}
+        error={err('nombre')}
+        required
+      />
+      <Field
+        lang={lang}
+        id="contact-email"
+        name="mail"
+        type="email"
+        label={t('form.email')}
+        autocomplete="email"
+        maxlength={254}
+        value={values.mail}
+        error={err('mail')}
+        required
+      />
+    </div>
+    <Field
+      lang={lang}
+      id="contact-company"
+      name="empresa"
+      label={t('form.company')}
+      autocomplete="organization"
+      maxlength={100}
+      value={values.empresa}
+      error={err('empresa')}
+      optional
+    />
+    <Field
+      lang={lang}
+      id="contact-message"
+      name="mensaje"
+      type="textarea"
+      label={t('form.message')}
+      hint={t('form.messageHint')}
+      maxlength={3000}
+      value={values.mensaje}
+      error={err('mensaje')}
+      required
+    />
+    <FormError lang={lang} visible={failed} />
+    <div>
+      <Button type="submit" arrow="right" loadingLabel={t('form.sending')} data-form-submit>
+        {t('form.submit')}
+      </Button>
+    </div>
+  </div>
+  <FormSuccess lang={lang} />
+</form>
+
+<style>
+  .form {
+    display: grid;
+  }
+
+  .form__body {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  .form__body[hidden] {
+    display: none;
+  }
+
+  .row {
+    display: grid;
+    gap: var(--space-5) var(--grid-gutter);
+
+    @media (min-width: 48rem) {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .form :global(.notice) {
+    padding: var(--space-3) var(--space-4);
+    border-inline-start: var(--border-rule);
+    border-inline-start-color: var(--color-accent);
+    background-color: var(--color-surface);
+  }
+</style>
+
+<script>
+  import { initContactForms } from '../scripts/contact-form';
+
+  document.addEventListener('astro:page-load', initContactForms);
+</script>

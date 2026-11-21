@@ -37,8 +37,10 @@ Por cada uno de los 4 casos (MoonDesk, ISCAMEN, Condimento, Carpa):
 
 - [ ] **Revisar** la bio del hero y de Sobre mí, las especialidades, las 6 capacidades de "Qué hago" y los 4 pasos de "Proceso + IA" (borradores de Claude a partir del PRD y del CV, en `src/i18n/*.json` → `home`)
 - [x] Experiencia con fechas: tomada del CV
-- [ ] **Confirmar diferencias CV vs sitio actual:** experiencia "más de 7 años" (CV) vs "más de 5 años" (sitio); inglés **B1** (CV) vs **B2 alto** (sitio). Hoy se muestra lo del CV
-- [ ] Foto: se usa `franco-photo.png` del sitio actual (600×900, recortada a 4:5). Si tenés una de más resolución, mejor
+- [x] Experiencia e inglés en el sitio: más de 5 años, B2 (pedido de Franco)
+- [ ] **Actualizar el CV** para que coincida con el sitio: hoy dice "más de 7 años" e inglés B1
+- [ ] Hero: la foto es provisoria hasta definir un arreglo gráfico o ilustración (D9)
+- [ ] Foto de más resolución (la actual es 600×900)
 
 ## Contacto y CV
 
