@@ -84,7 +84,7 @@ Al empezar cada fase, revisá qué skills tengo instaladas (`/skills`, `.claude/
 
 - Respondé en español. Trabajá por fases (ver `docs/plan.md` cuando exista) y **frená al final de cada fase** con: qué hiciste, cómo verlo (URL local exacta), qué falta y qué decisión necesitás de mí.
 - Antes de un cambio grande, plan corto primero. Cambios chicos: hacelos.
-- Git: commits chicos y descriptivos en español (`feat(visor): navegación por slides con teclado`). **No hagas push ni conectes Vercel hasta que te lo pida.**
+- Git: commits chicos y descriptivos en español (`feat(visor): navegación por slides con teclado`). Cada cambio en su rama (`feat/…`, `fix/…`, `content/…`, `docs/…`) desde `develop`, con pull request a `develop`; `main` solo recibe merges desde `develop`. Nunca `push --force` sobre `main` ni `develop`. Detalle en `docs/flujo-git.md`. **No conectes Vercel hasta que te lo pida.**
 - Nunca borres ni modifiques archivos fuera del repo. La carpeta de piezas originales es solo lectura.
 - Si algo del PRD no se puede implementar como está escrito, explicá por qué y proponé la alternativa más cercana.
 - Registrá decisiones técnicas nuevas en `docs/decisiones.md` (fecha, decisión, por qué). Si cambia algo del PRD, avisame para actualizarlo.
