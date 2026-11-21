@@ -4,8 +4,13 @@ import node from '@astrojs/node';
 import sitemap from '@astrojs/sitemap';
 import vercel from '@astrojs/vercel';
 
-// URL pública: se define en el deploy (SITE_URL). En local, localhost.
-const site = process.env.SITE_URL ?? 'http://localhost:4321';
+// URL pública (canonical, hreflang, sitemap): SITE_URL si está definida (dominio propio);
+// si no, el dominio de producción que Vercel expone en el build; en local, localhost.
+const site =
+  process.env.SITE_URL ||
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : 'http://localhost:4321');
 
 export default defineConfig({
   site,
@@ -49,5 +54,8 @@ export default defineConfig({
   security: { checkOrigin: false },
   // CSS incrustado en cada página: sin peticiones que bloqueen el render (LCP, Fase 8).
   build: { inlineStylesheets: 'always' },
+  // Scripts siempre como archivos (nunca incrustados): la CSP de vercel.json permite solo
+  // 'self' más el hash del script de tema (scripts/check-csp.mjs lo verifica en el build).
+  vite: { build: { assetsInlineLimit: 0 } },
   devToolbar: { enabled: false },
 });

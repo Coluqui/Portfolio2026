@@ -1,5 +1,6 @@
 // M33 · Descargar CV. La descarga la hace el navegador (link con `download`); esto solo
 // muestra el feedback en el mismo botón: Descargando → CV ✓ (--hold-feedback) → vuelve.
+import { trackEvent } from './analytics';
 import { tokenMs, wait } from './motion';
 
 let controller: AbortController | null = null;
@@ -28,6 +29,7 @@ export function initCvButtons(): void {
       'click',
       () => {
         if (link.dataset.state !== 'idle') return;
+        trackEvent('cv_download', { idioma: document.documentElement.lang });
         void feedback(link, status, signal);
       },
       { signal },
