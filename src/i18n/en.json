@@ -16,7 +16,7 @@
     "home": "Franco Colucci, home",
     "trabajos": "Work",
     "queHago": "What I do",
-    "proceso": "Process",
+    "herramientas": "Tools",
     "sobreMi": "About",
     "contacto": "Contact",
     "openMenu": "Open menu",
@@ -112,7 +112,7 @@
     "status": "Site under construction. The work is coming soon.",
     "hero": {
       "eyebrow": "Mendoza, Argentina · Remote or on-site",
-      "bio": "I design social content, performance ads, emails, ebooks and websites that communicate clearly and perform. 7+ years with public institutions and private brands, grounded in UX/UI and an AI-assisted workflow.",
+      "bio": "I design social content, performance ads, emails, ebooks and websites that communicate clearly and perform. 5+ years with public institutions and private brands, grounded in UX/UI and an AI-assisted workflow.",
       "expertiseLabel": "Expertise",
       "expertise": [
         "Social media",
@@ -126,11 +126,11 @@
       "facts": [
         {
           "label": "Experience",
-          "value": "7+ years"
+          "value": "5+ years"
         },
         {
           "label": "Languages",
-          "value": "Spanish (native) · English B1 · Italian A2"
+          "value": "Spanish (native) · English B2 · Italian A2"
         },
         {
           "label": "Work mode",
@@ -138,7 +138,7 @@
         }
       ],
       "ctaWork": "See work",
-      "mosaicLabel": "Featured work"
+      "photoAlt": "Black and white halftone portrait of Franco Colucci, smiling, wearing a dark T-shirt."
     },
     "clients": {
       "title": "Worked with"
@@ -178,87 +178,107 @@
           "title": "Figma systems",
           "text": "Components and templates that organise production and keep the brand consistent across channels."
         }
-      ],
-      "toolsTitle": "Tools",
-      "tools": [
-        "Illustrator",
-        "Photoshop",
-        "InDesign",
-        "Figma",
-        "WordPress",
-        "Elementor",
-        "Claude Code",
-        "ChatGPT",
-        "Antigravity"
       ]
     },
-    "process": {
-      "title": "Process + AI",
-      "intro": "AI speeds up production; the design judgement is still mine.",
-      "steps": [
+    "tools": {
+      "title": "Tools and AI",
+      "intro": "The software I produce each piece with, and what I use each one for.",
+      "groups": [
         {
-          "title": "Brief",
-          "text": "I understand the goal, the channel and how it will be measured before opening a file."
+          "title": "Design",
+          "items": [
+            {
+              "name": "Adobe Illustrator",
+              "icon": "design",
+              "use": "Branding, illustration and vector pieces."
+            },
+            {
+              "name": "Adobe Photoshop",
+              "icon": "design",
+              "use": "Retouching, compositing and social and ad assets."
+            },
+            {
+              "name": "Adobe InDesign",
+              "icon": "design",
+              "use": "Ebooks, one-pagers and editorial documents."
+            },
+            {
+              "name": "Figma",
+              "icon": "figma",
+              "use": "Interfaces, design systems and templates."
+            },
+            {
+              "name": "Canva",
+              "icon": "templates",
+              "use": "Editable templates for marketing teams."
+            }
+          ]
         },
         {
-          "title": "System",
-          "text": "I build templates and components in Figma so each new piece comes out fast and consistent."
+          "title": "Video and motion",
+          "items": [
+            {
+              "name": "Adobe After Effects",
+              "icon": "video",
+              "use": "Motion graphics and animated pieces."
+            },
+            {
+              "name": "Adobe Premiere Pro",
+              "icon": "video",
+              "use": "Video editing and reels."
+            },
+            {
+              "name": "CapCut",
+              "icon": "video",
+              "use": "Reels and quick edits for social."
+            }
+          ]
         },
         {
-          "title": "AI-assisted production",
-          "text": "I use Claude Code, ChatGPT and Antigravity to speed up variants, draft copy and layout."
+          "title": "Web",
+          "items": [
+            {
+              "name": "WordPress",
+              "icon": "wordpress",
+              "use": "Sites built with Elementor, responsive and easy to maintain."
+            }
+          ]
         },
         {
-          "title": "Delivery and tuning",
-          "text": "I review with the client, deliver in every format and adjust based on how the pieces perform."
+          "title": "AI and vibe coding",
+          "items": [
+            {
+              "name": "ChatGPT",
+              "icon": "ai",
+              "use": "Ideas, draft copy and production support."
+            },
+            {
+              "name": "Nano Banana (Gemini)",
+              "icon": "gemini",
+              "use": "Image generation and editing."
+            },
+            {
+              "name": "Claude Code",
+              "icon": "claude",
+              "use": "Vibe coding: websites, design systems and video."
+            },
+            {
+              "name": "ElevenLabs",
+              "icon": "elevenlabs",
+              "use": "Voices, voice-overs and audio."
+            }
+          ]
         }
       ]
     },
     "about": {
       "title": "About",
       "bio": [
-        "I studied Graphic Design at Universidad Nacional de Cuyo and specialised in digital and UX/UI design. Since 2021 I have designed ISCAMEN’s communication and, through Sette Agency, I work for private brands on social, ads, emails and websites.",
-        "I work closely with teams: from brief to final delivery, coordinating timelines and changes with each client."
-      ],
-      "photoAlt": "Black and white halftone portrait of Franco Colucci, smiling, wearing a dark T-shirt.",
-      "experienceTitle": "Experience",
-      "experience": [
-        {
-          "company": "ISCAMEN",
-          "role": "Graphic & Digital Designer",
-          "period": "Apr 2021 – present"
-        },
-        {
-          "company": "Sette Agency",
-          "role": "Digital & Web Designer (freelance)",
-          "period": "Jan 2023 – present"
-        },
-        {
-          "company": "Grupo Nexia",
-          "role": "Graphic & Digital Designer",
-          "period": "Jul 2024 – Jan 2025"
-        }
-      ],
-      "educationTitle": "Education",
-      "education": [
-        {
-          "title": "Graphic Design",
-          "place": "Universidad Nacional de Cuyo",
-          "period": "2011 – 2020"
-        },
-        {
-          "title": "UX/UI Design (advanced, 7 months)",
-          "place": "Codo a Codo",
-          "period": "2023"
-        },
-        {
-          "title": "UX/UI Design (intensive, 4 months)",
-          "place": "Coderhouse",
-          "period": "2022"
-        }
+        "I studied Graphic Design at Universidad Nacional de Cuyo and trained in UX/UI (Coderhouse and Codo a Codo). For 5+ years I have designed for public institutions, companies and agencies: ISCAMEN, Grupo Nexia and Sette Agency, and brands such as MoonDesk, Condimento, Carpa, RLB and Interlink.",
+        "I work closely with teams, from brief to final delivery, and use AI to produce faster without giving up design judgement."
       ],
       "languagesTitle": "Languages",
-      "languages": "Spanish (native) · English B1 · Italian A2"
+      "languages": "Spanish (native) · English B2 · Italian A2"
     },
     "contact": {
       "title": "Contact",

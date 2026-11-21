@@ -1,14 +1,13 @@
 ---
-// Hero: nombre, puesto, presentación, especialidades, datos rápidos y mosaico de 6 piezas.
-// M26: sin animación de entrada; el hero y el mosaico se ven completos en el primer frame.
-// El primer trabajo se ve sin scroll en 1440×900 y 360×780 (el mosaico va antes que los datos
-// en mobile).
-import { getCollection } from 'astro:content';
+// Hero: nombre, puesto, presentación, especialidades, datos rápidos y foto.
+// Sin mosaico de piezas (pedido de Franco, 21 nov; ver decisiones D9): las piezas viven en
+// 01 Trabajos. La foto es provisoria hasta definir un arreglo gráfico o ilustración.
+// M26: sin animación de entrada.
+import { Picture } from 'astro:assets';
+import portrait from '../assets/franco/franco-colucci-retrato.png';
 import Button from './Button.astro';
 import CvButton from './CvButton.astro';
-import PieceTile from './PieceTile.astro';
 import { type Lang, useDictionary, useTranslations } from '../i18n/utils';
-import { mosaic, pieceHref, resolvePieces } from '../lib/home';
 
 interface Props {
   lang: Lang;
@@ -17,7 +16,6 @@ interface Props {
 const { lang } = Astro.props;
 const t = useTranslations(lang);
 const hero = useDictionary(lang).home.hero;
-const pieces = resolvePieces(await getCollection('casos'), mosaic);
 ---
 
 <section class="hero container" aria-labelledby="hero-title">
@@ -33,24 +31,17 @@ const pieces = resolvePieces(await getCollection('casos'), mosaic);
     </ul>
   </div>
 
-  <div class="mosaic-wrap">
-    <h2 class="visually-hidden">{hero.mosaicLabel}</h2>
-    <ul class="mosaic" role="list">
-      {pieces.map(({ caso, cliente, pieza }, i) => (
-        <li>
-          <PieceTile
-            lang={lang}
-            caso={caso}
-            cliente={cliente}
-            pieza={pieza}
-            href={pieceHref(lang, caso, pieza.slug)}
-            priority={i < 4}
-            sizes="(min-width: 80rem) 20vw, (min-width: 48rem) 30vw, 46vw"
-          />
-        </li>
-      ))}
-    </ul>
-  </div>
+  <figure class="photo">
+    <Picture
+      src={portrait}
+      alt={hero.photoAlt}
+      formats={['avif', 'webp']}
+      widths={[320, 480, 600]}
+      sizes="(min-width: 80rem) 30vw, (min-width: 48rem) 40vw, 80vw"
+      loading="eager"
+      fetchpriority="high"
+    />
+  </figure>
 
   <div class="details">
     <dl class="facts" aria-label={hero.factsLabel}>
@@ -73,14 +64,18 @@ const pieces = resolvePieces(await getCollection('casos'), mosaic);
 <style>
   .hero {
     display: grid;
-    grid-template-areas: 'intro' 'mosaic' 'details';
+    grid-template-areas: 'intro' 'details' 'photo';
     gap: var(--space-6) var(--grid-gutter);
     padding-block: var(--space-6) var(--space-section);
 
-    @media (min-width: 80rem) {
-      grid-template-columns: 5fr 7fr;
-      grid-template-areas: 'intro mosaic' 'details mosaic';
+    @media (min-width: 48rem) {
+      grid-template-columns: 3fr 2fr;
+      grid-template-areas: 'intro photo' 'details photo';
       align-items: start;
+    }
+
+    @media (min-width: 80rem) {
+      grid-template-columns: 7fr 5fr;
       padding-block-start: var(--space-7);
     }
   }
@@ -132,25 +127,19 @@ const pieces = resolvePieces(await getCollection('casos'), mosaic);
     color: var(--color-text-secondary);
   }
 
-  /* Mosaico: columnas tipo masonry; cada pieza en su proporción real */
-  .mosaic-wrap {
-    grid-area: mosaic;
+  /* Foto provisoria (D9): retrato 4:5 sobre el escenario */
+  .photo {
+    grid-area: photo;
+    aspect-ratio: var(--ratio-carousel);
+    overflow: hidden;
+    background-color: var(--color-stage);
   }
 
-  .mosaic {
-    columns: 2;
-    column-gap: var(--grid-gutter);
-    padding: 0;
-    list-style: none;
-
-    @media (min-width: 48rem) {
-      columns: 3;
-    }
-  }
-
-  .mosaic li {
-    break-inside: avoid;
-    padding-block-end: var(--space-5);
+  .photo :global(img) {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+    object-position: top;
   }
 
   .details {

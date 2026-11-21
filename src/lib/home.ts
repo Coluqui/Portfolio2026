@@ -10,16 +10,6 @@ export interface PieceRef {
   slug: string;
 }
 
-/** Mosaico del hero: 6 lugares, uno por formato (un carrusel = un lugar). Orden de lectura. */
-export const mosaic: PieceRef[] = [
-  { caso: 'iscamen', slug: 'bioinsumos' },
-  { caso: 'moondesk', slug: 'nacimos-de-un-error' },
-  { caso: 'carpa', slug: 'metodo-carpa' },
-  { caso: 'condimento', slug: 'trafico-sin-ventas' },
-  { caso: 'iscamen', slug: 'mujer-en-la-ciencia' },
-  { caso: 'moondesk', slug: 'errores-packaging' },
-];
-
 /** "Trabajé con" (PRD §3). Texto hasta tener los logos en SVG monocromo. */
 export const clients = ['ISCAMEN', 'MoonDesk', 'Carpa', 'Condimento', 'RLB', 'Interlink'];
 

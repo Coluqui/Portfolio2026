@@ -47,15 +47,6 @@ const services = useDictionary(lang).home.services;
       </li>
     ))}
   </ol>
-
-  <div class="tools">
-    <h3 class="label tools__title">{t('home.services.toolsTitle')}</h3>
-    <ul role="list">
-      {services.tools.map((tool) => (
-        <li class="label">{tool}</li>
-      ))}
-    </ul>
-  </div>
 </section>
 
 <style>
@@ -195,30 +186,6 @@ const services = useDictionary(lang).home.services;
     [data-accordion] .plus {
       transition: none;
     }
-  }
-
-  .tools {
-    display: grid;
-    gap: var(--space-3);
-    margin-block-start: var(--space-7);
-  }
-
-  .tools__title {
-    color: var(--color-text-secondary);
-  }
-
-  .tools ul {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2);
-    padding: 0;
-    list-style: none;
-  }
-
-  .tools li {
-    padding: var(--space-1) var(--space-3);
-    border: var(--border-hairline);
-    border-radius: var(--radius-xs);
   }
 </style>
 

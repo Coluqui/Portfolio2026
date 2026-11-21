@@ -16,7 +16,7 @@
     "home": "Franco Colucci, inicio",
     "trabajos": "Trabajos",
     "queHago": "Qué hago",
-    "proceso": "Proceso",
+    "herramientas": "Herramientas",
     "sobreMi": "Sobre mí",
     "contacto": "Contacto",
     "openMenu": "Abrir menú",
@@ -112,7 +112,7 @@
     "status": "Sitio en construcción. Pronto, el trabajo.",
     "hero": {
       "eyebrow": "Mendoza, Argentina · Remoto o presencial",
-      "bio": "Diseño piezas de redes, ads de performance, mails, ebooks y webs que comunican claro y rinden. Más de 7 años con organismos públicos y marcas privadas, con base en UX/UI y un flujo de trabajo con IA.",
+      "bio": "Diseño piezas de redes, ads de performance, mails, ebooks y webs que comunican claro y rinden. Más de 5 años con organismos públicos y marcas privadas, con base en UX/UI y un flujo de trabajo con IA.",
       "expertiseLabel": "Especialidades",
       "expertise": [
         "Redes sociales",
@@ -126,11 +126,11 @@
       "facts": [
         {
           "label": "Experiencia",
-          "value": "Más de 7 años"
+          "value": "Más de 5 años"
         },
         {
           "label": "Idiomas",
-          "value": "Español nativo · Inglés B1 · Italiano A2"
+          "value": "Español nativo · Inglés B2 · Italiano A2"
         },
         {
           "label": "Modalidad",
@@ -138,7 +138,7 @@
         }
       ],
       "ctaWork": "Ver trabajos",
-      "mosaicLabel": "Trabajos destacados"
+      "photoAlt": "Retrato de Franco Colucci en blanco y negro, con trama de puntos, sonriendo y con remera oscura."
     },
     "clients": {
       "title": "Trabajé con"
@@ -178,87 +178,107 @@
           "title": "Sistemas en Figma",
           "text": "Componentes y plantillas que ordenan la producción y mantienen la marca igual en todos los canales."
         }
-      ],
-      "toolsTitle": "Herramientas",
-      "tools": [
-        "Illustrator",
-        "Photoshop",
-        "InDesign",
-        "Figma",
-        "WordPress",
-        "Elementor",
-        "Claude Code",
-        "ChatGPT",
-        "Antigravity"
       ]
     },
-    "process": {
-      "title": "Proceso + IA",
-      "intro": "La IA acelera la producción; el criterio de diseño sigue siendo mío.",
-      "steps": [
+    "tools": {
+      "title": "Herramientas e IA",
+      "intro": "El software con el que produzco cada pieza y para qué uso cada uno.",
+      "groups": [
         {
-          "title": "Brief",
-          "text": "Entiendo el objetivo, el canal y cómo se va a medir antes de abrir un archivo."
+          "title": "Diseño",
+          "items": [
+            {
+              "name": "Adobe Illustrator",
+              "icon": "design",
+              "use": "Identidad, ilustración y piezas vectoriales."
+            },
+            {
+              "name": "Adobe Photoshop",
+              "icon": "design",
+              "use": "Retoque, composición y piezas para redes y ads."
+            },
+            {
+              "name": "Adobe InDesign",
+              "icon": "design",
+              "use": "Ebooks, one-pagers y documentos editoriales."
+            },
+            {
+              "name": "Figma",
+              "icon": "figma",
+              "use": "Interfaces, sistemas de diseño y plantillas."
+            },
+            {
+              "name": "Canva",
+              "icon": "templates",
+              "use": "Plantillas editables para equipos de marketing."
+            }
+          ]
         },
         {
-          "title": "Sistema",
-          "text": "Armo plantillas y componentes en Figma para que cada pieza nueva salga rápido y consistente."
+          "title": "Video y motion",
+          "items": [
+            {
+              "name": "Adobe After Effects",
+              "icon": "video",
+              "use": "Motion graphics y animación de piezas."
+            },
+            {
+              "name": "Adobe Premiere Pro",
+              "icon": "video",
+              "use": "Edición de video y reels."
+            },
+            {
+              "name": "CapCut",
+              "icon": "video",
+              "use": "Reels y edición rápida para redes."
+            }
+          ]
         },
         {
-          "title": "Producción con IA",
-          "text": "Uso Claude Code, ChatGPT y Antigravity para acelerar variantes, textos de prueba y maquetado."
+          "title": "Web",
+          "items": [
+            {
+              "name": "WordPress",
+              "icon": "wordpress",
+              "use": "Sitios con Elementor, responsive y fáciles de mantener."
+            }
+          ]
         },
         {
-          "title": "Entrega y ajuste",
-          "text": "Valido con el cliente, entrego en todos los formatos y ajusto según cómo rinden las piezas."
+          "title": "IA y vibe coding",
+          "items": [
+            {
+              "name": "ChatGPT",
+              "icon": "ai",
+              "use": "Ideas, textos de prueba y apoyo en la producción."
+            },
+            {
+              "name": "Nano Banana (Gemini)",
+              "icon": "gemini",
+              "use": "Generación y edición de imágenes."
+            },
+            {
+              "name": "Claude Code",
+              "icon": "claude",
+              "use": "Vibe coding: sitios, design systems y video."
+            },
+            {
+              "name": "ElevenLabs",
+              "icon": "elevenlabs",
+              "use": "Voces, locuciones y audio."
+            }
+          ]
         }
       ]
     },
     "about": {
       "title": "Sobre mí",
       "bio": [
-        "Soy diseñador gráfico por la Universidad Nacional de Cuyo y me especialicé en diseño digital y UX/UI. Desde 2021 diseño la comunicación de ISCAMEN y, con Sette Agency, trabajo para marcas privadas en redes, ads, mails y webs.",
-        "Trabajo cerca de los equipos: del brief a la entrega final, coordinando tiempos y ajustes con cada cliente."
-      ],
-      "photoAlt": "Retrato de Franco Colucci en blanco y negro, con trama de puntos, sonriendo y con remera oscura.",
-      "experienceTitle": "Experiencia",
-      "experience": [
-        {
-          "company": "ISCAMEN",
-          "role": "Diseñador gráfico y digital",
-          "period": "Abr 2021 – actualidad"
-        },
-        {
-          "company": "Sette Agency",
-          "role": "Diseñador digital y web (freelance)",
-          "period": "Ene 2023 – actualidad"
-        },
-        {
-          "company": "Grupo Nexia",
-          "role": "Diseñador gráfico y digital",
-          "period": "Jul 2024 – Ene 2025"
-        }
-      ],
-      "educationTitle": "Formación",
-      "education": [
-        {
-          "title": "Diseño Gráfico",
-          "place": "Universidad Nacional de Cuyo",
-          "period": "2011 – 2020"
-        },
-        {
-          "title": "Diseño UX/UI (avanzado, 7 meses)",
-          "place": "Codo a Codo",
-          "period": "2023"
-        },
-        {
-          "title": "Diseño UX/UI (intensivo, 4 meses)",
-          "place": "Coderhouse",
-          "period": "2022"
-        }
+        "Soy diseñador gráfico por la Universidad Nacional de Cuyo, con formación en UX/UI (Coderhouse y Codo a Codo). Hace más de 5 años diseño para organismos públicos, empresas y agencias: ISCAMEN, Grupo Nexia y Sette Agency, y marcas como MoonDesk, Condimento, Carpa, RLB e Interlink.",
+        "Trabajo cerca de los equipos, del brief a la entrega final, y uso la IA para producir más rápido sin resignar criterio."
       ],
       "languagesTitle": "Idiomas",
-      "languages": "Español nativo · Inglés B1 · Italiano A2"
+      "languages": "Español nativo · Inglés B2 · Italiano A2"
     },
     "contact": {
       "title": "Contacto",

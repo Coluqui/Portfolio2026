@@ -1,0 +1,108 @@
+---
+// 03 Herramientas e IA: software agrupado por área, cada uno con ícono (monocromo) y para
+// qué lo usa Franco. Reemplaza a "Proceso + IA" (pedido de Franco, 21 nov; ver decisiones D10).
+import SectionHeader from './SectionHeader.astro';
+import ToolIcon from './ToolIcon.astro';
+import { type Lang, useDictionary } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+type IconName = Parameters<typeof ToolIcon>[0]['name'];
+
+const { lang } = Astro.props;
+const tools = useDictionary(lang).home.tools;
+---
+
+<section id="herramientas" class="container tools" aria-labelledby="tools-title">
+  <SectionHeader num="03" id="tools-title" title={tools.title} intro={tools.intro} />
+
+  <div class="groups">
+    {tools.groups.map((group) => (
+      <div class="group">
+        <h3 class="label group__title">{group.title}</h3>
+        <ul class="list" role="list">
+          {group.items.map((item) => (
+            <li class="tool">
+              <span class="tool__icon">
+                <ToolIcon name={item.icon as IconName} />
+              </span>
+              <span class="tool__text">
+                <span class="tool__name">{item.name}</span>
+                <span class="tool__use">{item.use}</span>
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .tools {
+    padding-block-start: var(--space-section);
+  }
+
+  .groups {
+    display: grid;
+    gap: var(--space-7) var(--grid-gutter);
+
+    @media (min-width: 48rem) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .group {
+    display: grid;
+    gap: var(--space-3);
+    align-content: start;
+  }
+
+  .group__title {
+    padding-block-end: var(--space-2);
+    border-block-end: var(--border-control);
+    color: var(--color-text-secondary);
+  }
+
+  .list {
+    display: grid;
+    padding: 0;
+    list-style: none;
+  }
+
+  .tool {
+    display: flex;
+    gap: var(--space-4);
+    align-items: center;
+    padding-block: var(--space-3);
+    border-block-end: var(--border-hairline);
+  }
+
+  .tool__icon {
+    display: grid;
+    place-items: center;
+    flex: none;
+    inline-size: var(--control-height);
+    block-size: var(--control-height);
+    border: var(--border-hairline);
+    border-radius: var(--radius-xs);
+    color: var(--color-text-primary);
+  }
+
+  .tool__text {
+    display: grid;
+    gap: var(--space-1);
+  }
+
+  .tool__name {
+    font-weight: var(--weight-strong);
+  }
+
+  .tool__use {
+    font-size: var(--text-small);
+    line-height: var(--leading-small);
+    color: var(--color-text-secondary);
+  }
+</style>
