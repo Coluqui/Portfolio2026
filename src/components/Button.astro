@@ -145,11 +145,11 @@ const Tag = href && !disabled ? 'a' : 'button';
     transition: transform var(--duration-fast) var(--ease-out);
   }
 
-  /* M30 · hover: fondo un tono más alto y la flecha avanza 4 px */
+  /* M30 · hover: los botones principales pasan al naranja de acción (D13); la flecha avanza 4 px */
   @media (hover: hover) and (pointer: fine) {
     .button--primary:not(:disabled):hover {
-      border-color: var(--color-text-secondary);
-      background-color: var(--color-text-secondary);
+      border-color: var(--color-action-hover);
+      background-color: var(--color-action-hover);
     }
 
     .button--secondary:not(:disabled):hover,
@@ -171,8 +171,8 @@ const Tag = href && !disabled ? 'a' : 'button';
   }
 
   .button--primary[data-force='hover'] {
-    border-color: var(--color-text-secondary);
-    background-color: var(--color-text-secondary);
+    border-color: var(--color-action-hover);
+    background-color: var(--color-action-hover);
   }
 
   .button--secondary[data-force='hover'],

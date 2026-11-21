@@ -5,29 +5,13 @@
   "portada": "bioinsumos",
   "destacado": "bioinsumos",
   "destacadas": ["bioinsumos", "citricos", "huerto-urbano", "mujer-en-la-ciencia"],
-  "titulo": {
-    "es": "TODO(contenido): nombre del caso iscamen",
-    "en": "TODO(contenido): nombre del caso iscamen"
-  },
   "rol": {
-    "es": "TODO(contenido): mi rol",
-    "en": "TODO(contenido): mi rol"
+    "es": "Lead Digital Designer",
+    "en": "Lead Digital Designer"
   },
-  "contexto": {
-    "es": "TODO(contenido): contexto",
-    "en": "TODO(contenido): contexto"
-  },
-  "desafio": {
-    "es": "TODO(contenido): desafío",
-    "en": "TODO(contenido): desafío"
-  },
-  "solucion": {
-    "es": "TODO(contenido): solución",
-    "en": "TODO(contenido): solución"
-  },
-  "resultado": {
-    "es": "TODO(contenido): resultado",
-    "en": "TODO(contenido): resultado"
+  "descripcion": {
+    "es": "ISCAMEN es el organismo de sanidad y calidad agropecuaria de Mendoza. Lidero su diseño digital desde 2021: campañas para redes, ciclos de capacitación y comunicación institucional que traduce información técnica en piezas claras para productores y vecinos.",
+    "en": "ISCAMEN is the agricultural health and quality agency of Mendoza, Argentina. I have led its digital design since 2021: social campaigns, training series and institutional communication that turn technical information into clear pieces for growers and the public."
   },
   "metricas": [],
   "entregables": [],

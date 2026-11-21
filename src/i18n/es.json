@@ -308,11 +308,7 @@
     "pieces": "Piezas",
     "next": "Siguiente caso",
     "labels": {
-      "rol": "Mi rol",
-      "contexto": "Contexto",
-      "desafio": "Desafío",
-      "solucion": "Solución",
-      "resultado": "Resultado"
+      "rol": "Mi rol"
     },
     "strip": "Carrusel destacado",
     "stripHint": "Deslizá para ver los slides. Tocá uno para abrirlo en el visor.",

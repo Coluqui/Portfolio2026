@@ -8,9 +8,7 @@ Actualizado: 21 nov 2026 (Fase 4).
 
 Por cada uno de los 4 casos (MoonDesk, ISCAMEN, Condimento, Carpa):
 
-- [ ] Nombre o título del caso (ES/EN)
-- [ ] Mi rol
-- [ ] Contexto, desafío, solución y resultado (2–3 líneas cada uno). Pasame los datos y redacto yo
+- [ ] **Revisar** el rol y la explicación breve de cada caso (borradores de Claude, D14). ISCAMEN: Lead Digital Designer (dato tuyo); MoonDesk, Condimento y Carpa: confirmar rol y que lo que dice cada descripción sea correcto (por ejemplo, que Condimento es una agencia de marketing)
 - [ ] 1–4 métricas reales. Sin dato no se muestra nada; nunca se inventa
 - [ ] Entregables
 - [ ] Objetivo en una línea por pieza (23 piezas; puede quedar vacío en las piezas simples)

@@ -42,14 +42,6 @@ const coverSlide = cover?.slides[0];
 const stripIndex = caso.piezas.findIndex((p) => p.slug === caso.destacado);
 const strip = caso.piezas[stripIndex];
 
-const texts = [
-  ['contexto', caso.contexto],
-  ['desafio', caso.desafio],
-  ['solucion', caso.solucion],
-  ['resultado', caso.resultado],
-] as const;
-const isTodo = (s: string) => s.startsWith('TODO(contenido)');
-
 // Textos del caso: entran 8 px desde abajo después del elemento compartido (M10).
 const rise = {
   forwards: {
@@ -69,11 +61,7 @@ const rise = {
 };
 ---
 
-<Page
-  lang={lang}
-  title={caso.cliente}
-  description={isTodo(caso.contexto[lang]) ? undefined : caso.contexto[lang]}
->
+<Page lang={lang} title={caso.cliente} description={caso.descripcion[lang]}>
   <article class="case">
     <header class="container hero">
       <a class="back label" href={`/${lang}/#trabajos`}>
@@ -81,22 +69,19 @@ const rise = {
         {t('case.back')}
       </a>
       <div class="hero__text">
-        <p class="label muted">
-          {caso.piezas.length}
-          {t('case.pieces').toLowerCase()} · {t('case.labels.rol')}: {caso.rol[lang]}
-        </p>
+        <p class="label muted">{`${caso.piezas.length} ${t('case.pieces').toLowerCase()}`}</p>
         <h1
           style={`view-transition-name: case-title-${caso.slug}; view-transition-class: case-morph`}
         >
           {caso.cliente}
         </h1>
-        <p
-          class:list={['lead', { todo: isTodo(caso.titulo[lang]) }]}
-          transition:name={`case-lead-${caso.slug}`}
-          transition:animate={rise}
-        >
-          {caso.titulo[lang]}
-        </p>
+        <div class="intro" transition:name={`case-lead-${caso.slug}`} transition:animate={rise}>
+          <p class="role">
+            <span class="label muted">{t('case.labels.rol')}</span>
+            <span>{caso.rol[lang]}</span>
+          </p>
+          <p class="lead">{caso.descripcion[lang]}</p>
+        </div>
       </div>
       {cover && coverSlide && (
         <a
@@ -140,31 +125,18 @@ const rise = {
       </section>
     )}
 
-    <section
-      class="container texts"
-      aria-label={caso.cliente}
-      transition:name={`case-texts-${caso.slug}`}
-      transition:animate={rise}
-    >
-      <dl>
-        {texts.map(([key, value]) => (
-          <div>
-            <dt class="label">{t(`case.labels.${key}`)}</dt>
-            <dd class:list={{ todo: isTodo(value[lang]) }}>{value[lang]}</dd>
-          </div>
-        ))}
-      </dl>
-      {caso.entregables.length > 0 && (
-        <div class="deliverables">
-          <h2 class="label muted">{t('case.deliverables')}</h2>
-          <ul role="list">
-            {caso.entregables.map((d) => (
-              <li>{d[lang]}</li>
-            ))}
-          </ul>
-        </div>
-      )}
-    </section>
+    {caso.entregables.length > 0 && (
+      <section class="container deliverables" aria-labelledby="deliverables-title">
+        <h2 id="deliverables-title" class="label muted">
+          {t('case.deliverables')}
+        </h2>
+        <ul role="list">
+          {caso.entregables.map((d) => (
+            <li>{d[lang]}</li>
+          ))}
+        </ul>
+      </section>
+    )}
 
     {strip && stripIndex >= 0 && (
       <ContactStrip
@@ -274,6 +246,20 @@ const rise = {
     letter-spacing: var(--tracking-display);
   }
 
+  .intro {
+    display: grid;
+    gap: var(--space-3);
+    max-inline-size: var(--measure);
+  }
+
+  .role {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-1) var(--space-3);
+    font-weight: var(--weight-strong);
+  }
+
   .lead {
     max-inline-size: var(--measure);
     font-size: var(--text-lead);
@@ -348,41 +334,10 @@ const rise = {
     line-height: var(--leading-h1);
   }
 
-  /* ---- Textos ---- */
-  .texts {
+  .deliverables {
     display: grid;
-    gap: var(--space-7);
-    padding-block: var(--space-8);
-    border-block-start: var(--border-rule);
-  }
-
-  .texts dl {
-    display: grid;
-    gap: var(--space-6) var(--grid-gutter);
-
-    @media (min-width: 48rem) {
-      grid-template-columns: 1fr 1fr;
-    }
-  }
-
-  .texts div {
-    display: grid;
-    gap: var(--space-2);
-    align-content: start;
-  }
-
-  .texts dt {
-    color: var(--color-accent-text);
-  }
-
-  .texts dd {
-    max-inline-size: var(--measure);
-    margin: 0;
-  }
-
-  .texts dd.todo,
-  .lead.todo {
-    color: var(--color-text-secondary);
+    gap: var(--space-3);
+    padding-block-end: var(--space-8);
   }
 
   .deliverables ul {

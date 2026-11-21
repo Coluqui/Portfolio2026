@@ -4,29 +4,13 @@
   "orden": 4,
   "portada": "metodo-carpa",
   "destacadas": ["metodo-carpa", "bonos", "oferta-lanzamiento"],
-  "titulo": {
-    "es": "TODO(contenido): nombre del caso carpa",
-    "en": "TODO(contenido): nombre del caso carpa"
-  },
   "rol": {
-    "es": "TODO(contenido): mi rol",
-    "en": "TODO(contenido): mi rol"
+    "es": "Diseñador gráfico del lanzamiento",
+    "en": "Launch Graphic Designer"
   },
-  "contexto": {
-    "es": "TODO(contenido): contexto",
-    "en": "TODO(contenido): contexto"
-  },
-  "desafio": {
-    "es": "TODO(contenido): desafío",
-    "en": "TODO(contenido): desafío"
-  },
-  "solucion": {
-    "es": "TODO(contenido): solución",
-    "en": "TODO(contenido): solución"
-  },
-  "resultado": {
-    "es": "TODO(contenido): resultado",
-    "en": "TODO(contenido): resultado"
+  "descripcion": {
+    "es": "Método Carpa es un curso para brokers de autos. Diseñé las piezas de su lanzamiento: portadas de módulos y bonos, el banner de la oferta y el mockup del producto completo, con un sistema visual común para todo el curso.",
+    "en": "Método Carpa is a course for car brokers. I designed its launch assets: module and bonus covers, the offer banner and the full product mockup, all under one shared visual system."
   },
   "metricas": [],
   "entregables": [],

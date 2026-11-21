@@ -5,29 +5,13 @@
   "portada": "nacimos-de-un-error",
   "destacado": "nacimos-de-un-error",
   "destacadas": ["nacimos-de-un-error", "errores-packaging", "dia-de-la-tierra", "validaciones"],
-  "titulo": {
-    "es": "TODO(contenido): nombre del caso moondesk",
-    "en": "TODO(contenido): nombre del caso moondesk"
-  },
   "rol": {
-    "es": "TODO(contenido): mi rol",
-    "en": "TODO(contenido): mi rol"
+    "es": "Diseñador gráfico y digital",
+    "en": "Graphic & Digital Designer"
   },
-  "contexto": {
-    "es": "TODO(contenido): contexto",
-    "en": "TODO(contenido): contexto"
-  },
-  "desafio": {
-    "es": "TODO(contenido): desafío",
-    "en": "TODO(contenido): desafío"
-  },
-  "solucion": {
-    "es": "TODO(contenido): solución",
-    "en": "TODO(contenido): solución"
-  },
-  "resultado": {
-    "es": "TODO(contenido): resultado",
-    "en": "TODO(contenido): resultado"
+  "descripcion": {
+    "es": "MoonDesk es una plataforma para gestionar y aprobar artes de packaging. Diseñé su comunicación digital: carruseles y posteos para redes, ebooks y one-pagers comerciales, con un estilo ilustrado que explica el producto a partir de historias simples.",
+    "en": "MoonDesk is a platform to manage and approve packaging artwork. I designed its digital communication: social carousels and posts, ebooks and sales one-pagers, with an illustrated style that explains the product through simple stories."
   },
   "metricas": [],
   "entregables": [],

@@ -4,29 +4,13 @@
   "orden": 3,
   "portada": "trafico-sin-ventas",
   "destacadas": ["trafico-sin-ventas", "auditoria", "no-funciona"],
-  "titulo": {
-    "es": "TODO(contenido): nombre del caso condimento",
-    "en": "TODO(contenido): nombre del caso condimento"
-  },
   "rol": {
-    "es": "TODO(contenido): mi rol",
-    "en": "TODO(contenido): mi rol"
+    "es": "Diseñador de ads",
+    "en": "Ad Designer"
   },
-  "contexto": {
-    "es": "TODO(contenido): contexto",
-    "en": "TODO(contenido): contexto"
-  },
-  "desafio": {
-    "es": "TODO(contenido): desafío",
-    "en": "TODO(contenido): desafío"
-  },
-  "solucion": {
-    "es": "TODO(contenido): solución",
-    "en": "TODO(contenido): solución"
-  },
-  "resultado": {
-    "es": "TODO(contenido): resultado",
-    "en": "TODO(contenido): resultado"
+  "descripcion": {
+    "es": "Condimento es una agencia de marketing digital. Diseñé ads de performance para captar clientes con una auditoría gratuita, con mensajes directos y variantes para probar, y aplicaciones de su marca.",
+    "en": "Condimento is a digital marketing agency. I designed performance ads to attract clients with a free audit, using direct messages and variants to test, plus applications of its brand."
   },
   "metricas": [],
   "entregables": [],

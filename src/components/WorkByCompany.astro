@@ -21,6 +21,7 @@ const casos = (await getCollection('casos')).sort((a, b) => a.data.orden - b.dat
 const groups = casos.map((entry) => ({
   slug: entry.data.slug,
   cliente: entry.data.cliente,
+  rol: entry.data.rol[lang],
   portada: entry.data.portada,
   total: entry.data.piezas.length,
   pieces: resolvePieces(
@@ -50,12 +51,15 @@ const options = filterOptions(
     {groups.map((group) => (
       <article class="company" data-company aria-labelledby={`company-${group.slug}`}>
         <header class="company__head">
-          <h3
-            id={`company-${group.slug}`}
-            style={`view-transition-name: case-title-${group.slug}; view-transition-class: case-morph`}
-          >
-            {group.cliente}
-          </h3>
+          <div class="company__who">
+            <h3
+              id={`company-${group.slug}`}
+              style={`view-transition-name: case-title-${group.slug}; view-transition-class: case-morph`}
+            >
+              {group.cliente}
+            </h3>
+            <p class="label muted">{group.rol}</p>
+          </div>
           <a class="company__link" href={`/${lang}/trabajos/${group.slug}/`} data-case-link>
             <span>{t('home.work.viewCase')}</span>
             <span class="label muted">{t('home.work.piecesInCase', { n: group.total })}</span>
@@ -124,6 +128,11 @@ const options = filterOptions(
     gap: var(--space-2) var(--space-5);
     padding-block-end: var(--space-3);
     border-block-end: var(--border-hairline);
+  }
+
+  .company__who {
+    display: grid;
+    gap: var(--space-1);
   }
 
   .company__link {

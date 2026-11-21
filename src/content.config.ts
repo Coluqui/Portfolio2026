@@ -67,12 +67,10 @@ const casos = defineCollection({
       cliente: z.string().min(1),
       /** Orden en Trabajos y para "Siguiente caso". */
       orden: z.number().int().positive(),
-      titulo: i18nText,
+      /** Mi rol en el caso (p. ej. "Lead Digital Designer"). */
       rol: i18nText,
-      contexto: i18nText,
-      desafio: i18nText,
-      solucion: i18nText,
-      resultado: i18nText,
+      /** Explicación breve del trabajo: qué es el cliente y qué diseñé (2–3 líneas). */
+      descripcion: i18nText,
       metricas: z.array(metrica).max(4),
       entregables: z.array(i18nText),
       /** Slug de la pieza que hace de portada (tarjeta y hero del caso). */

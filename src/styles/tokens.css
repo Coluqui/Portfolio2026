@@ -1,6 +1,6 @@
 /* ==========================================================================
    Portfolio Franco Colucci — Design tokens · "Ficha de producción"
-   v1.2 · 2026-11-20 (motion · Etapa 6) + D3 (ratios A4 y landing, Fase 1) + D8 (texto sobre velo, Fase 5)
+   v1.2 · 2026-11-20 (motion · Etapa 6) + D3 (ratios A4 y landing, Fase 1) + D8 (texto sobre velo, Fase 5) + D13 (hover de acción)
    Modo: <html data-theme="light|dark">. Sin atributo, sigue al sistema.
    Fuentes: Instrument Sans (400, 600) + Geist Mono (400, 500) — self-hosted (D1).
    ========================================================================== */
@@ -43,6 +43,7 @@
   --color-accent: var(--signal-600);
   --color-accent-text: var(--signal-700);
   --color-accent-text-hover: var(--signal-800);
+  --color-action-hover: var(--signal-700);   /* D13 · hover de botones principales (5,5:1 con el texto) */
   --color-success: var(--green-700);
   --color-success-bg: #DCE6DF;
   --color-danger: var(--crimson-700);
@@ -195,6 +196,7 @@
   --color-accent: var(--signal-500);
   --color-accent-text: var(--signal-400);
   --color-accent-text-hover: var(--signal-300);
+  --color-action-hover: var(--signal-400);
   --color-success: var(--green-300);
   --color-success-bg: #1E2C25;
   --color-danger: var(--crimson-300);
@@ -222,6 +224,7 @@
     --color-accent: var(--signal-500);
     --color-accent-text: var(--signal-400);
     --color-accent-text-hover: var(--signal-300);
+    --color-action-hover: var(--signal-400);
     --color-success: var(--green-300);
     --color-success-bg: #1E2C25;
     --color-danger: var(--crimson-300);

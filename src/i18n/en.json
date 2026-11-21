@@ -308,11 +308,7 @@
     "pieces": "Pieces",
     "next": "Next case",
     "labels": {
-      "rol": "My role",
-      "contexto": "Context",
-      "desafio": "Challenge",
-      "solucion": "Solution",
-      "resultado": "Result"
+      "rol": "My role"
     },
     "strip": "Featured carousel",
     "stripHint": "Swipe to see the slides. Tap one to open it in the viewer.",
