@@ -100,20 +100,50 @@ async function applyFilter(root: HTMLElement, id: string): Promise<void> {
   });
 }
 
+/** Flujo 2 (PRD §6): los links a los casos llevan el filtro activo (?filtro=<id>). */
+function syncCaseLinks(root: HTMLElement, id: string): void {
+  root.querySelectorAll<HTMLAnchorElement>('[data-case-link]').forEach((link) => {
+    const url = new URL(link.href);
+    if (id === 'todo') url.searchParams.delete('filtro');
+    else url.searchParams.set('filtro', id);
+    link.href = url.pathname + url.search + url.hash;
+  });
+}
+
 export function initWorkFilters(): void {
   controller?.abort();
   controller = new AbortController();
   const { signal } = controller;
 
-  const root = document.querySelector<HTMLElement>('[data-work]');
-  const section = root?.closest('section');
-  if (!root || !section) return;
+  const initial = new URL(location.href).searchParams.get('filtro');
 
-  section.addEventListener(
-    'filterchange',
-    (event) => void applyFilter(root, (event as CustomEvent<FilterChangeDetail>).detail.id),
-    { signal },
-  );
+  document.querySelectorAll<HTMLElement>('[data-work]').forEach((root) => {
+    const section = root.closest('section');
+    if (!section) return;
+
+    section.addEventListener(
+      'filterchange',
+      (event) => {
+        const { id } = (event as CustomEvent<FilterChangeDetail>).detail;
+        syncCaseLinks(root, id);
+        void applyFilter(root, id);
+      },
+      { signal },
+    );
+
+    // Llega con ?filtro=<id>: se activa ese chip (sin animar, antes de que se vea).
+    if (initial) {
+      const chip = section.querySelector<HTMLButtonElement>(
+        `[data-filter="${CSS.escape(initial)}"]`,
+      );
+      if (chip && chip.getAttribute('aria-pressed') !== 'true') {
+        const items = [...root.querySelectorAll<HTMLElement>('[data-work-item]')];
+        settle(root, items, (el) => el.dataset.familia === initial);
+        // Al frame siguiente: los chips (FilterChips) ya registraron sus listeners.
+        requestAnimationFrame(() => chip.click());
+      }
+    }
+  });
 
   document.addEventListener(
     'astro:before-swap',

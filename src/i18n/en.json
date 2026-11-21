@@ -289,6 +289,30 @@
       "desafio": "Challenge",
       "solucion": "Solution",
       "resultado": "Result"
-    }
+    },
+    "strip": "Featured carousel",
+    "stripHint": "Swipe to see the slides. Tap one to open it in the viewer.",
+    "stripPrev": "See previous slides",
+    "stripNext": "See more slides",
+    "metrics": "Results",
+    "deliverables": "Deliverables",
+    "allPieces": "All pieces",
+    "role": "Role"
+  },
+  "viewer": {
+    "label": "Piece viewer",
+    "piece": "Piece {p} / {total}",
+    "slide": "Slide {s} / {n}",
+    "slideAnnounce": "Slide {s} of {n}",
+    "close": "Close viewer",
+    "prevPiece": "Previous piece",
+    "nextPiece": "Next piece",
+    "prevSlide": "Previous slide",
+    "nextSlide": "Next slide",
+    "nextPanel": "Next piece",
+    "play": "Play",
+    "pause": "Pause",
+    "carousel": "carousel",
+    "slideRole": "slide"
   }
 }

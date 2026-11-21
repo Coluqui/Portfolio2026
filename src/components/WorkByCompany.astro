@@ -21,6 +21,7 @@ const casos = (await getCollection('casos')).sort((a, b) => a.data.orden - b.dat
 const groups = casos.map((entry) => ({
   slug: entry.data.slug,
   cliente: entry.data.cliente,
+  portada: entry.data.portada,
   total: entry.data.piezas.length,
   pieces: resolvePieces(
     casos,
@@ -49,8 +50,13 @@ const options = filterOptions(
     {groups.map((group) => (
       <article class="company" data-company aria-labelledby={`company-${group.slug}`}>
         <header class="company__head">
-          <h3 id={`company-${group.slug}`}>{group.cliente}</h3>
-          <a class="company__link" href={`/${lang}/trabajos/${group.slug}/`}>
+          <h3
+            id={`company-${group.slug}`}
+            style={`view-transition-name: case-title-${group.slug}; view-transition-class: case-morph`}
+          >
+            {group.cliente}
+          </h3>
+          <a class="company__link" href={`/${lang}/trabajos/${group.slug}/`} data-case-link>
             <span>{t('home.work.viewCase')}</span>
             <span class="label muted">{t('home.work.piecesInCase', { n: group.total })}</span>
             <span class="arrow" aria-hidden="true">
@@ -67,6 +73,9 @@ const options = filterOptions(
                 cliente={cliente}
                 pieza={pieza}
                 href={pieceHref(lang, caso, pieza.slug)}
+                transitionName={
+                  pieza.slug === group.portada ? `case-cover-${group.slug}` : undefined
+                }
               />
             </li>
           ))}

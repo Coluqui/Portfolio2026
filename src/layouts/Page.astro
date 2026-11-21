@@ -23,6 +23,7 @@ const { lang, title, description, noindex } = Astro.props;
   </main>
   <SiteFooter lang={lang} />
   <BottomBar lang={lang} />
+  <slot name="overlay" />
 </Base>
 
 <style>

@@ -1,6 +1,6 @@
 /* ==========================================================================
    Portfolio Franco Colucci — Design tokens · "Ficha de producción"
-   v1.2 · 2026-11-20 (motion · Etapa 6) + D3 (ratios A4 y landing, Fase 1)
+   v1.2 · 2026-11-20 (motion · Etapa 6) + D3 (ratios A4 y landing, Fase 1) + D8 (texto sobre velo, Fase 5)
    Modo: <html data-theme="light|dark">. Sin atributo, sigue al sistema.
    Fuentes: Instrument Sans (400, 600) + Geist Mono (400, 500) — self-hosted (D1).
    ========================================================================== */
@@ -48,6 +48,8 @@
   --color-danger: var(--crimson-700);
   --color-danger-bg: #F5E0E0;
   --color-scrim: rgb(26 25 23 / 0.92);
+  --color-on-scrim: var(--paper-100);       /* D8 · texto y controles sobre el velo del visor */
+  --color-on-scrim-muted: var(--ink-300);   /* D8 · texto secundario sobre el velo */
   --shadow-mockup: 0 24px 48px -16px rgb(26 25 23 / 0.18);
   --shadow-float: 0 8px 24px rgb(26 25 23 / 0.10);
   color-scheme: light;
@@ -198,6 +200,8 @@
   --color-danger: var(--crimson-300);
   --color-danger-bg: #33191C;
   --color-scrim: rgb(10 10 9 / 0.94);
+  --color-on-scrim: var(--ink-50);
+  --color-on-scrim-muted: var(--ink-300);
   --shadow-mockup: 0 24px 48px -16px rgb(0 0 0 / 0.55);
   --shadow-float: 0 0 0 1px var(--color-border-subtle), 0 8px 24px rgb(0 0 0 / 0.45);
   color-scheme: dark;
@@ -223,6 +227,8 @@
     --color-danger: var(--crimson-300);
     --color-danger-bg: #33191C;
     --color-scrim: rgb(10 10 9 / 0.94);
+    --color-on-scrim: var(--ink-50);
+    --color-on-scrim-muted: var(--ink-300);
     --shadow-mockup: 0 24px 48px -16px rgb(0 0 0 / 0.55);
     --shadow-float: 0 0 0 1px var(--color-border-subtle), 0 8px 24px rgb(0 0 0 / 0.45);
     color-scheme: dark;

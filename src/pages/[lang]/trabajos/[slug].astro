@@ -1,11 +1,20 @@
 ---
-// Página de caso (versión base, Fase 4): título, textos del caso y todas sus piezas, para que
-// los links de la home funcionen. La plantilla completa (métricas M27, tira de contactos,
-// visor M13–M19, transición tarjeta → caso M10–M12) llega en la Fase 5.
+// Página de caso. Escaneable: título, rol, contexto, desafío, solución, resultado (ux-ui.md).
+// M10: el H1 y la portada comparten view-transition-name con el bloque de la home.
+// M27: filetes sobre las métricas (solo si hay métricas reales; nunca se inventan).
+// M29: tira de contactos del carrusel destacado. Visor (M13–M18) para todas las piezas.
+// M12: "Siguiente: <cliente>" se convierte en el H1 del caso siguiente.
+import { Picture } from 'astro:assets';
 import { getCollection } from 'astro:content';
+import ContactStrip from '../../../components/ContactStrip.astro';
+import FilterChips from '../../../components/FilterChips.astro';
 import PieceTile from '../../../components/PieceTile.astro';
+import Viewer from '../../../components/Viewer.astro';
 import { type Lang, languages, useTranslations } from '../../../i18n/utils';
 import Page from '../../../layouts/Page.astro';
+import { familiaDe, filterOptions } from '../../../lib/filters';
+import { pieceImage } from '../../../lib/piece-images';
+import { buildViewerData } from '../../../lib/viewer-data';
 
 export async function getStaticPaths() {
   const casos = await getCollection('casos');
@@ -23,67 +32,219 @@ const all = (await getCollection('casos')).sort((a, b) => a.data.orden - b.data.
 const index = all.findIndex((c) => c.data.slug === caso.slug);
 const next = all[(index + 1) % all.length]?.data;
 
-const sections = [
-  ['rol', caso.rol],
+const viewer = await buildViewerData(caso, lang);
+const coverIndex = Math.max(
+  caso.piezas.findIndex((p) => p.slug === caso.portada),
+  0,
+);
+const cover = caso.piezas[coverIndex];
+const coverSlide = cover?.slides[0];
+const stripIndex = caso.piezas.findIndex((p) => p.slug === caso.destacado);
+const strip = caso.piezas[stripIndex];
+
+const texts = [
   ['contexto', caso.contexto],
   ['desafio', caso.desafio],
   ['solucion', caso.solucion],
   ['resultado', caso.resultado],
 ] as const;
+const isTodo = (s: string) => s.startsWith('TODO(contenido)');
+
+// Textos del caso: entran 8 px desde abajo después del elemento compartido (M10).
+const rise = {
+  forwards: {
+    old: { name: 'case-fade-out', duration: 'var(--duration-fast)', easing: 'var(--ease-in)' },
+    new: {
+      name: 'case-rise',
+      duration: 'var(--duration-slow)',
+      easing: 'var(--ease-out)',
+      delay: 'var(--delay-chrome)',
+      fillMode: 'backwards',
+    },
+  },
+  backwards: {
+    old: { name: 'case-fade-out', duration: 'var(--duration-fast)', easing: 'var(--ease-in)' },
+    new: { name: 'case-rise', duration: 'var(--duration-slow)', easing: 'var(--ease-out)' },
+  },
+};
 ---
 
-<Page lang={lang} title={caso.cliente} description={caso.contexto[lang]}>
-  <div class="container case">
-    <a class="back label" href={`/${lang}/#trabajos`}>
-      <span aria-hidden="true">←</span>
-      {t('case.back')}
-    </a>
-    <h1>{caso.cliente}</h1>
-
-    <dl class="texts">
-      {sections.map(([key, value]) => (
-        <div>
-          <dt class="label">{t(`case.labels.${key}`)}</dt>
-          <dd>{value[lang]}</dd>
-        </div>
-      ))}
-    </dl>
-
-    <h2>
-      {t('case.pieces')} <span class="label muted">{caso.piezas.length}</span>
-    </h2>
-    <ul class="grid" role="list">
-      {caso.piezas.map((pieza, i) => (
-        <li id={pieza.slug}>
-          <PieceTile
-            lang={lang}
-            caso={caso.slug}
-            cliente={caso.cliente}
-            pieza={pieza}
-            href={`#${pieza.slug}`}
-            priority={i < 4}
+<Page
+  lang={lang}
+  title={caso.cliente}
+  description={isTodo(caso.contexto[lang]) ? undefined : caso.contexto[lang]}
+>
+  <article class="case">
+    <header class="container hero">
+      <a class="back label" href={`/${lang}/#trabajos`}>
+        <span aria-hidden="true">←</span>
+        {t('case.back')}
+      </a>
+      <div class="hero__text">
+        <p class="label muted">
+          {caso.piezas.length}
+          {t('case.pieces').toLowerCase()} · {t('case.labels.rol')}: {caso.rol[lang]}
+        </p>
+        <h1
+          style={`view-transition-name: case-title-${caso.slug}; view-transition-class: case-morph`}
+        >
+          {caso.cliente}
+        </h1>
+        <p
+          class:list={['lead', { todo: isTodo(caso.titulo[lang]) }]}
+          transition:name={`case-lead-${caso.slug}`}
+          transition:animate={rise}
+        >
+          {caso.titulo[lang]}
+        </p>
+      </div>
+      {cover && coverSlide && (
+        <a
+          class="hero__cover crop-host"
+          href={viewer.pieces[coverIndex]?.slides[0]?.src}
+          data-viewer-piece={coverIndex}
+          style={`view-transition-name: case-cover-${caso.slug}; view-transition-class: case-morph; --cover-ratio: var(--ratio-${cover.ratio})`}
+        >
+          <Picture
+            src={pieceImage(caso.slug, coverSlide.src)}
+            alt={coverSlide.alt[lang]}
+            formats={['avif', 'webp']}
+            widths={[480, 720, 960, 1280]}
+            sizes="(min-width: 80rem) 40vw, 90vw"
+            loading="eager"
+            fetchpriority="high"
           />
-          <p class="title">{pieza.titulo[lang]}</p>
-        </li>
-      ))}
-    </ul>
+          <span class="crop-marks" aria-hidden="true">
+            <i />
+            <i />
+            <i />
+            <i />
+          </span>
+        </a>
+      )}
+    </header>
+
+    {caso.metricas.length > 0 && (
+      <section class="container metrics" aria-labelledby="metrics-title" data-reveal>
+        <h2 id="metrics-title" class="label muted">
+          {t('case.metrics')}
+        </h2>
+        <ul role="list">
+          {caso.metricas.map((m, i) => (
+            <li style={`--i: ${i}`}>
+              <span class="metric__value">{m.valor}</span>
+              <span class="label muted">{m.etiqueta[lang]}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    <section
+      class="container texts"
+      aria-label={caso.cliente}
+      transition:name={`case-texts-${caso.slug}`}
+      transition:animate={rise}
+    >
+      <dl>
+        {texts.map(([key, value]) => (
+          <div>
+            <dt class="label">{t(`case.labels.${key}`)}</dt>
+            <dd class:list={{ todo: isTodo(value[lang]) }}>{value[lang]}</dd>
+          </div>
+        ))}
+      </dl>
+      {caso.entregables.length > 0 && (
+        <div class="deliverables">
+          <h2 class="label muted">{t('case.deliverables')}</h2>
+          <ul role="list">
+            {caso.entregables.map((d) => (
+              <li>{d[lang]}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </section>
+
+    {strip && stripIndex >= 0 && (
+      <ContactStrip
+        lang={lang}
+        caso={caso.slug}
+        pieza={strip}
+        viewerIndex={stripIndex}
+        hrefs={viewer.pieces[stripIndex]?.slides.map((s) => s.src) ?? []}
+      />
+    )}
+
+    <section class="container pieces" aria-labelledby="pieces-title">
+      <h2 id="pieces-title">
+        {t('case.allPieces')} <span class="label muted">{caso.piezas.length}</span>
+      </h2>
+      <FilterChips lang={lang} options={filterOptions(caso.piezas, lang)} controls="case-grid" />
+      <div id="case-grid" data-work>
+        <ul class="grid" role="list">
+          {caso.piezas.map((pieza, i) => (
+            <li id={pieza.slug} data-work-item data-familia={familiaDe(pieza.formato)}>
+              <PieceTile
+                lang={lang}
+                caso={caso.slug}
+                cliente={caso.cliente}
+                pieza={pieza}
+                href={viewer.pieces[i]?.slides[0]?.src ?? `#${pieza.slug}`}
+                viewerIndex={i}
+              />
+              <p class="piece-title">{pieza.titulo[lang]}</p>
+            </li>
+          ))}
+        </ul>
+        <p class="muted" hidden data-work-empty>
+          {t('home.work.empty')}
+        </p>
+      </div>
+    </section>
 
     {next && next.slug !== caso.slug && (
-      <a class="next" href={`/${lang}/trabajos/${next.slug}/`}>
-        <span class="label muted">{t('case.next')}</span>
-        <span class="next__name">
-          {next.cliente} <span aria-hidden="true">→</span>
-        </span>
-      </a>
+      <nav class="container next" aria-label={t('case.next')}>
+        <a href={`/${lang}/trabajos/${next.slug}/`}>
+          <span class="label muted">{t('case.next')}</span>
+          <span class="next__name">
+            <span
+              style={`view-transition-name: case-title-${next.slug}; view-transition-class: case-morph`}
+            >
+              {next.cliente}
+            </span>
+            <span class="next__arrow" aria-hidden="true">
+              →
+            </span>
+          </span>
+        </a>
+      </nav>
     )}
-  </div>
+  </article>
+
+  <Viewer slot="overlay" lang={lang} data={viewer} />
 </Page>
 
 <style>
   .case {
     display: grid;
-    gap: var(--space-6);
-    padding-block-start: var(--space-6);
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .muted {
+    color: var(--color-text-secondary);
+  }
+
+  /* ---- Hero del caso ---- */
+  .hero {
+    display: grid;
+    gap: var(--space-5) var(--grid-gutter);
+    padding-block: var(--space-5) var(--space-8);
+
+    @media (min-width: 80rem) {
+      grid-template-columns: 1fr 1fr;
+      align-items: end;
+    }
   }
 
   .back {
@@ -94,42 +255,162 @@ const sections = [
     min-block-size: var(--target-min);
     color: var(--color-text-primary);
     text-decoration: none;
+
+    @media (min-width: 80rem) {
+      grid-column: 1 / -1;
+    }
+  }
+
+  .hero__text {
+    display: grid;
+    gap: var(--space-4);
+    align-content: end;
   }
 
   h1 {
+    justify-self: start;
     font-size: var(--text-display);
     line-height: var(--leading-display);
     letter-spacing: var(--tracking-display);
   }
 
+  .lead {
+    max-inline-size: var(--measure);
+    font-size: var(--text-lead);
+    line-height: var(--leading-lead);
+    letter-spacing: var(--tracking-lead);
+  }
+
+  .hero__cover {
+    display: grid;
+    place-items: center;
+    aspect-ratio: var(--cover-ratio);
+    max-block-size: calc(var(--viewport-full) - var(--nav-height) - var(--space-9));
+    justify-self: center;
+    background-color: var(--color-stage);
+    outline-offset: calc(var(--crop-mark-size) + var(--focus-ring-offset));
+  }
+
+  .hero__cover :global(picture) {
+    display: contents;
+  }
+
+  .hero__cover :global(img) {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: contain;
+  }
+
+  /* ---- M27 · métricas: filete que se dibuja, número sin contar ---- */
+  .metrics {
+    display: grid;
+    gap: var(--space-4);
+    padding-block-end: var(--space-8);
+  }
+
+  .metrics ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, calc(var(--space-9) * 2)), 1fr));
+    gap: var(--space-5) var(--grid-gutter);
+    padding: 0;
+    list-style: none;
+  }
+
+  .metrics li {
+    position: relative;
+    display: grid;
+    gap: var(--space-2);
+    padding-block-start: var(--space-4);
+  }
+
+  .metrics li::before {
+    content: '';
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline: 0;
+    border-block-start: var(--border-rule);
+    transform-origin: left;
+  }
+
+  .metrics[data-reveal='pending'] li::before {
+    transform: scaleX(0);
+  }
+
+  .metrics[data-reveal='in'] li::before {
+    transition: transform var(--duration-slow) var(--ease-register);
+    transition-delay: calc(var(--stagger) * var(--i));
+  }
+
+  .metric__value {
+    font-family: var(--font-mono);
+    font-size: var(--text-metric);
+    font-weight: var(--weight-mono);
+    line-height: var(--leading-h1);
+  }
+
+  /* ---- Textos ---- */
   .texts {
     display: grid;
-    gap: var(--space-3);
-    max-inline-size: var(--measure);
+    gap: var(--space-7);
+    padding-block: var(--space-8);
+    border-block-start: var(--border-rule);
+  }
+
+  .texts dl {
+    display: grid;
+    gap: var(--space-6) var(--grid-gutter);
+
+    @media (min-width: 48rem) {
+      grid-template-columns: 1fr 1fr;
+    }
   }
 
   .texts div {
     display: grid;
-    gap: var(--space-1);
-    padding-block-end: var(--space-3);
-    border-block-end: var(--border-hairline);
+    gap: var(--space-2);
+    align-content: start;
   }
 
-  .texts dt,
-  .muted {
-    color: var(--color-text-secondary);
+  .texts dt {
+    color: var(--color-accent-text);
   }
 
   .texts dd {
+    max-inline-size: var(--measure);
     margin: 0;
   }
 
-  h2 {
+  .texts dd.todo,
+  .lead.todo {
+    color: var(--color-text-secondary);
+  }
+
+  .deliverables ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    padding: 0;
+    list-style: none;
+  }
+
+  .deliverables li {
+    padding: var(--space-1) var(--space-3);
+    border: var(--border-hairline);
+    border-radius: var(--radius-xs);
+  }
+
+  /* ---- Piezas ---- */
+  .pieces {
+    display: grid;
+    gap: var(--space-5);
+    padding-block: var(--space-8);
+    border-block-start: var(--border-rule);
+  }
+
+  .pieces h2 {
     display: flex;
     gap: var(--space-3);
     align-items: baseline;
-    padding-block-start: var(--space-7);
-    border-block-start: var(--border-rule);
   }
 
   .grid {
@@ -146,24 +427,55 @@ const sections = [
     gap: var(--space-2);
   }
 
-  .title {
+  .grid li[hidden],
+  [data-work-empty][hidden] {
+    display: none;
+  }
+
+  .piece-title {
     font-size: var(--text-small);
     line-height: var(--leading-small);
   }
 
-  .next {
+  /* ---- M12 · Siguiente caso ---- */
+  .next a {
     display: grid;
     gap: var(--space-2);
-    padding-block: var(--space-7);
+    padding-block: var(--space-8);
     border-block-start: var(--border-rule);
     color: var(--color-text-primary);
     text-decoration: none;
   }
 
   .next__name {
-    font-size: var(--text-h2);
+    display: flex;
+    gap: var(--space-4);
+    align-items: baseline;
+    font-size: var(--text-h1);
     font-weight: var(--weight-strong);
-    line-height: var(--leading-h2);
-    letter-spacing: var(--tracking-h2);
+    line-height: var(--leading-h1);
+    letter-spacing: var(--tracking-h1);
+  }
+
+  .next__arrow {
+    font-family: var(--font-mono);
+    color: var(--color-accent-text);
+    transition: transform var(--duration-fast) var(--ease-out);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .next a:hover .next__arrow {
+      transform: translateX(var(--shift-sm));
+    }
   }
 </style>
+
+<script>
+  import { initReveal } from '../../../scripts/reveal';
+  import { initWorkFilters } from '../../../scripts/works';
+
+  document.addEventListener('astro:page-load', () => {
+    initReveal();
+    initWorkFilters();
+  });
+</script>

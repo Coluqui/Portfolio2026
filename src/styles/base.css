@@ -115,6 +115,34 @@ a {
   animation-timing-function: var(--ease-in-out);
 }
 
+/* ---- M10 · Tarjeta → caso / M12 · Siguiente caso ----
+   El tile de portada y el nombre del cliente llevan `view-transition-class: case-morph`
+   y se convierten en el hero y el H1 del caso (700 ms, register). */
+/* Solo en navegaciones del ClientRouter (no en el cambio de modo, M23) */
+:root[data-astro-transition]::view-transition-group(*.case-morph) {
+  animation-duration: var(--duration-page);
+  animation-timing-function: var(--ease-register);
+}
+
+/* M11 · Caso → Trabajos (atrás): la misma transición, 500 ms */
+:root[data-astro-transition='back']::view-transition-group(*.case-morph) {
+  animation-duration: var(--duration-slow);
+}
+
+/* Textos del caso: entran 8 px desde abajo después del elemento compartido */
+@keyframes case-rise {
+  from {
+    opacity: 0;
+    transform: translateY(var(--shift-sm));
+  }
+}
+
+@keyframes case-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
 /* ---- Utilidades ---- */
 .visually-hidden {
   position: absolute;
@@ -277,4 +305,13 @@ a {
   html {
     scroll-padding-block-end: var(--space-4);
   }
+}
+
+/* Visor abierto: la página no scrollea; el gutter estable evita el salto del scrollbar */
+html {
+  scrollbar-gutter: stable;
+}
+
+html.viewer-open {
+  overflow: hidden;
 }

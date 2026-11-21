@@ -1,0 +1,392 @@
+---
+// Visor de piezas a pantalla completa (M13–M18). Un diálogo modal por página de caso:
+// la pieza en su marco de contexto (teléfono, navegador o papel; sin marco en mobile),
+// slides en horizontal con scroll-snap, pieza siguiente en vertical, contador doble
+// "Pieza 03 / 12 · Slide 4 / 7" e indicador segmentado. Lo maneja src/scripts/viewer.ts.
+import Icon from './Icon.astro';
+import { type Lang, useTranslations } from '../i18n/utils';
+import type { ViewerData } from '../lib/viewer-data';
+
+interface Props {
+  lang: Lang;
+  data: ViewerData;
+}
+
+const { lang, data } = Astro.props;
+const t = useTranslations(lang);
+// JSON seguro dentro de <script>: sin "<" literal.
+const json = JSON.stringify(data).replace(/</g, '\\u003c');
+---
+
+<div
+  class="viewer"
+  role="dialog"
+  aria-modal="true"
+  aria-label={t('viewer.label')}
+  hidden
+  data-viewer
+>
+  <div class="scrim" data-viewer-scrim></div>
+
+  <div class="top chrome" data-viewer-chrome>
+    <p class="counter label">
+      <span class="counter__piece" data-viewer-piece-count></span>
+      <span data-viewer-slide-count></span>
+    </p>
+    <button class="icon-button" type="button" data-viewer-close aria-label={t('viewer.close')}>
+      <Icon name="close" />
+    </button>
+  </div>
+
+  <div class="stage" data-viewer-stage>
+    <button
+      class="arrow arrow--prev chrome icon-button"
+      type="button"
+      data-viewer-prev-slide
+      aria-label={t('viewer.prevSlide')}
+    >
+      <span aria-hidden="true">←</span>
+    </button>
+
+    <div class="frame" data-viewer-frame data-kind="phone">
+      <div class="screen" data-viewer-screen>
+        <div
+          class="track"
+          data-viewer-track
+          role="group"
+          aria-roledescription={t('viewer.carousel')}
+          tabindex="-1"
+        ></div>
+        <span class="crop-marks" aria-hidden="true" data-crop="on">
+          <i></i>
+          <i></i>
+          <i></i>
+          <i></i>
+        </span>
+      </div>
+    </div>
+
+    <button
+      class="arrow arrow--next chrome icon-button"
+      type="button"
+      data-viewer-next-slide
+      aria-label={t('viewer.nextSlide')}
+    >
+      <span aria-hidden="true">→</span>
+    </button>
+  </div>
+
+  <div class="bottom chrome" data-viewer-chrome>
+    <ol class="segments" aria-hidden="true" data-viewer-segments></ol>
+    <p class="meta">
+      <span class="label meta__kind" data-viewer-kind></span>
+      <span class="meta__title" data-viewer-title></span>
+    </p>
+    <div class="piece-nav">
+      <button class="nav-button" type="button" data-viewer-prev-piece>
+        <span aria-hidden="true">↑</span>
+        {t('viewer.prevPiece')}
+      </button>
+      <button class="nav-button" type="button" data-viewer-next-piece>
+        {t('viewer.nextPiece')}
+        <span aria-hidden="true">↓</span>
+      </button>
+    </div>
+  </div>
+
+  <p class="visually-hidden" aria-live="polite" data-viewer-live></p>
+  <script is:inline type="application/json" data-viewer-json set:html={json} />
+</div>
+
+<style>
+  .viewer {
+    --chrome-gap: var(--space-4);
+
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-viewer);
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    gap: var(--chrome-gap);
+    padding: max(var(--space-3), var(--safe-top)) max(var(--grid-margin), var(--safe-right))
+      max(var(--space-3), var(--safe-bottom)) max(var(--grid-margin), var(--safe-left));
+    color: var(--color-on-scrim);
+  }
+
+  .viewer[hidden] {
+    display: none;
+  }
+
+  .scrim {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-color: var(--color-scrim);
+  }
+
+  /* ---- Barra superior: contador doble y cerrar ---- */
+  .top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+  }
+
+  .counter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1) var(--space-3);
+    color: var(--color-on-scrim);
+  }
+
+  .counter__piece {
+    display: inline-block;
+  }
+
+  .icon-button {
+    display: inline-grid;
+    place-items: center;
+    min-inline-size: var(--target-min);
+    min-block-size: var(--target-min);
+    padding: 0;
+    border: var(--border-control);
+    border-color: var(--color-on-scrim-muted);
+    border-radius: var(--radius-xs);
+    background: none;
+    color: var(--color-on-scrim);
+    font-family: var(--font-mono);
+    font-size: var(--text-body);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .icon-button:hover,
+    .nav-button:hover {
+      border-color: var(--color-on-scrim);
+    }
+  }
+
+  .icon-button:disabled,
+  .nav-button:disabled {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* ---- Escenario ---- */
+  .stage {
+    container-type: size;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--space-4);
+    min-block-size: 0;
+    touch-action: pan-x;
+  }
+
+  .arrow {
+    display: none;
+
+    @media (hover: hover) and (pointer: fine) {
+      display: inline-grid;
+    }
+  }
+
+  .frame {
+    justify-self: center;
+    border-radius: 0;
+  }
+
+  /* El tamaño sale del espacio disponible y la proporción real del slide (--r, desde JS) */
+  .screen {
+    --frame-extra: 0px;
+
+    position: relative;
+    inline-size: min(100cqi, calc((100cqh - var(--frame-extra)) * var(--r, 0.8)));
+    aspect-ratio: var(--r, 0.8);
+    background-color: var(--color-stage);
+  }
+
+  /* Marcos de contexto (desde 768 px; en mobile la pieza va sin marco, PRD §8) */
+  @media (min-width: 48rem) {
+    .frame[data-kind='phone'] {
+      padding: var(--space-3);
+      border-radius: var(--radius-device-phone);
+      background-color: var(--color-surface);
+      box-shadow: var(--shadow-mockup);
+    }
+
+    .frame[data-kind='phone'] .screen {
+      --frame-extra: calc(var(--space-3) * 2);
+
+      overflow: visible;
+      border-radius: calc(var(--radius-device-phone) - var(--space-3));
+    }
+
+    .frame[data-kind='phone'] .track {
+      border-radius: calc(var(--radius-device-phone) - var(--space-3));
+    }
+
+    .frame[data-kind='browser'] {
+      padding-block-start: var(--space-6);
+      border-radius: var(--radius-device-browser);
+      background-color: var(--color-surface);
+      background-image:
+        radial-gradient(
+          circle at var(--space-4) var(--space-3),
+          var(--color-border-strong) 0 var(--space-1),
+          transparent 0
+        ),
+        radial-gradient(
+          circle at calc(var(--space-4) * 2) var(--space-3),
+          var(--color-border-strong) 0 var(--space-1),
+          transparent 0
+        );
+      box-shadow: var(--shadow-mockup);
+      overflow: hidden;
+    }
+
+    .frame[data-kind='browser'] .screen {
+      --frame-extra: var(--space-6);
+    }
+
+    .frame[data-kind='paper'] .screen {
+      box-shadow: var(--shadow-mockup);
+    }
+  }
+
+  /* ---- Pista de slides (M15: scroll-snap nativo, sigue al dedo 1:1) ---- */
+  .track {
+    display: flex;
+    block-size: 100%;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .track:focus-visible {
+    outline-offset: calc(var(--crop-mark-size) + var(--focus-ring-offset));
+  }
+
+  .track :global(.slide) {
+    display: grid;
+    flex: 0 0 100%;
+    place-items: center;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+
+  .track :global(.slide img) {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: contain;
+  }
+
+  /* M17 · panel final "Siguiente pieza →" */
+  .track :global(.slide--next) {
+    background-color: var(--color-scrim);
+    color: var(--color-on-scrim);
+    font-weight: var(--weight-strong);
+  }
+
+  /* ---- Barra inferior: segmentos, metadatos, pieza anterior/siguiente ---- */
+  .bottom {
+    display: grid;
+    gap: var(--space-3);
+    justify-items: center;
+  }
+
+  /* M18 · indicador segmentado (decorativo; el contador en texto es el que se lee) */
+  .segments {
+    display: flex;
+    gap: var(--space-1);
+    inline-size: min(100%, calc(var(--space-9) * 3));
+    padding: 0;
+    list-style: none;
+  }
+
+  .segments:empty {
+    display: none;
+  }
+
+  .segments :global(li) {
+    flex: 1;
+    block-size: var(--focus-ring-width);
+    background-color: var(--color-on-scrim-muted);
+    overflow: hidden;
+  }
+
+  .segments :global(li span) {
+    display: block;
+    block-size: 100%;
+    background-color: var(--color-on-scrim);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--duration-base) var(--ease-out);
+  }
+
+  .segments :global(li[data-done] span) {
+    transform: scaleX(1);
+  }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-1) var(--space-3);
+    text-align: center;
+  }
+
+  .meta__kind {
+    color: var(--color-on-scrim-muted);
+  }
+
+  .piece-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--target-gap);
+  }
+
+  .nav-button {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-block-size: var(--target-min);
+    padding-inline: var(--space-4);
+    border: var(--border-control);
+    border-color: var(--color-on-scrim-muted);
+    border-radius: var(--radius-xs);
+    background: none;
+    color: var(--color-on-scrim);
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    font-weight: var(--weight-mono);
+    letter-spacing: var(--tracking-label);
+  }
+
+  /* M13 · los controles aparecen después del viaje de la pieza (--delay-chrome) */
+  .chrome {
+    transition: opacity var(--duration-fast) var(--ease-out) var(--delay-chrome);
+  }
+
+  .viewer:not([data-ready]) .chrome {
+    opacity: 0;
+    transition: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .segments :global(li span) {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  import { initViewer } from '../scripts/viewer';
+
+  document.addEventListener('astro:page-load', initViewer);
+</script>

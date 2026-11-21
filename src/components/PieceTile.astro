@@ -3,7 +3,7 @@
 // --color-stage y etiqueta mono `cliente · formato` siempre visible. Carrusel: ⧉ y
 // "· 7 slides"; en grilla solo se carga la portada (slide 1). La pieza no se mueve: se
 // mueven las marcas de corte y la acción "Ver pieza ↗" (solo con puntero fino).
-// Sin JS es un link (al caso o a la imagen); el visor de la Fase 5 lo intercepta.
+// Sin JS es un link (al caso o a la imagen grande); con viewerIndex, el visor lo intercepta.
 import type { CollectionEntry } from 'astro:content';
 import { Picture } from 'astro:assets';
 import Icon from './Icon.astro';
@@ -21,6 +21,10 @@ interface Props {
   /** Primer viewport (mosaico del hero): carga inmediata y prioridad alta. */
   priority?: boolean;
   sizes?: string;
+  /** Índice de la pieza en el visor de la página (abre el visor en vez de navegar). */
+  viewerIndex?: number;
+  /** view-transition-name del marco (M10: tarjeta → caso). Único por página. */
+  transitionName?: string;
   /** Solo para /dev/componentes */
   force?: 'hover' | 'active' | 'focus';
 }
@@ -33,6 +37,8 @@ const {
   href,
   priority = false,
   sizes = '(min-width: 80rem) 25vw, (min-width: 48rem) 33vw, 50vw',
+  viewerIndex,
+  transitionName,
   force,
 } = Astro.props;
 const t = useTranslations(lang);
@@ -50,10 +56,18 @@ const action = isCarousel ? t('piece.viewSlides', { n: count }) : t('piece.view'
   href={href}
   data-piece={pieza.slug}
   data-caso={caso}
+  data-viewer-piece={viewerIndex}
   data-force={force}
   style={`--tile-ratio: var(--ratio-${pieza.ratio})`}
 >
-  <span class="tile__frame">
+  <span
+    class="tile__frame"
+    style={
+      transitionName
+        ? `view-transition-name: ${transitionName}; view-transition-class: case-morph`
+        : undefined
+    }
+  >
     <Picture
       src={pieceImage(caso, cover.src)}
       alt={cover.alt[lang]}

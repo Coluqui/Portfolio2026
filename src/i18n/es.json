@@ -289,6 +289,30 @@
       "desafio": "Desafío",
       "solucion": "Solución",
       "resultado": "Resultado"
-    }
+    },
+    "strip": "Carrusel destacado",
+    "stripHint": "Deslizá para ver los slides. Tocá uno para abrirlo en el visor.",
+    "stripPrev": "Ver slides anteriores",
+    "stripNext": "Ver más slides",
+    "metrics": "Resultados",
+    "deliverables": "Entregables",
+    "allPieces": "Todas las piezas",
+    "role": "Rol"
+  },
+  "viewer": {
+    "label": "Visor de piezas",
+    "piece": "Pieza {p} / {total}",
+    "slide": "Slide {s} / {n}",
+    "slideAnnounce": "Slide {s} de {n}",
+    "close": "Cerrar visor",
+    "prevPiece": "Pieza anterior",
+    "nextPiece": "Pieza siguiente",
+    "prevSlide": "Slide anterior",
+    "nextSlide": "Slide siguiente",
+    "nextPanel": "Siguiente pieza",
+    "play": "Reproducir",
+    "pause": "Pausar",
+    "carousel": "carrusel",
+    "slideRole": "slide"
   }
 }

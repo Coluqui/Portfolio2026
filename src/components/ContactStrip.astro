@@ -1,0 +1,215 @@
+---
+// Tira de contactos (M29, una vez por caso): los slides del carrusel destacado en fila, con
+// scroll horizontal nativo (scroll-snap) y bordes que se desvanecen con una máscara. En
+// desktop aparecen flechas en hover. Un clic abre el visor en ese slide; sin JS, la imagen.
+// Es el único scroll horizontal deliberado del sitio.
+import type { CollectionEntry } from 'astro:content';
+import { Picture } from 'astro:assets';
+import { type Lang, useTranslations } from '../i18n/utils';
+import { pieceImage } from '../lib/piece-images';
+
+type Pieza = CollectionEntry<'casos'>['data']['piezas'][number];
+
+interface Props {
+  lang: Lang;
+  caso: string;
+  pieza: Pieza;
+  /** Índice de la pieza en el visor. */
+  viewerIndex: number;
+  /** URL grande de cada slide (link sin JS). */
+  hrefs: string[];
+}
+
+const { lang, caso, pieza, viewerIndex, hrefs } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<section class="strip-section" aria-labelledby="strip-title">
+  <div class="container head">
+    <h2 id="strip-title">
+      {t('case.strip')} · {pieza.titulo[lang]}
+    </h2>
+    <p class="hint">{t('case.stripHint')}</p>
+  </div>
+
+  <div class="strip-wrap" data-strip>
+    <div class="strip" role="region" aria-labelledby="strip-title" tabindex="0" data-strip-track>
+      <ol class="list" role="list">
+        {pieza.slides.map((slide, i) => (
+          <li class="item">
+            <a
+              class="slide crop-host"
+              href={hrefs[i]}
+              data-viewer-open={`${viewerIndex}:${i}`}
+              style={`--tile-ratio: var(--ratio-${pieza.ratio})`}
+            >
+              <span class="frame">
+                <Picture
+                  src={pieceImage(caso, slide.src)}
+                  alt={slide.alt[lang]}
+                  formats={['avif', 'webp']}
+                  widths={[240, 360, 480, 720]}
+                  sizes="(min-width: 80rem) 20vw, (min-width: 48rem) 30vw, 65vw"
+                  loading="lazy"
+                />
+                <span class="crop-marks" aria-hidden="true">
+                  <i />
+                  <i />
+                  <i />
+                  <i />
+                </span>
+              </span>
+              <span class="num label" aria-hidden="true">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+            </a>
+          </li>
+        ))}
+      </ol>
+    </div>
+    <button
+      class="arrow arrow--prev"
+      type="button"
+      data-strip-prev
+      aria-label={t('case.stripPrev')}
+    >
+      <span aria-hidden="true">←</span>
+    </button>
+    <button
+      class="arrow arrow--next"
+      type="button"
+      data-strip-next
+      aria-label={t('case.stripNext')}
+    >
+      <span aria-hidden="true">→</span>
+    </button>
+  </div>
+</section>
+
+<style>
+  .strip-section {
+    display: grid;
+    /* Ítem de grid: sin esto toma el ancho de toda la fila de slides y ensancha la página */
+    min-inline-size: 0;
+    gap: var(--space-5);
+    padding-block: var(--space-8);
+  }
+
+  .head {
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .hint {
+    color: var(--color-text-secondary);
+  }
+
+  .strip-wrap {
+    position: relative;
+    min-inline-size: 0;
+  }
+
+  .strip {
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    scroll-padding-inline: var(--grid-margin);
+    overscroll-behavior-x: contain;
+    /* Bordes que se desvanecen (M29) */
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      black var(--grid-margin),
+      black calc(100% - var(--grid-margin)),
+      transparent
+    );
+  }
+
+  .strip:focus-visible {
+    outline-offset: calc(var(--focus-ring-offset) * -1);
+  }
+
+  .list {
+    display: flex;
+    gap: var(--grid-gutter);
+    inline-size: max-content;
+    padding: var(--space-4) var(--grid-margin);
+    list-style: none;
+  }
+
+  .item {
+    inline-size: clamp(var(--space-9) * 2, 65vw, calc(var(--space-9) * 3.5));
+    scroll-snap-align: start;
+
+    @media (min-width: 48rem) {
+      inline-size: calc(var(--space-9) * 3);
+    }
+  }
+
+  .slide {
+    display: grid;
+    gap: var(--space-2);
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    outline-offset: calc(var(--crop-mark-size) + var(--focus-ring-offset));
+  }
+
+  .frame {
+    position: relative;
+    display: grid;
+    aspect-ratio: var(--tile-ratio);
+    background-color: var(--color-stage);
+  }
+
+  .frame :global(picture) {
+    display: contents;
+  }
+
+  .frame :global(img) {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: contain;
+  }
+
+  /* Flechas: solo con puntero fino y en hover de la tira */
+  .arrow {
+    position: absolute;
+    inset-block-start: 50%;
+    display: none;
+    place-items: center;
+    min-inline-size: var(--target-min);
+    min-block-size: var(--target-min);
+    border: var(--border-control);
+    border-radius: var(--radius-xs);
+    background-color: var(--color-bg);
+    color: var(--color-text-primary);
+    font-family: var(--font-mono);
+    opacity: 0;
+    transform: translateY(-50%);
+    transition: opacity var(--duration-fast) var(--ease-out);
+  }
+
+  .arrow--prev {
+    inset-inline-start: var(--grid-margin);
+  }
+
+  .arrow--next {
+    inset-inline-end: var(--grid-margin);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .arrow {
+      display: grid;
+    }
+
+    .strip-wrap:hover .arrow,
+    .arrow:focus-visible {
+      opacity: 1;
+    }
+  }
+</style>
+
+<script>
+  import { initStrip } from '../scripts/strip';
+
+  document.addEventListener('astro:page-load', initStrip);
+</script>
