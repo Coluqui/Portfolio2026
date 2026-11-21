@@ -4,17 +4,17 @@ Portfolio de Franco Colucci, diseñador gráfico y digital (Mendoza, Argentina).
 
 ## Comandos
 
-| Comando | Qué hace |
-| --- | --- |
-| `npm install` | Instala dependencias (Node 22.23+) |
-| `npm run dev` | Servidor local en http://localhost:4321 |
-| `npm run build` | Build de producción en `dist/` |
-| `npx astro preview --port 4322` | Sirve el build (para medir y auditar) |
-| `npm run check` | Tipos, contenido e i18n |
-| `npm run lint` | ESLint + Prettier |
-| `npm run audit:motion` | Auditoría de motion sobre el build (puerto 4322) |
-| `npm run qa` | Matriz de QA: anchos × idiomas × modos + teclado (puerto 4322) |
-| `npm run pendientes` | Lista los `TODO(contenido)` |
+| Comando                         | Qué hace                                                       |
+| ------------------------------- | -------------------------------------------------------------- |
+| `npm install`                   | Instala dependencias (Node 22.23+)                             |
+| `npm run dev`                   | Servidor local en http://localhost:4321                        |
+| `npm run build`                 | Build de producción en `dist/`                                 |
+| `npx astro preview --port 4322` | Sirve el build (para medir y auditar)                          |
+| `npm run check`                 | Tipos, contenido e i18n                                        |
+| `npm run lint`                  | ESLint + Prettier                                              |
+| `npm run audit:motion`          | Auditoría de motion sobre el build (puerto 4322)               |
+| `npm run qa`                    | Matriz de QA: anchos × idiomas × modos + teclado (puerto 4322) |
+| `npm run pendientes`            | Lista los `TODO(contenido)`                                    |
 
 ## Documentación
 

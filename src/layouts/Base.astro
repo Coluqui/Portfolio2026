@@ -127,5 +127,10 @@ const alternates = isLocalized
       {t('a11y.skipToContent')}
     </a>
     <slot />
+    <script>
+      import { initAnalytics } from '../scripts/analytics';
+
+      initAnalytics();
+    </script>
   </body>
 </html>
