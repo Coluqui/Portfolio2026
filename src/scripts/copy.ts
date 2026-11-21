@@ -1,4 +1,5 @@
 // M34 · Copiar mail. Feedback en el mismo botón ("Copiado ✓") durante --hold-feedback.
+import { trackEvent } from './analytics';
 import { tokenMs, wait } from './motion';
 
 let controller: AbortController | null = null;
@@ -28,6 +29,7 @@ export function initCopyEmail(): void {
           return;
         }
         if (fallback) fallback.hidden = true;
+        trackEvent('contact_link', { canal: 'mail' });
         root.dataset.state = 'done';
         if (status) status.textContent = announce;
         await wait(tokenMs('--hold-feedback'), signal);

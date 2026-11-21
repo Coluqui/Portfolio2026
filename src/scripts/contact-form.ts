@@ -2,6 +2,7 @@
 // M35 filete de foco (CSS) · M36 error al salir del campo, sin sacudida · M37 enviando ·
 // M38 envío exitoso con marcas de corte · M39 error de envío sin perder lo escrito.
 // Mismas reglas que el servidor (src/lib/contact-form.ts); el servidor es el que decide.
+import { trackEvent } from './analytics';
 import { tokenMs } from './motion';
 
 type Messages = Record<string, string>;
@@ -168,7 +169,10 @@ export function initContactForms(): void {
       };
       setLoading(submit, false);
 
-      if (response.ok && result.ok) return showSuccess();
+      if (response.ok && result.ok) {
+        trackEvent('contact_submit', { idioma: document.documentElement.lang });
+        return showSuccess();
+      }
 
       if (response.status === 400) {
         const errors = result.errors ?? {};

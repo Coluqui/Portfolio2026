@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro build && node scripts/check-csp.mjs",
     "preview": "astro preview",
     "check": "astro check && node scripts/check-i18n.mjs",
     "check:i18n": "node scripts/check-i18n.mjs",
@@ -25,6 +25,7 @@
     "@astrojs/node": "^11.1.14",
     "@astrojs/sitemap": "^3.7.6",
     "@astrojs/vercel": "^11.0.22",
+    "@vercel/analytics": "^2.0.1",
     "astro": "^7.4.13"
   },
   "devDependencies": {

@@ -11,6 +11,7 @@
 // URL: ?pieza=<slug>&slide=<n>. Foco atrapado con `inert` y devuelto al tile al cerrar.
 // Interrumpible: cada acción cancela las animaciones en curso.
 import type { ViewerData } from '../lib/viewer-data';
+import { trackEvent } from './analytics';
 import { tokenMs } from './motion';
 
 const CLOSE_DRAG = 120; // px (motion.md, constantes de gesto)
@@ -333,6 +334,10 @@ function open(
   }
   const s: State = { root, data, piece, slide, opener, animations: [], inerted: [] };
   state = s;
+  trackEvent('viewer_open', {
+    caso: location.pathname.split('/')[3] ?? '',
+    pieza: data.pieces[piece]?.slug ?? '',
+  });
 
   root.hidden = false;
   root.removeAttribute('data-ready');

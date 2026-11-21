@@ -13,7 +13,7 @@
 | 6 · Contacto y CV | Cerrada: `/api/contacto` en modo local, validación cliente/servidor, anti-spam, fallback sin JS, gracias; CV por idioma |
 | 7 · Pasada de motion | Cerrada: tabla M01–M39 en `docs/motion-cumplimiento.md`, auditoría 38/38 |
 | 8 · QA | Cerrada: Lighthouse 95–97 / 100 / 100 / 100, matriz 56 vistas, teclado, informe en `docs/qa.md` |
-| Deploy | Cuando Franco lo pida: GitHub privado + Vercel preview + QA sobre la URL |
+| Deploy | Repo en GitHub (público, por decisión de Franco) con `main`/`develop` y ramas de trabajo. Listo para Vercel: ver `docs/deploy-vercel.md` |
 
 ## 1. Lo que encontré (Fase 0)
 
