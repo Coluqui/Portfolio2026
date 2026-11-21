@@ -1,6 +1,6 @@
 # Plan de construcción — Portfolio Franco Colucci
 
-21 nov 2026 · Fases 0 a 7 cerradas (D1–D4 aprobadas, ver `docs/decisiones.md`). Este archivo se actualiza al cerrar cada fase.
+21 nov 2026 · Fases 0 a 8 cerradas (D1–D4 aprobadas, ver `docs/decisiones.md`). Este archivo se actualiza al cerrar cada fase.
 
 | Fase | Estado |
 | --- | --- |
@@ -12,7 +12,8 @@
 | 5 · Caso + visor | Cerrada: caso completo, tira de contactos, visor (teclado, swipe, URL), tarjeta → caso, filtro en la URL |
 | 6 · Contacto y CV | Cerrada: `/api/contacto` en modo local, validación cliente/servidor, anti-spam, fallback sin JS, gracias; CV por idioma |
 | 7 · Pasada de motion | Cerrada: tabla M01–M39 en `docs/motion-cumplimiento.md`, auditoría 38/38 |
-| 8 · QA | Próxima |
+| 8 · QA | Cerrada: Lighthouse 95–97 / 100 / 100 / 100, matriz 56 vistas, teclado, informe en `docs/qa.md` |
+| Deploy | Cuando Franco lo pida: GitHub privado + Vercel preview + QA sobre la URL |
 
 ## 1. Lo que encontré (Fase 0)
 

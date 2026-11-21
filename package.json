@@ -18,7 +18,8 @@
     "inventario:check": "node scripts/inventario.mjs check",
     "inventario:sheets": "node scripts/inventario.mjs sheets",
     "pendientes": "node scripts/pendientes.mjs",
-    "audit:motion": "node scripts/motion-audit.mjs"
+    "audit:motion": "node scripts/motion-audit.mjs",
+    "qa": "node scripts/qa-check.mjs"
   },
   "dependencies": {
     "@astrojs/node": "^11.1.14",
@@ -32,6 +33,7 @@
     "eslint": "^10.15.0",
     "eslint-plugin-astro": "^3.2.1",
     "globals": "^17.14.0",
+    "lighthouse": "^13.6.0",
     "playwright-core": "^1.65.1",
     "prettier": "^3.10.1",
     "prettier-plugin-astro": "^1.1.2",

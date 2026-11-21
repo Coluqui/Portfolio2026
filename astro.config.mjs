@@ -47,5 +47,7 @@ export default defineConfig({
   // POST en local y en los deploys de preview. Lo reemplaza sameOrigin() de
   // src/lib/contact-form.ts, que compara contra el host real de la petición (T31).
   security: { checkOrigin: false },
+  // CSS incrustado en cada página: sin peticiones que bloqueen el render (LCP, Fase 8).
+  build: { inlineStylesheets: 'always' },
   devToolbar: { enabled: false },
 });

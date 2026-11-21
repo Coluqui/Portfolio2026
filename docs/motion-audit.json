@@ -1,5 +1,5 @@
 {
-  "date": "2026-11-21T13:50:07.035Z",
+  "date": "2026-11-21T14:04:19.819Z",
   "base": "http://localhost:4322",
   "results": [
     {
@@ -21,7 +21,7 @@
       "mode": "normal",
       "check": "LCP de la home",
       "pass": true,
-      "detail": "208 ms"
+      "detail": "140 ms"
     },
     {
       "id": "M25",
@@ -42,7 +42,7 @@
       "mode": "normal",
       "check": "CLS inesperado al filtrar = 0",
       "pass": true,
-      "detail": "total 0.3849, inesperado 0.0000"
+      "detail": "total 0.3900, inesperado 0.0000"
     },
     {
       "id": "M23",
@@ -140,7 +140,7 @@
       "mode": "reducido",
       "check": "LCP de la home",
       "pass": true,
-      "detail": "88 ms"
+      "detail": "84 ms"
     },
     {
       "id": "M25",
@@ -245,28 +245,28 @@
       "mode": "cpu 4×",
       "check": "fps del filtro (FLIP)",
       "pass": true,
-      "detail": "{\"fps\":149,\"long\":1,\"max\":36,\"frames\":135}"
+      "detail": "{\"fps\":153,\"long\":1,\"max\":30,\"frames\":138}"
     },
     {
       "id": "M23",
       "mode": "cpu 4×",
       "check": "fps del cambio de modo",
       "pass": true,
-      "detail": "{\"fps\":74,\"long\":2,\"max\":127,\"frames\":45}"
+      "detail": "{\"fps\":78,\"long\":2,\"max\":127,\"frames\":47}"
     },
     {
       "id": "M13",
       "mode": "cpu 4×",
       "check": "fps al abrir el visor",
       "pass": true,
-      "detail": "{\"fps\":152,\"long\":2,\"max\":49,\"frames\":137}"
+      "detail": "{\"fps\":153,\"long\":1,\"max\":55,\"frames\":139}"
     },
     {
       "id": "M15",
       "mode": "cpu 4×",
       "check": "fps del slide siguiente",
       "pass": true,
-      "detail": "{\"fps\":164,\"long\":0,\"max\":7,\"frames\":147}"
+      "detail": "{\"fps\":165,\"long\":0,\"max\":6,\"frames\":149}"
     }
   ]
 }
