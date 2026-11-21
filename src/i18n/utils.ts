@@ -12,8 +12,17 @@ const dictionaries: Record<Lang, Dictionary> = { es, en };
 
 /** Claves con puntos de las hojas de texto: 'meta.role', 'lang.short.es'… */
 type Leaves<T> = {
-  [K in keyof T & string]: T[K] extends string ? K : `${K}.${Leaves<T[K]>}`;
+  [K in keyof T & string]: T[K] extends string
+    ? K
+    : T[K] extends readonly unknown[]
+      ? never
+      : `${K}.${Leaves<T[K]>}`;
 }[keyof T & string];
+
+/** Diccionario completo de un idioma, para listas (capacidades, pasos, experiencia…). */
+export function useDictionary(lang: Lang): Dictionary {
+  return dictionaries[lang];
+}
 
 export type TranslationKey = Leaves<Dictionary>;
 

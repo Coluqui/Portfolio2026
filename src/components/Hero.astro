@@ -1,0 +1,199 @@
+---
+// Hero: nombre, puesto, presentación, especialidades, datos rápidos y mosaico de 6 piezas.
+// M26: sin animación de entrada; el hero y el mosaico se ven completos en el primer frame.
+// El primer trabajo se ve sin scroll en 1440×900 y 360×780 (el mosaico va antes que los datos
+// en mobile).
+import { getCollection } from 'astro:content';
+import Button from './Button.astro';
+import CvButton from './CvButton.astro';
+import PieceTile from './PieceTile.astro';
+import { type Lang, useDictionary, useTranslations } from '../i18n/utils';
+import { mosaic, pieceHref, resolvePieces } from '../lib/home';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const hero = useDictionary(lang).home.hero;
+const pieces = resolvePieces(await getCollection('casos'), mosaic);
+---
+
+<section class="hero container" aria-labelledby="hero-title">
+  <div class="intro">
+    <p class="eyebrow label">{hero.eyebrow}</p>
+    <h1 id="hero-title">{t('home.name')}</h1>
+    <p class="role">{t('meta.role')}</p>
+    <p class="bio">{hero.bio}</p>
+    <ul class="tags" role="list" aria-label={hero.expertiseLabel}>
+      {hero.expertise.map((tag) => (
+        <li class="label">{tag}</li>
+      ))}
+    </ul>
+  </div>
+
+  <div class="mosaic-wrap">
+    <h2 class="visually-hidden">{hero.mosaicLabel}</h2>
+    <ul class="mosaic" role="list">
+      {pieces.map(({ caso, cliente, pieza }, i) => (
+        <li>
+          <PieceTile
+            lang={lang}
+            caso={caso}
+            cliente={cliente}
+            pieza={pieza}
+            href={pieceHref(lang, caso, pieza.slug)}
+            priority={i < 4}
+            sizes="(min-width: 80rem) 20vw, (min-width: 48rem) 30vw, 46vw"
+          />
+        </li>
+      ))}
+    </ul>
+  </div>
+
+  <div class="details">
+    <dl class="facts" aria-label={hero.factsLabel}>
+      {hero.facts.map((fact) => (
+        <div>
+          <dt class="label">{fact.label}</dt>
+          <dd>{fact.value}</dd>
+        </div>
+      ))}
+    </dl>
+    <div class="actions">
+      <Button href={`/${lang}/#trabajos`} arrow="down">
+        {hero.ctaWork}
+      </Button>
+      <CvButton lang={lang} size="full" />
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    display: grid;
+    grid-template-areas: 'intro' 'mosaic' 'details';
+    gap: var(--space-6) var(--grid-gutter);
+    padding-block: var(--space-6) var(--space-section);
+
+    @media (min-width: 80rem) {
+      grid-template-columns: 5fr 7fr;
+      grid-template-areas: 'intro mosaic' 'details mosaic';
+      align-items: start;
+      padding-block-start: var(--space-7);
+    }
+  }
+
+  .intro {
+    grid-area: intro;
+    display: grid;
+    gap: var(--space-4);
+    align-content: start;
+  }
+
+  .eyebrow {
+    color: var(--color-text-secondary);
+  }
+
+  h1 {
+    font-size: var(--text-display);
+    line-height: var(--leading-display);
+    letter-spacing: var(--tracking-display);
+  }
+
+  .role {
+    font-size: var(--text-h3);
+    font-weight: var(--weight-strong);
+    line-height: var(--leading-h3);
+    letter-spacing: var(--tracking-h3);
+  }
+
+  .bio {
+    max-inline-size: var(--measure);
+    font-size: var(--text-lead);
+    line-height: var(--leading-lead);
+    letter-spacing: var(--tracking-lead);
+    color: var(--color-text-secondary);
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    padding: 0;
+    list-style: none;
+  }
+
+  .tags li {
+    padding: var(--space-1) var(--space-2);
+    border: var(--border-hairline);
+    border-radius: var(--radius-xs);
+    color: var(--color-text-secondary);
+  }
+
+  /* Mosaico: columnas tipo masonry; cada pieza en su proporción real */
+  .mosaic-wrap {
+    grid-area: mosaic;
+  }
+
+  .mosaic {
+    columns: 2;
+    column-gap: var(--grid-gutter);
+    padding: 0;
+    list-style: none;
+
+    @media (min-width: 48rem) {
+      columns: 3;
+    }
+  }
+
+  .mosaic li {
+    break-inside: avoid;
+    padding-block-end: var(--space-5);
+  }
+
+  .details {
+    grid-area: details;
+    display: grid;
+    gap: var(--space-5);
+    align-content: start;
+  }
+
+  .facts {
+    display: grid;
+    gap: var(--space-3) var(--space-5);
+
+    @media (min-width: 48rem) {
+      grid-template-columns: max-content 1fr;
+    }
+  }
+
+  /* Las filas comparten la columna de etiquetas (subgrid): se alinea a la más larga */
+  .facts div {
+    display: grid;
+    grid-column: 1 / -1;
+    gap: var(--space-1) var(--space-5);
+    padding-block-end: var(--space-3);
+    border-block-end: var(--border-hairline);
+
+    @media (min-width: 48rem) {
+      grid-template-columns: subgrid;
+      align-items: baseline;
+    }
+  }
+
+  .facts dt {
+    color: var(--color-text-secondary);
+  }
+
+  .facts dd {
+    margin: 0;
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+</style>

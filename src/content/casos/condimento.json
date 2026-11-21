@@ -3,6 +3,7 @@
   "cliente": "Condimento",
   "orden": 3,
   "portada": "trafico-sin-ventas",
+  "destacadas": ["trafico-sin-ventas", "auditoria", "no-funciona"],
   "titulo": {
     "es": "TODO(contenido): nombre del caso condimento",
     "en": "TODO(contenido): nombre del caso condimento"

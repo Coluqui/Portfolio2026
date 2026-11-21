@@ -1,0 +1,61 @@
+---
+// "Trabajé con": franja estática (sin marquee). Nombres en mono hasta tener los logos SVG.
+import { type Lang, useTranslations } from '../i18n/utils';
+import { clients } from '../lib/home';
+
+interface Props {
+  lang: Lang;
+}
+
+const t = useTranslations(Astro.props.lang);
+---
+
+<section class="clients" aria-labelledby="clients-title">
+  <div class="container inner">
+    <h2 id="clients-title" class="label title">
+      {t('home.clients.title')}
+    </h2>
+    <ul role="list">
+      {clients.map((name) => (
+        <li>{name}</li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .clients {
+    border-block: var(--border-hairline);
+  }
+
+  .inner {
+    display: grid;
+    gap: var(--space-4);
+    padding-block: var(--space-6);
+
+    @media (min-width: 80rem) {
+      grid-template-columns: max-content 1fr;
+      align-items: center;
+      gap: var(--space-7);
+    }
+  }
+
+  .title {
+    color: var(--color-text-secondary);
+  }
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3) var(--space-7);
+    padding: 0;
+    list-style: none;
+  }
+
+  li {
+    font-size: var(--text-h3);
+    font-weight: var(--weight-strong);
+    line-height: var(--leading-h3);
+    letter-spacing: var(--tracking-h3);
+  }
+</style>

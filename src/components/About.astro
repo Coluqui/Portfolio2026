@@ -1,0 +1,161 @@
+---
+// 04 Sobre mí: foto 4:5, bio, experiencia con fechas, formación, idiomas y CV (datos del CV).
+import { Picture } from 'astro:assets';
+import portrait from '../assets/franco/franco-colucci-retrato.png';
+import CvButton from './CvButton.astro';
+import SectionHeader from './SectionHeader.astro';
+import { type Lang, useDictionary, useTranslations } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const about = useDictionary(lang).home.about;
+---
+
+<section id="sobre-mi" class="container about" aria-labelledby="about-title">
+  <SectionHeader num="04" id="about-title" title={t('home.about.title')} />
+
+  <div class="layout">
+    <figure class="photo">
+      <Picture
+        src={portrait}
+        alt={about.photoAlt}
+        formats={['avif', 'webp']}
+        widths={[320, 480, 600]}
+        sizes="(min-width: 80rem) 25vw, (min-width: 48rem) 40vw, 100vw"
+        loading="lazy"
+      />
+    </figure>
+
+    <div class="text">
+      {about.bio.map((paragraph) => (
+        <p class="bio">{paragraph}</p>
+      ))}
+
+      <div class="block">
+        <h3 class="label block__title">{about.experienceTitle}</h3>
+        <ol class="list" role="list">
+          {about.experience.map((job) => (
+            <li>
+              <span class="list__main">
+                <strong>{job.company}</strong> · {job.role}
+              </span>
+              <span class="label muted">{job.period}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      <div class="block">
+        <h3 class="label block__title">{about.educationTitle}</h3>
+        <ol class="list" role="list">
+          {about.education.map((item) => (
+            <li>
+              <span class="list__main">
+                <strong>{item.title}</strong> · {item.place}
+              </span>
+              <span class="label muted">{item.period}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      <div class="block">
+        <h3 class="label block__title">{about.languagesTitle}</h3>
+        <p>{about.languages}</p>
+      </div>
+
+      <CvButton lang={lang} size="full" variant="primary" />
+    </div>
+  </div>
+</section>
+
+<style>
+  .about {
+    padding-block-start: var(--space-section);
+  }
+
+  .layout {
+    display: grid;
+    gap: var(--space-6) var(--grid-gutter);
+
+    @media (min-width: 48rem) {
+      grid-template-columns: 2fr 3fr;
+      align-items: start;
+    }
+
+    @media (min-width: 80rem) {
+      grid-template-columns: 1fr 2fr;
+    }
+  }
+
+  .photo {
+    aspect-ratio: var(--ratio-carousel);
+    overflow: hidden;
+    background-color: var(--color-stage);
+  }
+
+  .photo :global(img) {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+    object-position: top;
+  }
+
+  .text {
+    display: grid;
+    gap: var(--space-5);
+    justify-items: start;
+  }
+
+  .bio {
+    max-inline-size: var(--measure);
+    font-size: var(--text-lead);
+    line-height: var(--leading-lead);
+    letter-spacing: var(--tracking-lead);
+  }
+
+  .bio + .bio {
+    font-size: var(--text-body);
+    line-height: var(--leading-body);
+    color: var(--color-text-secondary);
+  }
+
+  .block {
+    display: grid;
+    gap: var(--space-3);
+    inline-size: 100%;
+    max-inline-size: var(--measure);
+  }
+
+  .block__title {
+    color: var(--color-text-secondary);
+  }
+
+  .list {
+    display: grid;
+    padding: 0;
+    list-style: none;
+  }
+
+  .list li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-1) var(--space-4);
+    padding-block: var(--space-3);
+    border-block-end: var(--border-hairline);
+  }
+
+  .list strong {
+    font-weight: var(--weight-strong);
+  }
+
+  .muted {
+    color: var(--color-text-secondary);
+  }
+</style>

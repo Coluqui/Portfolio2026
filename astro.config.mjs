@@ -14,13 +14,13 @@ export default defineConfig({
   // En Vercel se usa su adapter; en local, Node, para que `npm run preview` funcione
   // (el adapter de Vercel no soporta `astro preview`). Ver docs/decisiones.md.
   adapter: process.env.VERCEL ? vercel() : node({ mode: 'standalone' }),
+  // Routing manual: las rutas /es/ y /en/ salen de src/pages/[lang]/ y `/` redirige por
+  // cookie o Accept-Language (src/pages/index.astro). Con el routing automático, `astro dev`
+  // devolvía 404 en toda ruta sin prefijo de idioma (/dev/*, robots.txt, /api/*). Ver T19.
   i18n: {
     defaultLocale: 'es',
     locales: ['es', 'en'],
-    routing: {
-      prefixDefaultLocale: true,
-      redirectToDefaultLocale: false,
-    },
+    routing: 'manual',
   },
   integrations: [
     sitemap({

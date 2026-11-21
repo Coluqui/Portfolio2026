@@ -4,6 +4,7 @@
   "orden": 1,
   "portada": "nacimos-de-un-error",
   "destacado": "nacimos-de-un-error",
+  "destacadas": ["nacimos-de-un-error", "errores-packaging", "dia-de-la-tierra", "validaciones"],
   "titulo": {
     "es": "TODO(contenido): nombre del caso moondesk",
     "en": "TODO(contenido): nombre del caso moondesk"

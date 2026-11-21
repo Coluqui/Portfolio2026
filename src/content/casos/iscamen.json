@@ -4,6 +4,7 @@
   "orden": 2,
   "portada": "bioinsumos",
   "destacado": "bioinsumos",
+  "destacadas": ["bioinsumos", "citricos", "huerto-urbano", "mujer-en-la-ciencia"],
   "titulo": {
     "es": "TODO(contenido): nombre del caso iscamen",
     "en": "TODO(contenido): nombre del caso iscamen"

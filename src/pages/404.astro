@@ -1,0 +1,52 @@
+---
+// 404 (PRD §4): mensaje corto + links a Trabajos y Contacto. Una sola página para los dos
+// idiomas: el idioma sale del prefijo de la URL pedida (/en/… → inglés).
+import Button from '../components/Button.astro';
+import Page from '../layouts/Page.astro';
+import { type Lang, useTranslations } from '../i18n/utils';
+
+const lang: Lang = Astro.url.pathname.startsWith('/en') ? 'en' : 'es';
+const t = useTranslations(lang);
+---
+
+<Page lang={lang} title={t('notFound.title')} noindex>
+  <div class="container not-found">
+    <p class="code label">404</p>
+    <h1>{t('notFound.title')}</h1>
+    <p class="body">{t('notFound.body')}</p>
+    <div class="actions">
+      <Button href={`/${lang}/#trabajos`} arrow="right">
+        {t('notFound.work')}
+      </Button>
+      <Button href={`/${lang}/#contacto`} variant="secondary">
+        {t('notFound.contact')}
+      </Button>
+    </div>
+  </div>
+</Page>
+
+<style>
+  .not-found {
+    display: grid;
+    gap: var(--space-4);
+    justify-items: start;
+    padding-block: var(--space-section);
+  }
+
+  .code {
+    color: var(--color-accent-text);
+  }
+
+  .body {
+    max-inline-size: var(--measure);
+    font-size: var(--text-lead);
+    line-height: var(--leading-lead);
+    color: var(--color-text-secondary);
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+</style>

@@ -1,46 +1,29 @@
 ---
-// Home provisoria: verifica el layout con nav, footer y barra inferior.
-// La home real (hero, mosaico y secciones 01–05) se arma en la Fase 4.
+// Home: hero + mosaico · Trabajé con · 01 Trabajos · 02 Qué hago · 03 Proceso + IA ·
+// 04 Sobre mí · 05 Contacto.
+import About from '../../components/About.astro';
+import ClientsStrip from '../../components/ClientsStrip.astro';
+import ContactSection from '../../components/ContactSection.astro';
+import Hero from '../../components/Hero.astro';
+import Process from '../../components/Process.astro';
+import Services from '../../components/Services.astro';
+import WorkByCompany from '../../components/WorkByCompany.astro';
 import Page from '../../layouts/Page.astro';
-import { type Lang, languages, useTranslations } from '../../i18n/utils';
+import { type Lang, languages } from '../../i18n/utils';
 
 export function getStaticPaths() {
   return languages.map((lang) => ({ params: { lang } }));
 }
 
 const lang = Astro.params.lang as Lang;
-const t = useTranslations(lang);
 ---
 
 <Page lang={lang}>
-  <div class="container intro">
-    <h1>{t('home.name')}</h1>
-    <p class="role">{t('meta.role')}</p>
-    <p class="status label">{t('home.status')}</p>
-  </div>
+  <Hero lang={lang} />
+  <ClientsStrip lang={lang} />
+  <WorkByCompany lang={lang} />
+  <Services lang={lang} />
+  <Process lang={lang} />
+  <About lang={lang} />
+  <ContactSection lang={lang} />
 </Page>
-
-<style>
-  .intro {
-    display: grid;
-    gap: var(--space-4);
-    padding-block: var(--space-section);
-  }
-
-  h1 {
-    font-size: var(--text-display);
-    line-height: var(--leading-display);
-    letter-spacing: var(--tracking-display);
-  }
-
-  .role {
-    font-size: var(--text-lead);
-    line-height: var(--leading-lead);
-    letter-spacing: var(--tracking-lead);
-    color: var(--color-text-secondary);
-  }
-
-  .status {
-    color: var(--color-text-secondary);
-  }
-</style>

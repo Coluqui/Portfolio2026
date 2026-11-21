@@ -55,6 +55,11 @@ const activeCount = options.find((o) => o.id === active)?.count ?? 0;
 </div>
 
 <style>
+  /* Sin JS los chips no filtran: se reserva su espacio (sin CLS) y aparecen al cargar el script */
+  .filters:not([data-enhanced]) .chips {
+    visibility: hidden;
+  }
+
   .chips {
     position: relative;
     display: flex;

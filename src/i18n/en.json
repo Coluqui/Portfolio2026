@@ -9,7 +9,8 @@
     "skipToContent": "Skip to content",
     "mainNav": "Main navigation",
     "quickActions": "Quick actions",
-    "newTab": "(opens in a new tab)"
+    "newTab": "(opens in a new tab)",
+    "opensCase": "Opens the {cliente} case"
   },
   "nav": {
     "home": "Franco Colucci, home",
@@ -108,12 +109,186 @@
   },
   "home": {
     "name": "Franco Colucci",
-    "status": "Site under construction. The work is coming soon."
+    "status": "Site under construction. The work is coming soon.",
+    "hero": {
+      "eyebrow": "Mendoza, Argentina · Remote or on-site",
+      "bio": "I design social content, performance ads, emails, ebooks and websites that communicate clearly and perform. 7+ years with public institutions and private brands, grounded in UX/UI and an AI-assisted workflow.",
+      "expertiseLabel": "Expertise",
+      "expertise": [
+        "Social media",
+        "Performance ads",
+        "Email marketing",
+        "Ebooks",
+        "WordPress websites",
+        "Figma systems"
+      ],
+      "factsLabel": "Quick facts",
+      "facts": [
+        {
+          "label": "Experience",
+          "value": "7+ years"
+        },
+        {
+          "label": "Languages",
+          "value": "Spanish (native) · English B1 · Italian A2"
+        },
+        {
+          "label": "Work mode",
+          "value": "Remote or on-site · GMT-3"
+        }
+      ],
+      "ctaWork": "See work",
+      "mosaicLabel": "Featured work"
+    },
+    "clients": {
+      "title": "Worked with"
+    },
+    "work": {
+      "title": "Work",
+      "intro": "A selection by company. Each carousel counts as one piece.",
+      "viewCase": "See full case",
+      "piecesInCase": "{n} pieces in the case",
+      "empty": "No pieces of this format in the selection."
+    },
+    "services": {
+      "title": "What I do",
+      "intro": "From carousels and reels to ads, emails, ebooks and websites. All designed as a system, to produce a lot without losing consistency.",
+      "items": [
+        {
+          "title": "Social media",
+          "text": "Carousels, posts, stories and reels. One well-built template and many consistent pieces from it."
+        },
+        {
+          "title": "Performance ads",
+          "text": "Paid campaign assets in every size, with variants to test messages."
+        },
+        {
+          "title": "Email marketing",
+          "text": "Responsive campaigns and templates for institutional and commercial communication."
+        },
+        {
+          "title": "Ebooks and documents",
+          "text": "Lead magnets, one-pagers and presentations with a clear hierarchy for quick reading."
+        },
+        {
+          "title": "WordPress websites",
+          "text": "Design and build of sites with WordPress and Elementor, responsive and easy to maintain."
+        },
+        {
+          "title": "Figma systems",
+          "text": "Components and templates that organise production and keep the brand consistent across channels."
+        }
+      ],
+      "toolsTitle": "Tools",
+      "tools": [
+        "Illustrator",
+        "Photoshop",
+        "InDesign",
+        "Figma",
+        "WordPress",
+        "Elementor",
+        "Claude Code",
+        "ChatGPT",
+        "Antigravity"
+      ]
+    },
+    "process": {
+      "title": "Process + AI",
+      "intro": "AI speeds up production; the design judgement is still mine.",
+      "steps": [
+        {
+          "title": "Brief",
+          "text": "I understand the goal, the channel and how it will be measured before opening a file."
+        },
+        {
+          "title": "System",
+          "text": "I build templates and components in Figma so each new piece comes out fast and consistent."
+        },
+        {
+          "title": "AI-assisted production",
+          "text": "I use Claude Code, ChatGPT and Antigravity to speed up variants, draft copy and layout."
+        },
+        {
+          "title": "Delivery and tuning",
+          "text": "I review with the client, deliver in every format and adjust based on how the pieces perform."
+        }
+      ]
+    },
+    "about": {
+      "title": "About",
+      "bio": [
+        "I studied Graphic Design at Universidad Nacional de Cuyo and specialised in digital and UX/UI design. Since 2021 I have designed ISCAMEN’s communication and, through Sette Agency, I work for private brands on social, ads, emails and websites.",
+        "I work closely with teams: from brief to final delivery, coordinating timelines and changes with each client."
+      ],
+      "photoAlt": "Black and white halftone portrait of Franco Colucci, smiling, wearing a dark T-shirt.",
+      "experienceTitle": "Experience",
+      "experience": [
+        {
+          "company": "ISCAMEN",
+          "role": "Graphic & Digital Designer",
+          "period": "Apr 2021 – present"
+        },
+        {
+          "company": "Sette Agency",
+          "role": "Digital & Web Designer (freelance)",
+          "period": "Jan 2023 – present"
+        },
+        {
+          "company": "Grupo Nexia",
+          "role": "Graphic & Digital Designer",
+          "period": "Jul 2024 – Jan 2025"
+        }
+      ],
+      "educationTitle": "Education",
+      "education": [
+        {
+          "title": "Graphic Design",
+          "place": "Universidad Nacional de Cuyo",
+          "period": "2011 – 2020"
+        },
+        {
+          "title": "UX/UI Design (advanced, 7 months)",
+          "place": "Codo a Codo",
+          "period": "2023"
+        },
+        {
+          "title": "UX/UI Design (intensive, 4 months)",
+          "place": "Coderhouse",
+          "period": "2022"
+        }
+      ],
+      "languagesTitle": "Languages",
+      "languages": "Spanish (native) · English B1 · Italian A2"
+    },
+    "contact": {
+      "title": "Contact",
+      "intro": "Hiring for a role or have a project? Write to me and I’ll reply by email.",
+      "directTitle": "Or reach me directly",
+      "formTitle": "Form"
+    }
   },
   "footer": {
     "location": "Mendoza, Argentina",
     "remote": "Available for remote work",
     "backToTop": "Back to top",
     "rights": "© {year} Franco Colucci"
+  },
+  "notFound": {
+    "title": "This page doesn’t exist",
+    "body": "The link may be wrong or the page may have moved.",
+    "work": "See work",
+    "contact": "Go to contact"
+  },
+  "case": {
+    "back": "All work",
+    "pieces": "Pieces",
+    "next": "Next case",
+    "labels": {
+      "rol": "My role",
+      "contexto": "Context",
+      "desafio": "Challenge",
+      "solucion": "Solution",
+      "resultado": "Result"
+    }
   }
 }

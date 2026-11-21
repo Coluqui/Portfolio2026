@@ -1,0 +1,229 @@
+---
+// 02 Qué hago: 6 capacidades + herramientas. Desktop: grilla abierta. Mobile: acordeón
+// (M28, única animación de layout permitida: grid-template-rows 0fr → 1fr). Sin JS, todo
+// queda abierto.
+import SectionHeader from './SectionHeader.astro';
+import { type Lang, useDictionary, useTranslations } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const services = useDictionary(lang).home.services;
+---
+
+<section id="que-hago" class="container services" aria-labelledby="services-title">
+  <SectionHeader
+    num="02"
+    id="services-title"
+    title={t('home.services.title')}
+    intro={t('home.services.intro')}
+  />
+
+  <ol class="items" role="list" data-accordion>
+    {services.items.map((item, i) => (
+      <li class="item" data-accordion-item data-open="true">
+        <h3 class="item__title">
+          <span class="num" aria-hidden="true">
+            {String(i + 1).padStart(2, '0')}
+          </span>
+          <span class="item__static">{item.title}</span>
+          <button
+            class="item__toggle"
+            type="button"
+            aria-expanded="true"
+            aria-controls={`service-${i}`}
+            data-accordion-button
+          >
+            <span>{item.title}</span>
+            <span class="plus" aria-hidden="true" />
+          </button>
+        </h3>
+        <div class="item__panel" id={`service-${i}`}>
+          <p class="item__text">{item.text}</p>
+        </div>
+      </li>
+    ))}
+  </ol>
+
+  <div class="tools">
+    <h3 class="label tools__title">{t('home.services.toolsTitle')}</h3>
+    <ul role="list">
+      {services.tools.map((tool) => (
+        <li class="label">{tool}</li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .services {
+    padding-block-start: var(--space-section);
+  }
+
+  .items {
+    display: grid;
+    padding: 0;
+    list-style: none;
+
+    @media (min-width: 48rem) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-7) var(--grid-gutter);
+    }
+
+    @media (min-width: 80rem) {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .item {
+    border-block-end: var(--border-hairline);
+
+    @media (min-width: 48rem) {
+      display: grid;
+      gap: var(--space-3);
+      align-content: start;
+      padding-block-start: var(--space-4);
+      border-block-start: var(--border-hairline);
+      border-block-end: 0;
+    }
+  }
+
+  .item__title {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-3);
+    font-size: var(--text-h3);
+  }
+
+  .num {
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    font-weight: var(--weight-mono);
+    letter-spacing: var(--tracking-label);
+    color: var(--color-accent-text);
+  }
+
+  /* El botón solo existe en mobile con JS; el título estático en desktop o sin JS */
+  .item__toggle {
+    display: none;
+  }
+
+  .item__text {
+    max-inline-size: var(--measure);
+    color: var(--color-text-secondary);
+  }
+
+  @media (max-width: 47.99rem) {
+    [data-accordion][data-enhanced] .item__static {
+      display: none;
+    }
+
+    [data-accordion][data-enhanced] .item__toggle {
+      display: flex;
+      flex: 1;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-3);
+      min-block-size: var(--control-height);
+      padding: 0;
+      border: 0;
+      background: none;
+      color: var(--color-text-primary);
+      font: inherit;
+      font-weight: var(--weight-strong);
+      text-align: start;
+    }
+
+    .item__title {
+      padding-block: var(--space-2);
+    }
+
+    /* M28 · grid-template-rows 0fr → 1fr (⚠ única animación de layout permitida) */
+    [data-accordion][data-enhanced] .item__panel {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows var(--duration-base) var(--ease-in-out);
+    }
+
+    [data-accordion][data-enhanced] .item[data-open='true'] .item__panel {
+      grid-template-rows: 1fr;
+    }
+
+    [data-accordion][data-enhanced] .item__text {
+      overflow: hidden;
+      min-block-size: 0;
+    }
+
+    .item[data-open='true'] .item__text {
+      padding-block-end: var(--space-4);
+    }
+  }
+
+  /* + gira 45° y pasa a × */
+  .plus {
+    position: relative;
+    flex: none;
+    inline-size: var(--space-4);
+    block-size: var(--space-4);
+    transition: transform var(--duration-base) var(--ease-in-out);
+  }
+
+  .plus::before,
+  .plus::after {
+    content: '';
+    position: absolute;
+    inset-block-start: calc(50% - var(--crop-mark-width) / 2);
+    inset-inline: 0;
+    block-size: var(--crop-mark-width);
+    background-color: currentColor;
+  }
+
+  .plus::after {
+    transform: rotate(90deg);
+  }
+
+  .item[data-open='true'] .plus {
+    transform: rotate(45deg);
+  }
+
+  /* M28 reducido: apertura instantánea (misma especificidad que la regla de arriba) */
+  @media (prefers-reduced-motion: reduce) {
+    [data-accordion][data-enhanced] .item__panel,
+    [data-accordion] .plus {
+      transition: none;
+    }
+  }
+
+  .tools {
+    display: grid;
+    gap: var(--space-3);
+    margin-block-start: var(--space-7);
+  }
+
+  .tools__title {
+    color: var(--color-text-secondary);
+  }
+
+  .tools ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    padding: 0;
+    list-style: none;
+  }
+
+  .tools li {
+    padding: var(--space-1) var(--space-3);
+    border: var(--border-hairline);
+    border-radius: var(--radius-xs);
+  }
+</style>
+
+<script>
+  import { initAccordion } from '../scripts/accordion';
+
+  document.addEventListener('astro:page-load', initAccordion);
+</script>

@@ -1,0 +1,107 @@
+---
+// Encabezado de sección numerada (01–05). M25: el filete de 3 px se dibuja de izquierda a
+// derecha y número y título suben 8 px, una sola vez al entrar en pantalla. Sin JS (o si la
+// sección ya está en el primer viewport) se ve completo desde el inicio.
+interface Props {
+  num: string;
+  title: string;
+  id: string;
+  intro?: string;
+}
+
+const { num, title, id, intro } = Astro.props;
+---
+
+<header class="section-header" data-reveal>
+  <span class="rule" aria-hidden="true"></span>
+  <h2 id={id} class="title">
+    <span class="num">{num}</span>
+    <span>{title}</span>
+  </h2>
+  {intro && <p class="intro">{intro}</p>}
+</header>
+
+<style>
+  .section-header {
+    display: grid;
+    gap: var(--space-4);
+    padding-block-end: var(--space-7);
+  }
+
+  .rule {
+    display: block;
+    block-size: 0;
+    border-block-start: var(--border-rule);
+    transform-origin: left;
+  }
+
+  .title {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-4);
+    padding-block-start: var(--space-3);
+  }
+
+  .num {
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    font-weight: var(--weight-mono);
+    letter-spacing: var(--tracking-label);
+    color: var(--color-accent-text);
+  }
+
+  .intro {
+    max-inline-size: var(--measure);
+    font-size: var(--text-lead);
+    line-height: var(--leading-lead);
+    letter-spacing: var(--tracking-lead);
+    color: var(--color-text-secondary);
+  }
+
+  /* M25 · estado previo: lo agrega reveal.ts solo a lo que está fuera del primer viewport */
+  .section-header[data-reveal='pending'] .rule {
+    transform: scaleX(0);
+  }
+
+  .section-header[data-reveal='pending'] .title,
+  .section-header[data-reveal='pending'] .intro {
+    opacity: 0;
+    transform: translateY(var(--shift-sm));
+  }
+
+  .section-header[data-reveal='in'] .rule {
+    transition: transform var(--duration-slow) var(--ease-register);
+  }
+
+  .section-header[data-reveal='in'] .title,
+  .section-header[data-reveal='in'] .intro {
+    transition:
+      opacity var(--duration-slow) var(--ease-out),
+      transform var(--duration-slow) var(--ease-out);
+  }
+
+  .section-header[data-reveal='in'] .title {
+    transition-delay: var(--stagger);
+  }
+
+  .section-header[data-reveal='in'] .intro {
+    transition-delay: calc(var(--stagger) * 2);
+  }
+
+  /* M25 reducido: sin entrada, todo visible */
+  @media (prefers-reduced-motion: reduce) {
+    .section-header[data-reveal] .rule,
+    .section-header[data-reveal] .title,
+    .section-header[data-reveal] .intro {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  import { initReveal } from '../scripts/reveal';
+
+  document.addEventListener('astro:page-load', initReveal);
+</script>

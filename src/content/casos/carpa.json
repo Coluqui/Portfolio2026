@@ -3,6 +3,7 @@
   "cliente": "Carpa",
   "orden": 4,
   "portada": "metodo-carpa",
+  "destacadas": ["metodo-carpa", "bonos", "oferta-lanzamiento"],
   "titulo": {
     "es": "TODO(contenido): nombre del caso carpa",
     "en": "TODO(contenido): nombre del caso carpa"

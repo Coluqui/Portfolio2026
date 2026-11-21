@@ -2,7 +2,7 @@
 
 Lo que falta para que el sitio tenga contenido real. En el código, cada hueco es un `TODO(contenido): …` visible. `npm run pendientes` los lista y los cuenta.
 
-Actualizado: 20 nov 2026 (cierre de la Fase 2).
+Actualizado: 21 nov 2026 (Fase 4).
 
 ## Casos (`src/content/casos/*.json`)
 
@@ -24,7 +24,8 @@ Por cada uno de los 4 casos (MoonDesk, ISCAMEN, Condimento, Carpa):
 
 ## Piezas e imágenes
 
-- [ ] **Mosaico del hero:** elegir 6 piezas (propuesta en `docs/inventario.md`)
+- [x] **Mosaico del hero:** propuesto por Claude (`src/lib/home.ts`). Cambialo si querés otras
+- [x] **Mejores piezas por empresa** para la home: propuestas en `destacadas` de cada caso. Revisalas
 - [ ] Exportaciones de más resolución (≥ 1440 px de ancho) para las piezas del mosaico y las portadas
 - [ ] Mockups o escenas de portada por caso (si no hay, uso marcos de dispositivo en CSS)
 - [ ] Páginas interiores de los ebooks de MoonDesk (si existen)
@@ -34,13 +35,13 @@ Por cada uno de los 4 casos (MoonDesk, ISCAMEN, Condimento, Carpa):
 
 ## Home y textos generales
 
-- [ ] Bio corta del hero (2 líneas) y bio de Sobre mí
-- [ ] Tags de expertise y las 6 capacidades de "Qué hago"
-- [ ] Los 4 pasos de "Proceso + IA"
-- [ ] Experiencia con fechas (empresa, rol, período). ¿La saco del CV?
+- [ ] **Revisar** la bio del hero y de Sobre mí, las especialidades, las 6 capacidades de "Qué hago" y los 4 pasos de "Proceso + IA" (borradores de Claude a partir del PRD y del CV, en `src/i18n/*.json` → `home`)
+- [x] Experiencia con fechas: tomada del CV
+- [ ] **Confirmar diferencias CV vs sitio actual:** experiencia "más de 7 años" (CV) vs "más de 5 años" (sitio); inglés **B1** (CV) vs **B2 alto** (sitio). Hoy se muestra lo del CV
+- [ ] Foto: se usa `franco-photo.png` del sitio actual (600×900, recortada a 4:5). Si tenés una de más resolución, mejor
 
 ## Contacto y CV
 
-- [ ] **CV en inglés** (PDF). Hasta que llegue, el botón en `/en/` descarga el CV en español
-- [ ] Mail público de contacto, URL de LinkedIn y número de WhatsApp
+- [x] CV en inglés: era la página 2 del CV; ahora es `public/cv/franco-colucci-cv-en.pdf`
+- [x] Mail, LinkedIn y WhatsApp: los mismos del sitio actual
 - [ ] "Última actualización" del CV (el PRD la marca como pendiente)

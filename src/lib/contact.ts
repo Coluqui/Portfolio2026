@@ -11,11 +11,15 @@ export interface ContactData {
   whatsapp: string | null;
 }
 
+// Mismos datos que publica el sitio actual y el CV (21 nov 2026).
 export const contact: ContactData = {
-  email: null,
-  linkedin: null,
-  whatsapp: null,
+  email: 'fcoluccidg@gmail.com',
+  linkedin: 'https://www.linkedin.com/in/francocolucci93/',
+  whatsapp: '5492615581727',
 };
+
+/** Número legible para mostrar junto al link de WhatsApp. */
+export const whatsappDisplay = '+54 261 558 1727';
 
 export const TODO_EMAIL = 'TODO(contenido): mail público';
 

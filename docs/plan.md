@@ -1,6 +1,6 @@
 # Plan de construcción — Portfolio Franco Colucci
 
-20 nov 2026 · Fases 0 a 3 cerradas (D1–D4 aprobadas, ver `docs/decisiones.md`). Este archivo se actualiza al cerrar cada fase.
+21 nov 2026 · Fases 0 a 4 cerradas (D1–D4 aprobadas, ver `docs/decisiones.md`). Este archivo se actualiza al cerrar cada fase.
 
 | Fase | Estado |
 | --- | --- |
@@ -8,7 +8,8 @@
 | 1 · Base | Cerrada: Astro 7.4, fuentes woff2, i18n, tema, SEO base, `/dev/tokens` |
 | 2 · Inventario | Cerrada: 23 piezas copiadas, JSON por caso, alt ES/EN, `/dev/inventario` |
 | 3 · Componentes | Cerrada: nav, toggles, botones, links, CV, copiar mail, tile, chips, barra inferior, footer, campos; `/dev/componentes` |
-| 4 · Home | Próxima |
+| 4 · Home | Cerrada: hero con datos y mosaico, Trabajé con, 01 Trabajos por empresa con filtros (FLIP), 02–05, caso base y 404 |
+| 5 · Caso + visor | Próxima |
 
 ## 1. Lo que encontré (Fase 0)
 

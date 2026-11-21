@@ -1,0 +1,187 @@
+---
+// 05 Contacto: formulario + contacto directo (mail con copiar, LinkedIn, WhatsApp, CV).
+// El envío (endpoint /api/contacto, validación, anti-spam, M37–M39) se conecta en la Fase 6.
+import Button from './Button.astro';
+import CopyEmail from './CopyEmail.astro';
+import CvButton from './CvButton.astro';
+import Field from './Field.astro';
+import FormError from './FormError.astro';
+import FormSuccess from './FormSuccess.astro';
+import SectionHeader from './SectionHeader.astro';
+import TextLink from './TextLink.astro';
+import { type Lang, useTranslations } from '../i18n/utils';
+import { contact, whatsappDisplay } from '../lib/contact';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const linkedinLabel = contact.linkedin?.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '');
+---
+
+<section id="contacto" class="container contact" aria-labelledby="contact-title">
+  <SectionHeader
+    num="05"
+    id="contact-title"
+    title={t('home.contact.title')}
+    intro={t('home.contact.intro')}
+  />
+
+  <div class="layout">
+    <form class="form" method="post" action="/api/contacto" novalidate data-contact-form>
+      <h3 class="visually-hidden">{t('home.contact.formTitle')}</h3>
+      <input type="hidden" name="lang" value={lang} />
+      <div class="row">
+        <Field
+          lang={lang}
+          id="contact-name"
+          name="nombre"
+          label={t('form.name')}
+          autocomplete="name"
+          maxlength={100}
+          required
+        />
+        <Field
+          lang={lang}
+          id="contact-email"
+          name="mail"
+          type="email"
+          label={t('form.email')}
+          autocomplete="email"
+          maxlength={254}
+          required
+        />
+      </div>
+      <Field
+        lang={lang}
+        id="contact-company"
+        name="empresa"
+        label={t('form.company')}
+        autocomplete="organization"
+        maxlength={100}
+        optional
+      />
+      <Field
+        lang={lang}
+        id="contact-message"
+        name="mensaje"
+        type="textarea"
+        label={t('form.message')}
+        hint={t('form.messageHint')}
+        minlength={10}
+        maxlength={3000}
+        required
+      />
+      <FormError lang={lang} />
+      <div>
+        <Button type="submit" arrow="right" loadingLabel={t('form.sending')}>
+          {t('form.submit')}
+        </Button>
+      </div>
+      <FormSuccess lang={lang} />
+    </form>
+
+    <aside class="direct" aria-labelledby="contact-direct">
+      <h3 id="contact-direct" class="label direct__title">
+        {t('home.contact.directTitle')}
+      </h3>
+      <ul class="direct__list" role="list">
+        {contact.email && (
+          <li>
+            <span class="label muted">{t('contact.email')}</span>
+            <a class="direct__value" href={`mailto:${contact.email}`}>
+              {contact.email}
+            </a>
+            <CopyEmail lang={lang} />
+          </li>
+        )}
+        {contact.linkedin && (
+          <li>
+            <span class="label muted">{t('contact.linkedin')}</span>
+            <TextLink href={contact.linkedin} lang={lang} external standalone>
+              {linkedinLabel}
+            </TextLink>
+          </li>
+        )}
+        {contact.whatsapp && (
+          <li>
+            <span class="label muted">{t('contact.whatsapp')}</span>
+            <TextLink href={`https://wa.me/${contact.whatsapp}`} lang={lang} external standalone>
+              {whatsappDisplay}
+            </TextLink>
+          </li>
+        )}
+        <li>
+          <span class="label muted">{t('cv.label')}</span>
+          <CvButton lang={lang} size="full" />
+        </li>
+      </ul>
+    </aside>
+  </div>
+</section>
+
+<style>
+  .contact {
+    padding-block-start: var(--space-section);
+  }
+
+  .layout {
+    display: grid;
+    gap: var(--space-8) var(--grid-gutter);
+
+    @media (min-width: 80rem) {
+      grid-template-columns: 3fr 2fr;
+      align-items: start;
+    }
+  }
+
+  .form {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  .row {
+    display: grid;
+    gap: var(--space-5) var(--grid-gutter);
+
+    @media (min-width: 48rem) {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .direct {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .direct__title,
+  .muted {
+    color: var(--color-text-secondary);
+  }
+
+  .direct__list {
+    display: grid;
+    padding: 0;
+    list-style: none;
+  }
+
+  .direct__list li {
+    display: grid;
+    gap: var(--space-2);
+    justify-items: start;
+    padding-block: var(--space-4);
+    border-block-end: var(--border-hairline);
+  }
+
+  .direct__value {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: var(--target-min);
+    color: var(--color-text-primary);
+    font-size: var(--text-lead);
+    font-weight: var(--weight-strong);
+    overflow-wrap: anywhere;
+  }
+</style>

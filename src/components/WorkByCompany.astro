@@ -1,0 +1,171 @@
+---
+// 01 Trabajos: las mejores piezas de cada caso (`destacadas`), agrupadas por empresa, con
+// link al caso completo. Filtros por familia de formato (M05) que reordenan la grilla con
+// FLIP (M06); una empresa sin piezas del filtro activo se oculta. Sin JS se ve todo.
+import { getCollection } from 'astro:content';
+import FilterChips from './FilterChips.astro';
+import PieceTile from './PieceTile.astro';
+import SectionHeader from './SectionHeader.astro';
+import { type Lang, useTranslations } from '../i18n/utils';
+import { familiaDe, filterOptions } from '../lib/filters';
+import { pieceHref, resolvePieces } from '../lib/home';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const casos = (await getCollection('casos')).sort((a, b) => a.data.orden - b.data.orden);
+const groups = casos.map((entry) => ({
+  slug: entry.data.slug,
+  cliente: entry.data.cliente,
+  total: entry.data.piezas.length,
+  pieces: resolvePieces(
+    casos,
+    entry.data.destacadas.map((slug) => ({ caso: entry.data.slug, slug })),
+  ),
+}));
+const options = filterOptions(
+  groups.flatMap((g) => g.pieces.map((p) => p.pieza)),
+  lang,
+);
+---
+
+<section id="trabajos" class="container work" aria-labelledby="work-title">
+  <SectionHeader
+    num="01"
+    id="work-title"
+    title={t('home.work.title')}
+    intro={t('home.work.intro')}
+  />
+
+  <div class="filters-wrap">
+    <FilterChips lang={lang} options={options} controls="work-groups" />
+  </div>
+
+  <div id="work-groups" class="groups" data-work>
+    {groups.map((group) => (
+      <article class="company" data-company aria-labelledby={`company-${group.slug}`}>
+        <header class="company__head">
+          <h3 id={`company-${group.slug}`}>{group.cliente}</h3>
+          <a class="company__link" href={`/${lang}/trabajos/${group.slug}/`}>
+            <span>{t('home.work.viewCase')}</span>
+            <span class="label muted">{t('home.work.piecesInCase', { n: group.total })}</span>
+            <span class="arrow" aria-hidden="true">
+              →
+            </span>
+          </a>
+        </header>
+        <ul class="grid" role="list">
+          {group.pieces.map(({ caso, cliente, pieza }) => (
+            <li data-work-item data-familia={familiaDe(pieza.formato)}>
+              <PieceTile
+                lang={lang}
+                caso={caso}
+                cliente={cliente}
+                pieza={pieza}
+                href={pieceHref(lang, caso, pieza.slug)}
+              />
+            </li>
+          ))}
+        </ul>
+      </article>
+    ))}
+    <p class="empty muted" hidden data-work-empty>
+      {t('home.work.empty')}
+    </p>
+  </div>
+</section>
+
+<style>
+  .work {
+    padding-block: var(--space-section) 0;
+  }
+
+  .filters-wrap {
+    position: sticky;
+    inset-block-start: calc(var(--nav-height) + var(--safe-top));
+    z-index: 1;
+    padding-block: var(--space-3);
+    margin-block-end: var(--space-5);
+    background-color: var(--color-bg);
+  }
+
+  .groups {
+    display: grid;
+    gap: var(--space-8);
+  }
+
+  .company {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  .company[hidden] {
+    display: none;
+  }
+
+  .company__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-2) var(--space-5);
+    padding-block-end: var(--space-3);
+    border-block-end: var(--border-hairline);
+  }
+
+  .company__link {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-1) var(--space-3);
+    min-block-size: var(--target-min);
+    padding-block: var(--space-3);
+    color: var(--color-text-primary);
+    font-weight: var(--weight-strong);
+    text-decoration: none;
+  }
+
+  .company__link .arrow {
+    font-family: var(--font-mono);
+    color: var(--color-accent-text);
+    transition: transform var(--duration-fast) var(--ease-out);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .company__link:hover .arrow {
+      transform: translateX(calc(var(--shift-sm) / 2));
+    }
+  }
+
+  .muted {
+    color: var(--color-text-secondary);
+    font-weight: var(--weight-regular);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(var(--pieces-columns), minmax(0, 1fr));
+    gap: var(--space-7) var(--grid-gutter);
+    align-items: start;
+    padding: 0;
+    list-style: none;
+  }
+
+  .grid li[hidden] {
+    display: none;
+  }
+
+  .empty[hidden] {
+    display: none;
+  }
+</style>
+
+<script>
+  import { initWorkFilters } from '../scripts/works';
+
+  document.addEventListener('astro:page-load', initWorkFilters);
+</script>

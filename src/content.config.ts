@@ -79,6 +79,8 @@ const casos = defineCollection({
       portada: slug.optional(),
       /** Slug del carrusel que se muestra además como tira de contactos (una vez por caso). */
       destacado: slug.optional(),
+      /** Mejores piezas del caso, en orden: las que muestra la home en 01 Trabajos. */
+      destacadas: z.array(slug).min(1).max(4),
       piezas: z.array(pieza).min(1),
     })
     .superRefine((caso, ctx) => {
@@ -86,6 +88,14 @@ const casos = defineCollection({
       slugs.forEach((s, i) => {
         if (slugs.indexOf(s) !== i)
           ctx.addIssue({ code: 'custom', message: `pieza repetida: ${s}`, path: ['piezas', i] });
+      });
+      caso.destacadas.forEach((value, i) => {
+        if (!slugs.includes(value))
+          ctx.addIssue({
+            code: 'custom',
+            message: `destacadas: "${value}" no es una pieza`,
+            path: ['destacadas', i],
+          });
       });
       for (const key of ['portada', 'destacado'] as const) {
         const value = caso[key];

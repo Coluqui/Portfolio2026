@@ -9,7 +9,8 @@
     "skipToContent": "Saltar al contenido",
     "mainNav": "Navegación principal",
     "quickActions": "Accesos rápidos",
-    "newTab": "(se abre en otra pestaña)"
+    "newTab": "(se abre en otra pestaña)",
+    "opensCase": "Abre el caso {cliente}"
   },
   "nav": {
     "home": "Franco Colucci, inicio",
@@ -108,12 +109,186 @@
   },
   "home": {
     "name": "Franco Colucci",
-    "status": "Sitio en construcción. Pronto, el trabajo."
+    "status": "Sitio en construcción. Pronto, el trabajo.",
+    "hero": {
+      "eyebrow": "Mendoza, Argentina · Remoto o presencial",
+      "bio": "Diseño piezas de redes, ads de performance, mails, ebooks y webs que comunican claro y rinden. Más de 7 años con organismos públicos y marcas privadas, con base en UX/UI y un flujo de trabajo con IA.",
+      "expertiseLabel": "Especialidades",
+      "expertise": [
+        "Redes sociales",
+        "Ads de performance",
+        "Email marketing",
+        "Ebooks",
+        "Web en WordPress",
+        "Sistemas en Figma"
+      ],
+      "factsLabel": "Datos rápidos",
+      "facts": [
+        {
+          "label": "Experiencia",
+          "value": "Más de 7 años"
+        },
+        {
+          "label": "Idiomas",
+          "value": "Español nativo · Inglés B1 · Italiano A2"
+        },
+        {
+          "label": "Modalidad",
+          "value": "Remoto o presencial · GMT-3"
+        }
+      ],
+      "ctaWork": "Ver trabajos",
+      "mosaicLabel": "Trabajos destacados"
+    },
+    "clients": {
+      "title": "Trabajé con"
+    },
+    "work": {
+      "title": "Trabajos",
+      "intro": "Una selección por empresa. Cada carrusel cuenta como una pieza.",
+      "viewCase": "Ver caso completo",
+      "piecesInCase": "{n} piezas en el caso",
+      "empty": "No hay piezas de este formato en la selección."
+    },
+    "services": {
+      "title": "Qué hago",
+      "intro": "Del carrusel y el reel al ad, el mail, el ebook y la web. Todo pensado como sistema, para producir mucho sin perder consistencia.",
+      "items": [
+        {
+          "title": "Redes sociales",
+          "text": "Carruseles, posteos, stories y reels. Una plantilla bien resuelta y muchas piezas consistentes a partir de ella."
+        },
+        {
+          "title": "Ads de performance",
+          "text": "Piezas para campañas pagas en todos los tamaños, con variantes para probar mensajes."
+        },
+        {
+          "title": "Email marketing",
+          "text": "Campañas y plantillas responsive para comunicación institucional y comercial."
+        },
+        {
+          "title": "Ebooks y documentos",
+          "text": "Lead magnets, one-pagers y presentaciones con jerarquía clara para leer rápido."
+        },
+        {
+          "title": "Web en WordPress",
+          "text": "Diseño e implementación de sitios con WordPress y Elementor, responsive y fáciles de mantener."
+        },
+        {
+          "title": "Sistemas en Figma",
+          "text": "Componentes y plantillas que ordenan la producción y mantienen la marca igual en todos los canales."
+        }
+      ],
+      "toolsTitle": "Herramientas",
+      "tools": [
+        "Illustrator",
+        "Photoshop",
+        "InDesign",
+        "Figma",
+        "WordPress",
+        "Elementor",
+        "Claude Code",
+        "ChatGPT",
+        "Antigravity"
+      ]
+    },
+    "process": {
+      "title": "Proceso + IA",
+      "intro": "La IA acelera la producción; el criterio de diseño sigue siendo mío.",
+      "steps": [
+        {
+          "title": "Brief",
+          "text": "Entiendo el objetivo, el canal y cómo se va a medir antes de abrir un archivo."
+        },
+        {
+          "title": "Sistema",
+          "text": "Armo plantillas y componentes en Figma para que cada pieza nueva salga rápido y consistente."
+        },
+        {
+          "title": "Producción con IA",
+          "text": "Uso Claude Code, ChatGPT y Antigravity para acelerar variantes, textos de prueba y maquetado."
+        },
+        {
+          "title": "Entrega y ajuste",
+          "text": "Valido con el cliente, entrego en todos los formatos y ajusto según cómo rinden las piezas."
+        }
+      ]
+    },
+    "about": {
+      "title": "Sobre mí",
+      "bio": [
+        "Soy diseñador gráfico por la Universidad Nacional de Cuyo y me especialicé en diseño digital y UX/UI. Desde 2021 diseño la comunicación de ISCAMEN y, con Sette Agency, trabajo para marcas privadas en redes, ads, mails y webs.",
+        "Trabajo cerca de los equipos: del brief a la entrega final, coordinando tiempos y ajustes con cada cliente."
+      ],
+      "photoAlt": "Retrato de Franco Colucci en blanco y negro, con trama de puntos, sonriendo y con remera oscura.",
+      "experienceTitle": "Experiencia",
+      "experience": [
+        {
+          "company": "ISCAMEN",
+          "role": "Diseñador gráfico y digital",
+          "period": "Abr 2021 – actualidad"
+        },
+        {
+          "company": "Sette Agency",
+          "role": "Diseñador digital y web (freelance)",
+          "period": "Ene 2023 – actualidad"
+        },
+        {
+          "company": "Grupo Nexia",
+          "role": "Diseñador gráfico y digital",
+          "period": "Jul 2024 – Ene 2025"
+        }
+      ],
+      "educationTitle": "Formación",
+      "education": [
+        {
+          "title": "Diseño Gráfico",
+          "place": "Universidad Nacional de Cuyo",
+          "period": "2011 – 2020"
+        },
+        {
+          "title": "Diseño UX/UI (avanzado, 7 meses)",
+          "place": "Codo a Codo",
+          "period": "2023"
+        },
+        {
+          "title": "Diseño UX/UI (intensivo, 4 meses)",
+          "place": "Coderhouse",
+          "period": "2022"
+        }
+      ],
+      "languagesTitle": "Idiomas",
+      "languages": "Español nativo · Inglés B1 · Italiano A2"
+    },
+    "contact": {
+      "title": "Contacto",
+      "intro": "¿Tenés un puesto o un proyecto? Escribime y te respondo por mail.",
+      "directTitle": "O escribime directo",
+      "formTitle": "Formulario"
+    }
   },
   "footer": {
     "location": "Mendoza, Argentina",
     "remote": "Disponible para trabajo remoto",
     "backToTop": "Volver arriba",
     "rights": "© {year} Franco Colucci"
+  },
+  "notFound": {
+    "title": "Esta página no existe",
+    "body": "Puede que el link esté mal o que la página se haya movido.",
+    "work": "Ver trabajos",
+    "contact": "Ir a contacto"
+  },
+  "case": {
+    "back": "Todos los trabajos",
+    "pieces": "Piezas",
+    "next": "Siguiente caso",
+    "labels": {
+      "rol": "Mi rol",
+      "contexto": "Contexto",
+      "desafio": "Desafío",
+      "solucion": "Solución",
+      "resultado": "Resultado"
+    }
   }
 }

@@ -1,0 +1,169 @@
+---
+// Página de caso (versión base, Fase 4): título, textos del caso y todas sus piezas, para que
+// los links de la home funcionen. La plantilla completa (métricas M27, tira de contactos,
+// visor M13–M19, transición tarjeta → caso M10–M12) llega en la Fase 5.
+import { getCollection } from 'astro:content';
+import PieceTile from '../../../components/PieceTile.astro';
+import { type Lang, languages, useTranslations } from '../../../i18n/utils';
+import Page from '../../../layouts/Page.astro';
+
+export async function getStaticPaths() {
+  const casos = await getCollection('casos');
+  return languages.flatMap((lang) =>
+    casos.map((entry) => ({ params: { lang, slug: entry.data.slug }, props: { entry } })),
+  );
+}
+
+const lang = Astro.params.lang as Lang;
+const { entry } = Astro.props;
+const caso = entry.data;
+const t = useTranslations(lang);
+
+const all = (await getCollection('casos')).sort((a, b) => a.data.orden - b.data.orden);
+const index = all.findIndex((c) => c.data.slug === caso.slug);
+const next = all[(index + 1) % all.length]?.data;
+
+const sections = [
+  ['rol', caso.rol],
+  ['contexto', caso.contexto],
+  ['desafio', caso.desafio],
+  ['solucion', caso.solucion],
+  ['resultado', caso.resultado],
+] as const;
+---
+
+<Page lang={lang} title={caso.cliente} description={caso.contexto[lang]}>
+  <div class="container case">
+    <a class="back label" href={`/${lang}/#trabajos`}>
+      <span aria-hidden="true">←</span>
+      {t('case.back')}
+    </a>
+    <h1>{caso.cliente}</h1>
+
+    <dl class="texts">
+      {sections.map(([key, value]) => (
+        <div>
+          <dt class="label">{t(`case.labels.${key}`)}</dt>
+          <dd>{value[lang]}</dd>
+        </div>
+      ))}
+    </dl>
+
+    <h2>
+      {t('case.pieces')} <span class="label muted">{caso.piezas.length}</span>
+    </h2>
+    <ul class="grid" role="list">
+      {caso.piezas.map((pieza, i) => (
+        <li id={pieza.slug}>
+          <PieceTile
+            lang={lang}
+            caso={caso.slug}
+            cliente={caso.cliente}
+            pieza={pieza}
+            href={`#${pieza.slug}`}
+            priority={i < 4}
+          />
+          <p class="title">{pieza.titulo[lang]}</p>
+        </li>
+      ))}
+    </ul>
+
+    {next && next.slug !== caso.slug && (
+      <a class="next" href={`/${lang}/trabajos/${next.slug}/`}>
+        <span class="label muted">{t('case.next')}</span>
+        <span class="next__name">
+          {next.cliente} <span aria-hidden="true">→</span>
+        </span>
+      </a>
+    )}
+  </div>
+</Page>
+
+<style>
+  .case {
+    display: grid;
+    gap: var(--space-6);
+    padding-block-start: var(--space-6);
+  }
+
+  .back {
+    display: inline-flex;
+    gap: var(--space-2);
+    align-items: center;
+    justify-self: start;
+    min-block-size: var(--target-min);
+    color: var(--color-text-primary);
+    text-decoration: none;
+  }
+
+  h1 {
+    font-size: var(--text-display);
+    line-height: var(--leading-display);
+    letter-spacing: var(--tracking-display);
+  }
+
+  .texts {
+    display: grid;
+    gap: var(--space-3);
+    max-inline-size: var(--measure);
+  }
+
+  .texts div {
+    display: grid;
+    gap: var(--space-1);
+    padding-block-end: var(--space-3);
+    border-block-end: var(--border-hairline);
+  }
+
+  .texts dt,
+  .muted {
+    color: var(--color-text-secondary);
+  }
+
+  .texts dd {
+    margin: 0;
+  }
+
+  h2 {
+    display: flex;
+    gap: var(--space-3);
+    align-items: baseline;
+    padding-block-start: var(--space-7);
+    border-block-start: var(--border-rule);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(var(--pieces-columns), minmax(0, 1fr));
+    gap: var(--space-7) var(--grid-gutter);
+    align-items: start;
+    padding: 0;
+    list-style: none;
+  }
+
+  .grid li {
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .title {
+    font-size: var(--text-small);
+    line-height: var(--leading-small);
+  }
+
+  .next {
+    display: grid;
+    gap: var(--space-2);
+    padding-block: var(--space-7);
+    border-block-start: var(--border-rule);
+    color: var(--color-text-primary);
+    text-decoration: none;
+  }
+
+  .next__name {
+    font-size: var(--text-h2);
+    font-weight: var(--weight-strong);
+    line-height: var(--leading-h2);
+    letter-spacing: var(--tracking-h2);
+  }
+</style>
