@@ -330,6 +330,11 @@ const num = (i: number) => String(i + 1).padStart(2, '0');
 
   /* M22 reducido: fundido de 120 ms, sin desplazamiento */
   @media (prefers-reduced-motion: reduce) {
+    /* M20 reducido: instantáneo */
+    .active-rule {
+      transition: none;
+    }
+
     .sheet {
       transform: none;
       opacity: 0;

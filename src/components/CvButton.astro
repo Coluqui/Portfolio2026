@@ -35,8 +35,10 @@ const state = force === 'downloading' || force === 'done' ? force : 'idle';
   >
     <span class="cv__labels" aria-hidden={size === 'compact' ? 'true' : undefined}>
       <span class="cv__label cv__label--idle">{label}</span>
-      <span class="cv__label cv__label--downloading">{t('cv.downloading')}</span>
-      <span class="cv__label cv__label--done">
+      <span class="cv__label cv__label--downloading" aria-hidden="true">
+        {t('cv.downloading')}
+      </span>
+      <span class="cv__label cv__label--done" aria-hidden="true">
         {t('cv.done')}
         <Icon name="check" />
       </span>

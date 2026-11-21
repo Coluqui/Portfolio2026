@@ -21,6 +21,24 @@ const siteName = t('meta.siteName');
 const fullTitle = title ? `${title} — ${siteName}` : `${siteName} — ${t('meta.role')}`;
 const metaDescription = description ?? t('meta.description');
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
+
+// M10 / M24 · fundido de página del ClientRouter: 200 ms (el preset de Astro usa 180 ms).
+// Con movimiento reducido Astro anula las View Transitions: cambio instantáneo (principio 6).
+const pageFade = {
+  old: {
+    name: 'astroFadeOut',
+    duration: 'var(--duration-fast)',
+    easing: 'var(--ease-in)',
+    fillMode: 'both',
+  },
+  new: {
+    name: 'astroFadeIn',
+    duration: 'var(--duration-fast)',
+    easing: 'var(--ease-out)',
+    fillMode: 'both',
+  },
+};
+const pageTransition = { forwards: pageFade, backwards: pageFade };
 const isLocalized = /^\/(es|en)(\/|$)/.test(Astro.url.pathname);
 const alternates = isLocalized
   ? languages.map((l) => ({
@@ -31,7 +49,7 @@ const alternates = isLocalized
 ---
 
 <!doctype html>
-<html lang={lang}>
+<html lang={lang} transition:animate={pageTransition}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />

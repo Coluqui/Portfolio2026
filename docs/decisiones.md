@@ -52,3 +52,5 @@ Registro de decisiones nuevas o que cambian algo del PRD. Formato: fecha · deci
 | 21 nov 2026 | T34 | Rate limit: 5 envíos válidos cada 10 min por IP (en memoria, por instancia). Los errores de campo y los reintentos automáticos no cuentan | Que un usuario real que se equivoca no quede bloqueado |
 | 21 nov 2026 | T35 | El token se puede reusar durante 2 horas (no es de un solo uso) | Aceptable para el volumen esperado; si llega spam, marcar tokens usados |
 | 21 nov 2026 | T36 | Honeypot con nombre `hp_ref` y `autocomplete="one-time-code"` | Un campo `website` lo llena el autocompletado y se perdían mensajes reales |
+| 21 nov 2026 | T37 | Auditoría de motion automatizada (`npm run audit:motion`, playwright-core + Chrome instalado): con y sin `prefers-reduced-motion`, CPU ×4, CLS, LCP, interrupciones del visor y marcas de corte con teclado. Resultado en `docs/motion-audit.json` | Criterios de aceptación de `motion.md` §8 verificables y repetibles |
+| 21 nov 2026 | T38 | Fundido de página del ClientRouter con tokens (`--duration-fast`, 200 ms) en lugar del preset de Astro (180 ms) | M10 y M24 piden 200 ms |

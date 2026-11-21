@@ -17,7 +17,8 @@
     "fonts": "python scripts/build-fonts.py",
     "inventario:check": "node scripts/inventario.mjs check",
     "inventario:sheets": "node scripts/inventario.mjs sheets",
-    "pendientes": "node scripts/pendientes.mjs"
+    "pendientes": "node scripts/pendientes.mjs",
+    "audit:motion": "node scripts/motion-audit.mjs"
   },
   "dependencies": {
     "@astrojs/node": "^11.1.14",

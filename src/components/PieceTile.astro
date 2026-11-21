@@ -194,4 +194,14 @@ const action = isCarousel ? t('piece.viewSlides', { n: count }) : t('piece.view'
       opacity var(--duration-fast) var(--ease-out) var(--stagger-fast),
       transform var(--duration-fast) var(--ease-out) var(--stagger-fast);
   }
+
+  /* M02 reducido: la acción aparece con un fundido de 120 ms, sin subir */
+  @media (prefers-reduced-motion: reduce) {
+    .tile .tile__action,
+    .tile:hover .tile__action,
+    .tile:focus-visible .tile__action {
+      transition-duration: var(--duration-base);
+      transition-delay: 0s;
+    }
+  }
 </style>

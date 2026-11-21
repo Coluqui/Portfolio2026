@@ -1,0 +1,272 @@
+{
+  "date": "2026-11-21T13:50:07.035Z",
+  "base": "http://localhost:4322",
+  "results": [
+    {
+      "id": "tok",
+      "mode": "normal",
+      "check": "tokens de motion",
+      "pass": true,
+      "detail": "--duration-fast=200ms --duration-base=300ms --duration-slow=500ms --duration-page=700ms --crop-travel=6px --delay-chrome=200ms --hold-feedback=1800ms"
+    },
+    {
+      "id": "M26",
+      "mode": "normal",
+      "check": "hero completo en el primer frame",
+      "pass": true,
+      "detail": "animaciones 0, invisibles 0"
+    },
+    {
+      "id": "LCP",
+      "mode": "normal",
+      "check": "LCP de la home",
+      "pass": true,
+      "detail": "208 ms"
+    },
+    {
+      "id": "M25",
+      "mode": "normal",
+      "check": "filete y título entran una vez",
+      "pass": true,
+      "detail": "antes pending/0, después in"
+    },
+    {
+      "id": "M06",
+      "mode": "normal",
+      "check": "filtro: salida + FLIP + entrada",
+      "pass": true,
+      "detail": "piezas 3, animaciones [200,200,200,200,200,200,200,200,200,200,200]"
+    },
+    {
+      "id": "CLS",
+      "mode": "normal",
+      "check": "CLS inesperado al filtrar = 0",
+      "pass": true,
+      "detail": "total 0.3849, inesperado 0.0000"
+    },
+    {
+      "id": "M23",
+      "mode": "normal",
+      "check": "modo: fundido con View Transition",
+      "pass": true,
+      "detail": "vt 1, tema dark"
+    },
+    {
+      "id": "CLS",
+      "mode": "normal",
+      "check": "CLS al cambiar modo = 0",
+      "pass": true,
+      "detail": "0.0000"
+    },
+    {
+      "id": "M24",
+      "mode": "normal",
+      "check": "idioma: misma página, tema conservado",
+      "pass": true,
+      "detail": "{\"lang\":\"en\",\"theme\":\"dark\"}"
+    },
+    {
+      "id": "CLS",
+      "mode": "normal",
+      "check": "CLS inesperado al cambiar idioma = 0",
+      "pass": true,
+      "detail": "inesperado 0.0000"
+    },
+    {
+      "id": "M01",
+      "mode": "normal",
+      "check": "marcas de corte visibles con teclado",
+      "pass": true,
+      "detail": "{\"opacity\":\"1\",\"transform\":\"matrix(1, 0, 0, 1, 0, 0)\"}"
+    },
+    {
+      "id": "M13",
+      "mode": "normal",
+      "check": "abrir: FLIP 500 ms + velo 300 ms",
+      "pass": true,
+      "detail": "[{\"el\":\"otro\",\"ms\":100},{\"el\":\"otro\",\"ms\":0},{\"el\":\"otro\",\"ms\":100},{\"el\":\"otro\",\"ms\":0},{\"el\":\"otro\",\"ms\":100},{\"el\":\"otro\",\"ms\":0},{\"el\":\"otro\",\"ms\":100},{\"el\":\"otro\",\"ms\":0},{\"el\":\"otro\",\"ms\":100},{\"el\":\"otro\",\"ms\":100},{\"el\":\"otro\",\"ms\":200},{\"el\":\"otro\",\"ms\":200},{\"el\":\"otro\",\"ms\":200},{\"el\":\"velo\",\"ms\":300},{\"el\":\"pieza\",\"ms\":500}]"
+    },
+    {
+      "id": "M01",
+      "mode": "normal",
+      "check": "marcas de corte enmarcan la pieza abierta",
+      "pass": true,
+      "detail": "opacidad 1"
+    },
+    {
+      "id": "M15",
+      "mode": "normal",
+      "check": "→ pasa al slide 2",
+      "pass": true,
+      "detail": "{\"url\":\"?pieza=nacimos-de-un-error&slide=2\",\"done\":2,\"live\":\"Nacimos de un error. Slide 2 de 5\"}"
+    },
+    {
+      "id": "M16",
+      "mode": "normal",
+      "check": "pieza siguiente: sale 200 / entra 300",
+      "pass": true,
+      "detail": "[200] ?pieza=cambio-normativo&slide=1"
+    },
+    {
+      "id": "M14",
+      "mode": "normal",
+      "check": "ESC + reabrir enseguida: estado consistente",
+      "pass": true,
+      "detail": "{\"open\":true,\"inert\":true,\"title\":\"Día de la Tierra\"}"
+    },
+    {
+      "id": "M14",
+      "mode": "normal",
+      "check": "cerrar: foco vuelve al tile, URL limpia",
+      "pass": true,
+      "detail": "{\"hidden\":true,\"inert\":false,\"focus\":\"2\",\"url\":\"\"}"
+    },
+    {
+      "id": "tok",
+      "mode": "reducido",
+      "check": "tokens de motion",
+      "pass": true,
+      "detail": "--duration-fast=0ms --duration-base=120ms --duration-slow=120ms --duration-page=120ms --crop-travel=0px --delay-chrome=0ms --hold-feedback=1800ms"
+    },
+    {
+      "id": "M26",
+      "mode": "reducido",
+      "check": "hero completo en el primer frame",
+      "pass": true,
+      "detail": "animaciones 0, invisibles 0"
+    },
+    {
+      "id": "LCP",
+      "mode": "reducido",
+      "check": "LCP de la home",
+      "pass": true,
+      "detail": "88 ms"
+    },
+    {
+      "id": "M25",
+      "mode": "reducido",
+      "check": "secciones visibles sin entrada",
+      "pass": true,
+      "detail": "antes pending/1, después in"
+    },
+    {
+      "id": "M06",
+      "mode": "reducido",
+      "check": "filtro: fundido de la grilla 120 ms",
+      "pass": true,
+      "detail": "piezas 3, animaciones [120]"
+    },
+    {
+      "id": "CLS",
+      "mode": "reducido",
+      "check": "CLS inesperado al filtrar = 0",
+      "pass": true,
+      "detail": "total 0.0000, inesperado 0.0000"
+    },
+    {
+      "id": "M23",
+      "mode": "reducido",
+      "check": "modo: cambio instantáneo",
+      "pass": true,
+      "detail": "vt 0, tema dark"
+    },
+    {
+      "id": "CLS",
+      "mode": "reducido",
+      "check": "CLS al cambiar modo = 0",
+      "pass": true,
+      "detail": "0.0000"
+    },
+    {
+      "id": "M24",
+      "mode": "reducido",
+      "check": "idioma: misma página, tema conservado",
+      "pass": true,
+      "detail": "{\"lang\":\"en\",\"theme\":\"dark\"}"
+    },
+    {
+      "id": "CLS",
+      "mode": "reducido",
+      "check": "CLS inesperado al cambiar idioma = 0",
+      "pass": true,
+      "detail": "inesperado 0.0000"
+    },
+    {
+      "id": "M01",
+      "mode": "reducido",
+      "check": "marcas de corte visibles con teclado",
+      "pass": true,
+      "detail": "{\"opacity\":\"1\",\"transform\":\"matrix(1, 0, 0, 1, 0, 0)\"}"
+    },
+    {
+      "id": "M13",
+      "mode": "reducido",
+      "check": "abrir: fundido 120 ms sin viaje",
+      "pass": true,
+      "detail": "[{\"el\":\"otro\",\"ms\":100},{\"el\":\"otro\",\"ms\":100},{\"el\":\"otro\",\"ms\":100},{\"el\":\"otro\",\"ms\":100},{\"el\":\"otro\",\"ms\":120},{\"el\":\"otro\",\"ms\":120},{\"el\":\"visor\",\"ms\":120}]"
+    },
+    {
+      "id": "M01",
+      "mode": "reducido",
+      "check": "marcas de corte enmarcan la pieza abierta",
+      "pass": true,
+      "detail": "opacidad 1"
+    },
+    {
+      "id": "M15",
+      "mode": "reducido",
+      "check": "→ pasa al slide 2",
+      "pass": true,
+      "detail": "{\"url\":\"?pieza=nacimos-de-un-error&slide=2\",\"done\":2,\"live\":\"Nacimos de un error. Slide 2 de 5\"}"
+    },
+    {
+      "id": "M16",
+      "mode": "reducido",
+      "check": "pieza siguiente: fundido corto",
+      "pass": true,
+      "detail": "[120,120] ?pieza=cambio-normativo&slide=1"
+    },
+    {
+      "id": "M14",
+      "mode": "reducido",
+      "check": "ESC + reabrir enseguida: estado consistente",
+      "pass": true,
+      "detail": "{\"open\":true,\"inert\":true,\"title\":\"Día de la Tierra\"}"
+    },
+    {
+      "id": "M14",
+      "mode": "reducido",
+      "check": "cerrar: foco vuelve al tile, URL limpia",
+      "pass": true,
+      "detail": "{\"hidden\":true,\"inert\":false,\"focus\":\"2\",\"url\":\"\"}"
+    },
+    {
+      "id": "M06",
+      "mode": "cpu 4×",
+      "check": "fps del filtro (FLIP)",
+      "pass": true,
+      "detail": "{\"fps\":149,\"long\":1,\"max\":36,\"frames\":135}"
+    },
+    {
+      "id": "M23",
+      "mode": "cpu 4×",
+      "check": "fps del cambio de modo",
+      "pass": true,
+      "detail": "{\"fps\":74,\"long\":2,\"max\":127,\"frames\":45}"
+    },
+    {
+      "id": "M13",
+      "mode": "cpu 4×",
+      "check": "fps al abrir el visor",
+      "pass": true,
+      "detail": "{\"fps\":152,\"long\":2,\"max\":49,\"frames\":137}"
+    },
+    {
+      "id": "M15",
+      "mode": "cpu 4×",
+      "check": "fps del slide siguiente",
+      "pass": true,
+      "detail": "{\"fps\":164,\"long\":0,\"max\":7,\"frames\":147}"
+    }
+  ]
+}

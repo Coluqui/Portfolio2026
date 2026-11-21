@@ -194,10 +194,14 @@ const common = {
     color: var(--color-text-disabled);
   }
 
-  /* M35 reducido: el filete aparece sin dibujarse */
+  /* M35 reducido: el filete aparece sin dibujarse · M36 reducido: fundido de 120 ms */
   @media (prefers-reduced-motion: reduce) {
     .field__rule {
       transition: none;
+    }
+
+    .field__error {
+      animation-duration: var(--duration-base);
     }
   }
 </style>
