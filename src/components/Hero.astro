@@ -18,8 +18,21 @@ const hero = useDictionary(lang).home.hero;
 
 <section class="hero container" aria-labelledby="hero-title">
   <header class="head">
+    <p class="status label">
+      <span class="status__dot" aria-hidden="true"></span>
+      {hero.availability}
+    </p>
     <p class="eyebrow label">{hero.eyebrow}</p>
-    <h1 id="hero-title">{t('home.name')}</h1>
+    <!-- El nombre registrado como una pieza: marcas de corte fijas en naranja (gesto propio) -->
+    <h1 id="hero-title" class="name">
+      <span class="name__text">{t('home.name')}</span>
+      <span class="crop-marks" aria-hidden="true" data-crop="on">
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+      </span>
+    </h1>
     <p class="role">{t('meta.role')}</p>
   </header>
 
@@ -78,6 +91,33 @@ const hero = useDictionary(lang).home.hero;
     color: var(--color-text-secondary);
   }
 
+  /* Disponibilidad: lo primero que busca un recruiter */
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    justify-self: start;
+    padding: var(--space-1) var(--space-3);
+    border: var(--border-hairline);
+    border-color: var(--color-accent);
+    border-radius: var(--radius-xs);
+    color: var(--color-text-primary);
+  }
+
+  .status__dot {
+    inline-size: var(--space-2);
+    block-size: var(--space-2);
+    background-color: var(--color-accent);
+  }
+
+  /* El nombre con marcas de corte: el gesto propio aplicado a Franco */
+  .name {
+    position: relative;
+    justify-self: start;
+    margin-block: var(--space-2);
+    padding-inline: var(--space-1);
+  }
+
   h1 {
     font-size: var(--text-display);
     line-height: var(--leading-display);
@@ -85,6 +125,7 @@ const hero = useDictionary(lang).home.hero;
   }
 
   .role {
+    color: var(--color-accent-text);
     font-size: var(--text-h3);
     font-weight: var(--weight-strong);
     line-height: var(--leading-h3);
